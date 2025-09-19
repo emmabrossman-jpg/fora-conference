@@ -48,19 +48,6 @@
             transform: translate(50px, -50px);
         }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 150px;
-            height: 150px;
-            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300&h=300&fit=crop&crop=center') center/cover;
-            opacity: 0.1;
-            border-radius: 50%;
-            transform: translate(-50px, 50px);
-        }
-
         .header h1 {
             font-size: 2.75rem;
             font-weight: 600;
@@ -83,20 +70,6 @@
             border: 1px solid #e2e8f0;
             padding: 2.5rem;
             margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .algorithm-section::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 120px;
-            height: 120px;
-            background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&h=200&fit=crop&crop=center') center/cover;
-            opacity: 0.08;
-            border-radius: 50%;
         }
 
         .algorithm-section h2 {
@@ -104,8 +77,6 @@
             margin-bottom: 1rem;
             font-size: 1.5rem;
             font-weight: 600;
-            position: relative;
-            z-index: 1;
         }
 
         .algorithm-grid {
@@ -113,8 +84,6 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
         }
 
         .algorithm-card {
@@ -122,26 +91,11 @@
             padding: 2rem;
             border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .algorithm-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            opacity: 0.5;
-            transform: translate(20px, -20px) rotate(45deg);
         }
 
         .algorithm-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
         }
 
         .algorithm-card h3 {
@@ -149,16 +103,6 @@
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
             font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
-
-        .algorithm-card p {
-            color: #64748b;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
         }
 
         .scoring-formula {
@@ -170,8 +114,6 @@
             color: #334155;
             text-align: center;
             font-weight: 500;
-            position: relative;
-            z-index: 1;
         }
 
         .main-card {
@@ -179,20 +121,6 @@
             border: 1px solid #e2e8f0;
             padding: 2.5rem;
             margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-card::before {
-            content: '';
-            position: absolute;
-            bottom: -30px;
-            left: -30px;
-            width: 100px;
-            height: 100px;
-            background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=center') center/cover;
-            opacity: 0.06;
-            border-radius: 50%;
         }
 
         .upload-section {
@@ -202,8 +130,6 @@
             margin-bottom: 2rem;
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
         }
 
         .upload-section:hover {
@@ -262,7 +188,7 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            gap: 1.5rem;
             margin: 2rem 0;
         }
 
@@ -272,26 +198,11 @@
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=100&h=100&fit=crop&crop=center') center/cover;
-            opacity: 0.06;
-            border-radius: 50%;
         }
 
         .stat-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            border-color: #cbd5e1;
         }
 
         .stat-number {
@@ -299,8 +210,6 @@
             font-weight: 600;
             margin-bottom: 1rem;
             color: #0f172a;
-            position: relative;
-            z-index: 1;
         }
 
         .stat-label {
@@ -309,8 +218,6 @@
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            position: relative;
-            z-index: 1;
         }
 
         .matches-container {
@@ -320,19 +227,6 @@
             margin: 2rem 0;
             max-height: 500px;
             overflow-y: auto;
-            position: relative;
-        }
-
-        .matches-container::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=100&h=100&fit=crop&crop=center') center/cover;
-            opacity: 0.05;
-            border-radius: 50%;
         }
 
         .match-item {
@@ -344,25 +238,12 @@
             border: 1px solid #e2e8f0;
             margin-bottom: 0.75rem;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .match-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(135deg, #334155 0%, #64748b 100%);
-            opacity: 0.7;
+            border-left: 4px solid #334155;
         }
 
         .match-item:hover {
             transform: translateX(4px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
         }
 
         .advisor-info {
@@ -375,14 +256,6 @@
             color: #64748b;
             font-size: 0.875rem;
             margin-top: 0.25rem;
-        }
-
-        .advisor-notes {
-            color: #94a3b8;
-            font-size: 0.75rem;
-            font-style: italic;
-            margin-top: 0.5rem;
-            max-width: 400px;
         }
 
         .ttv-info {
@@ -457,20 +330,46 @@
             100% { transform: rotate(360deg); }
         }
 
-        .debug-info {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border: 1px solid #f59e0b;
-            padding: 1.25rem;
-            margin: 1rem 0;
+        .conferences-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .conferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .conference-card {
+            background: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .conference-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .conference-name {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .conference-details {
+            color: #64748b;
             font-size: 0.875rem;
-            color: #92400e;
+            line-height: 1.5;
         }
 
         @media (max-width: 768px) {
-            .algorithm-grid {
-                grid-template-columns: 1fr;
-            }
-            .stats-grid {
+            .stats-grid, .conferences-grid {
                 grid-template-columns: 1fr;
             }
             .download-section {
@@ -479,7 +378,7 @@
             .match-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.5rem;
+                gap: 0.75rem;
             }
         }
     </style>
@@ -512,6 +411,13 @@
             </div>
         </div>
 
+        <div class="conferences-section">
+            <h2>📅 2025-2026 Conference Calendar</h2>
+            <div class="conferences-grid" id="conferences-list">
+                <!-- Conferences will be populated here -->
+            </div>
+        </div>
+
         <div class="main-card">
             <div id="upload-step">
                 <div class="upload-section">
@@ -521,19 +427,12 @@
                     <button class="upload-button" onclick="document.getElementById('file-input').click()">
                         Choose File
                     </button>
-                    
-                    <!-- Sample data option -->
-                    <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); border: 1px solid #cbd5e1;">
-                        <p style="font-size: 0.875rem; color: #475569; margin-bottom: 1rem;">
-                            <strong>🚀 Want to test the system first?</strong> Try it with sample data
-                        </p>
+                    <div style="margin-top: 2rem;">
                         <button onclick="loadSampleData()" class="upload-button" style="background: linear-gradient(135deg, #475569 0%, #64748b 100%);">
                             Load Sample Data
                         </button>
                     </div>
-                    
                     <div id="file-status"></div>
-                    <div id="debug-info" class="debug-info" style="display: none;"></div>
                 </div>
                 <button class="process-button" id="process-btn" onclick="runMatching()" disabled>
                     Upload Data First
@@ -543,9 +442,8 @@
             <div id="processing-step" class="hidden">
                 <div style="text-align: center;">
                     <div class="spinner"></div>
-                    <h3>Running Real Matching Algorithm</h3>
-                    <p>Processing your actual advisor preferences and TTV data...</p>
-                    <div id="processing-status"></div>
+                    <h3>Running Matching Algorithm</h3>
+                    <p>Analyzing advisors and optimizing conference assignments...</p>
                 </div>
             </div>
 
@@ -570,7 +468,7 @@
 
                 <h3>Your Matches:</h3>
                 <div class="matches-container" id="matches-list">
-                    <!-- Real matches will be populated here -->
+                    <!-- Matches will be populated here -->
                 </div>
 
                 <div class="download-section">
@@ -589,121 +487,50 @@
         let fileData = null;
         let realMatches = [];
 
-        // Complete conference database with all details
+        // Complete conference database with all details in date order
         const conferenceDatabase = {
-            "DUCO Italy": { location: "Milan, Italy", dates: "Mar 23–27, 2026", description: "Exclusive Italy-focused conference for advisors with significant Italian market expertise." },
-            "DUCO Portugal/Spain": { location: "Marbella, Spain", dates: "Oct 19–23, 2026", description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence." },
-            "DUCO Spain/Portugal": { location: "Marbella, Spain", dates: "Oct 19–23, 2026", description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence." },
-            "DUCO France": { location: "Paris, France", dates: "Nov 2–6, 2026", description: "Exclusive French market conference for advisors with substantial France booking volume." },
-            "Emotions Latin America & Car": { location: "Costa Rica", dates: "Mar 8–11, 2026", description: "Central and South American travel showcase emphasizing adventure and eco-luxury." },
-            "Emotions Latin America": { location: "Costa Rica", dates: "Mar 8–11, 2026", description: "Central and South American travel showcase emphasizing adventure and eco-luxury." },
-            "Emotions Europe": { location: "Madrid, Spain", dates: "May 15–18, 2026", description: "European travel specialization conference featuring cultural immersion experiences." },
-            "Emotions Madrid": { location: "Madrid, Spain", dates: "Jun 1–4, 2026", description: "Spanish mainland cultural conference focusing on art, cuisine, and luxury city experiences." },
-            "Emotions: Balearics": { location: "Mallorca, Spain", dates: "May 28–31, 2026", description: "Luxury Balearic Islands conference featuring exclusive resorts and yacht experiences." },
-            "Emotions: Greece": { location: "Santorini, Greece", dates: "Jun 5–8, 2026", description: "Greek island luxury travel conference featuring yacht charters and villa experiences." },
-            "ILTM Americas": { location: "Mexico City, Mexico", dates: "Sep 2–5, 2025", description: "Premier luxury travel event for the Americas connecting regional specialists." },
-            "ILTM Cannes": { location: "Cannes, France", dates: "Dec 1–4, 2025", description: "World's leading luxury travel trade show with exclusive networking opportunities." },
-            "Remote Immersion": { location: "Iceland", dates: "Aug 12–15, 2026", description: "Specializing in off-the-beaten-path and adventure travel destinations." },
-            "Further East": { location: "Singapore", dates: "Oct 5–8, 2026", description: "Asia-Pacific travel conference focusing on emerging destinations and luxury experiences." },
-            "We Are Africa": { location: "Cape Town, South Africa", dates: "Jul 8–11, 2026", description: "Definitive African travel showcase connecting advisors with authentic safari experiences." },
             "WAA Sundance": { location: "Park City, Utah", dates: "Jan 20–23, 2026", description: "Winter luxury travel conference coinciding with Sundance Film Festival." },
             "LE Miami": { location: "Miami, FL", dates: "Feb 10–13, 2026", description: "Luxury Exchange Miami for influential luxury travel advisors and suppliers." },
-            "PURE Life Experiences": { location: "Swiss Alps", dates: "Nov 18–21, 2026", description: "Focusing on experiential and transformative luxury travel experiences." },
+            "Emotions Latin America": { location: "Costa Rica", dates: "Mar 8–11, 2026", description: "Central and South American travel showcase emphasizing adventure and eco-luxury." },
+            "DUCO Italy": { location: "Milan, Italy", dates: "Mar 23–27, 2026", description: "Exclusive Italy-focused conference for advisors with significant Italian market expertise." },
+            "TRUE Puglia": { location: "Puglia, Italy", dates: "Apr 12–15, 2026", description: "Southern Italian cultural and culinary conference showcasing Puglia's charm." },
             "Do Not Disturb": { location: "Portugal", dates: "Apr 20–23, 2026", description: "Exclusive wellness and retreat-focused conference for transformative travel." },
+            "Emotions Europe": { location: "Madrid, Spain", dates: "May 15–18, 2026", description: "European travel specialization conference featuring cultural immersion experiences." },
+            "Emotions: Balearics": { location: "Mallorca, Spain", dates: "May 28–31, 2026", description: "Luxury Balearic Islands conference featuring exclusive resorts and yacht experiences." },
+            "Emotions Madrid": { location: "Madrid, Spain", dates: "Jun 1–4, 2026", description: "Spanish mainland cultural conference focusing on art, cuisine, and luxury city experiences." },
+            "Emotions: Greece": { location: "Santorini, Greece", dates: "Jun 5–8, 2026", description: "Greek island luxury travel conference featuring yacht charters and villa experiences." },
             "TRUE Sicily": { location: "Sicily, Italy", dates: "Jun 14–17, 2026", description: "Intimate conference showcasing authentic Sicilian culture and cuisine." },
+            "We Are Africa": { location: "Cape Town, South Africa", dates: "Jul 8–11, 2026", description: "Definitive African travel showcase connecting advisors with authentic safari experiences." },
+            "Remote Immersion": { location: "Iceland", dates: "Aug 12–15, 2026", description: "Specializing in off-the-beaten-path and adventure travel destinations." },
+            "ILTM Americas": { location: "Mexico City, Mexico", dates: "Sep 2–5, 2025", description: "Premier luxury travel event for the Americas connecting regional specialists." },
             "TRUE Dolomites": { location: "Italian Alps", dates: "Sep 15–18, 2026", description: "Mountain luxury and alpine adventure conference in Italy's Dolomites." },
-            "TRUE Puglia": { location: "Puglia, Italy", dates: "Apr 12–15, 2026", description: "Southern Italian cultural and culinary conference showcasing Puglia's charm." }
+            "Further East": { location: "Singapore", dates: "Oct 5–8, 2026", description: "Asia-Pacific travel conference focusing on emerging destinations and luxury experiences." },
+            "DUCO Spain/Portugal": { location: "Marbella, Spain", dates: "Oct 19–23, 2026", description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence." },
+            "DUCO France": { location: "Paris, France", dates: "Nov 2–6, 2026", description: "Exclusive French market conference for advisors with substantial France booking volume." },
+            "PURE Life Experiences": { location: "Swiss Alps", dates: "Nov 18–21, 2026", description: "Focusing on experiential and transformative luxury travel experiences." },
+            "ILTM Cannes": { location: "Cannes, France", dates: "Dec 1–4, 2025", description: "World's leading luxury travel trade show with exclusive networking opportunities." }
         };
 
-        let fileData = null;
-        let realMatches = [];
+        // Populate conferences section
+        function populateConferences() {
+            const conferencesList = document.getElementById('conferences-list');
+            const sortedConferences = Object.entries(conferenceDatabase).sort((a, b) => {
+                // Sort by date
+                const dateA = new Date(a[1].dates.split('–')[0] + ', 2026');
+                const dateB = new Date(b[1].dates.split('–')[0] + ', 2026');
+                return dateA - dateB;
+            });
 
-        // Simple file upload handler (back to working version)
-        document.getElementById('file-input').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    const data = new Uint8Array(event.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    
-                    processExcelData(workbook);
-                    
-                } catch (error) {
-                    console.error('Error reading Excel file:', error);
-                    document.getElementById('file-status').innerHTML = `
-                        <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #dc2626;">
-                            <p style="color: #dc2626; font-weight: 500;">❌ Error reading file: ${error.message}</p>
-                        </div>
-                    `;
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        });
-
-        function processExcelData(workbook) {
-            try {
-                const debugInfo = document.getElementById('debug-info');
-                debugInfo.style.display = 'block';
-                
-                // Get sheet names
-                const sheetNames = workbook.SheetNames;
-                debugInfo.innerHTML = `<strong>📋 Sheets found:</strong> ${sheetNames.join(', ')}`;
-                
-                // Process advisor preferences
-                const advisorSheet = workbook.Sheets['Advisor Preferences'];
-                if (!advisorSheet) {
-                    throw new Error('Advisor Preferences sheet not found');
-                }
-                
-                const advisorData = XLSX.utils.sheet_to_json(advisorSheet, { header: 1 });
-                const headers = advisorData[0];
-                const rows = advisorData.slice(1);
-                
-                // Process TTV data
-                const ttvSheet = workbook.Sheets['Advisor 12 month trailing TTV'];
-                const ttvData = ttvSheet ? XLSX.utils.sheet_to_json(ttvSheet) : [];
-                
-                // Process geo data
-                const geoSheet = workbook.Sheets['Geo Values'];
-                const geoData = geoSheet ? XLSX.utils.sheet_to_json(geoSheet) : [];
-                
-                // Process conference data
-                const confSheet = workbook.Sheets['Conference Spots'];
-                const confData = confSheet ? XLSX.utils.sheet_to_json(confSheet) : [];
-                
-                // Create data structures
-                fileData = {
-                    advisors: processAdvisors(headers, rows),
-                    ttv: createTTVMap(ttvData),
-                    geo: createGeoMap(geoData),
-                    conferences: confData
-                };
-                
-                debugInfo.innerHTML += `<br><strong>✅ Processed:</strong> ${fileData.advisors.length} advisors, ${Object.keys(fileData.ttv).length} TTV records, ${confData.length} conferences`;
-                
-                // Enable the process button
-                const processBtn = document.getElementById('process-btn');
-                processBtn.disabled = false;
-                processBtn.textContent = '🚀 Generate Optimized Matches';
-                processBtn.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
-                
-                document.getElementById('file-status').innerHTML = `
-                    <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #10b981;">
-                        <p style="color: #065f46; font-weight: 500;">✅ File processed successfully!</p>
+            conferencesList.innerHTML = sortedConferences.map(([name, details]) => `
+                <div class="conference-card">
+                    <div class="conference-name">${name}</div>
+                    <div class="conference-details">
+                        <div style="margin-bottom: 0.5rem;"><strong>📅 ${details.dates}</strong></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>📍 ${details.location}</strong></div>
+                        <div>${details.description}</div>
                     </div>
-                `;
-                
-            } catch (error) {
-                console.error('Error processing Excel data:', error);
-                document.getElementById('file-status').innerHTML = `
-                    <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #dc2626;">
-                        <p style="color: #dc2626; font-weight: 500;">❌ Error processing file: ${error.message}</p>
-                    </div>
-                `;
-            }
+                </div>
+            `).join('');
         }
 
         // Load sample data function
@@ -746,542 +573,285 @@
                     <p style="color: #047857; font-size: 0.875rem; margin-top: 0.5rem;">10 advisors with preferences and TTV data ready for matching</p>
                 </div>
             `;
-
-            const debugInfo = document.getElementById('debug-info');
-            debugInfo.style.display = 'block';
-            debugInfo.innerHTML = '<strong>📊 Sample data loaded:</strong> 10 advisors, $20M+ total TTV, various conference preferences';
         }
 
-        function processExcelData(workbook) {
-            try {
-                const debugInfo = document.getElementById('debug-info');
-                debugInfo.style.display = 'block';
-                
-                // Get sheet names
-                const sheetNames = workbook.SheetNames;
-                debugInfo.innerHTML = `<strong>Sheets found:</strong> ${sheetNames.join(', ')}`;
-                
-                // Process advisor preferences
-                const advisorSheet = workbook.Sheets['Advisor Preferences'];
-                if (!advisorSheet) {
-                    throw new Error('Advisor Preferences sheet not found');
-                }
-                
-                const advisorData = XLSX.utils.sheet_to_json(advisorSheet, { header: 1 });
-                const headers = advisorData[0];
-                const rows = advisorData.slice(1);
-                
-                // Process TTV data
-                const ttvSheet = workbook.Sheets['Advisor 12 month trailing TTV'];
-                const ttvData = ttvSheet ? XLSX.utils.sheet_to_json(ttvSheet) : [];
-                
-                // Process geo data
-                const geoSheet = workbook.Sheets['Geo Values'];
-                const geoData = geoSheet ? XLSX.utils.sheet_to_json(geoSheet) : [];
-                
-                // Process conference data
-                const confSheet = workbook.Sheets['Conference Spots'];
-                const confData = confSheet ? XLSX.utils.sheet_to_json(confSheet) : [];
-                
-                // Create data structures
-                fileData = {
-                    advisors: processAdvisors(headers, rows),
-                    ttv: createTTVMap(ttvData),
-                    geo: createGeoMap(geoData),
-                    conferences: confData
-                };
-                
-                debugInfo.innerHTML += `<br><strong>Processed:</strong> ${fileData.advisors.length} advisors, ${Object.keys(fileData.ttv).length} TTV records, ${confData.length} conferences`;
-                
-                // Enable the process button
-                const processBtn = document.getElementById('process-btn');
-                processBtn.disabled = false;
-                processBtn.textContent = 'Generate Real Matches';
-                processBtn.style.background = '#28a745';
-                
-                document.getElementById('file-status').innerHTML = `
-                    <div style="background: #d1fae5; padding: 1rem; margin-top: 1rem; border: 1px solid #10b981;">
-                        <p style="color: #065f46; font-weight: 500;">✓ File processed successfully!</p>
-                    </div>
-                `;
-                
-            } catch (error) {
-                console.error('Error processing Excel data:', error);
-                document.getElementById('file-status').innerHTML = `
-                    <div style="background: #f8d7da; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #dc3545;">
-                        <p style="color: #dc3545; font-weight: 600;">❌ Error processing file: ${error.message}</p>
-                    </div>
-                `;
-            }
-        }
+        // File upload handler
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
 
-        function processAdvisors(headers, rows) {
-            const advisors = [];
-            
-            rows.forEach(row => {
-                if (!row[1]) return; // Skip empty advisor ID
-                
-                const advisor = {
-                    id: row[1],
-                    previousConference: row[2] === 'None!' ? null : row[2],
-                    preferences: [],
-                    notes: row[25] || ''
-                };
-                
-                // Extract preferences from columns 3-21
-                for (let i = 3; i <= 21; i++) {
-                    if (headers[i] && typeof row[i] === 'number' && row[i] >= 1 && row[i] <= 5) {
-                        advisor.preferences.push({
-                            conference: headers[i],
-                            ranking: row[i]
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const data = new Uint8Array(event.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    
+                    // Process advisor preferences
+                    const advisorSheet = workbook.Sheets['Advisor Preferences'];
+                    const rawAdvisorData = XLSX.utils.sheet_to_json(advisorSheet, { header: 1 });
+                    const headers = rawAdvisorData[0];
+                    const advisorRows = rawAdvisorData.slice(1);
+
+                    const advisors = advisorRows.map(row => {
+                        const advisor = {
+                            id: row[1],
+                            previousConference: row[2] === 'None!' ? null : row[2],
+                            preferences: [],
+                            notes: row[25] || ''
+                        };
+                        
+                        const conferenceColumns = headers.slice(3, 22);
+                        conferenceColumns.forEach((confName, index) => {
+                            const ranking = row[3 + index];
+                            if (typeof ranking === 'number' && ranking >= 1 && ranking <= 5) {
+                                advisor.preferences.push({
+                                    conference: confName,
+                                    ranking: ranking
+                                });
+                            }
                         });
-                    }
-                }
-                
-                advisor.preferences.sort((a, b) => a.ranking - b.ranking);
-                advisors.push(advisor);
-            });
-            
-            return advisors;
-        }
+                        
+                        advisor.preferences.sort((a, b) => a.ranking - b.ranking);
+                        return advisor;
+                    });
 
-        function createTTVMap(ttvData) {
-            const ttvMap = {};
-            ttvData.forEach(record => {
-                if (record['Advisor ID']) {
-                    ttvMap[record['Advisor ID']] = record['Commissionable Booking Value (12 Months)'] || 0;
-                }
-            });
-            return ttvMap;
-        }
+                    // Process TTV data
+                    const ttvSheet = workbook.Sheets['Advisor 12 month trailing TTV'];
+                    const ttvRows = XLSX.utils.sheet_to_json(ttvSheet);
+                    const ttvMap = {};
+                    ttvRows.forEach(row => {
+                        if (row['Advisor ID']) {
+                            ttvMap[row['Advisor ID']] = row['Commissionable Booking Value (12 Months)'] || 0;
+                        }
+                    });
 
-        function createGeoMap(geoData) {
-            const geoMap = {};
-            geoData.forEach(record => {
-                if (record['Advisor ID']) {
-                    const id = record['Advisor ID'];
-                    if (!geoMap[id]) geoMap[id] = {};
-                    const country = record.Country;
-                    const value = record['Commissionable Booking Value'] || 0;
-                    if (!geoMap[id][country]) geoMap[id][country] = 0;
-                    geoMap[id][country] += value;
+                    // Process geo data
+                    const geoSheet = workbook.Sheets['Geo Values'];
+                    const geoRows = geoSheet ? XLSX.utils.sheet_to_json(geoSheet) : [];
+                    const geoMap = {};
+                    geoRows.forEach(row => {
+                        if (row['Advisor ID']) {
+                            const id = row['Advisor ID'];
+                            if (!geoMap[id]) geoMap[id] = {};
+                            const country = row.Country;
+                            const value = row['Commissionable Booking Value'] || 0;
+                            if (!geoMap[id][country]) geoMap[id][country] = 0;
+                            geoMap[id][country] += value;
+                        }
+                    });
+
+                    fileData = {
+                        advisors: advisors.filter(a => a.id),
+                        ttv: ttvMap,
+                        geo: geoMap,
+                        conferences: []
+                    };
+
+                    // Enable processing
+                    const processBtn = document.getElementById('process-btn');
+                    processBtn.disabled = false;
+                    processBtn.textContent = '🚀 Generate Real Matches';
+                    processBtn.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
+
+                    document.getElementById('file-status').innerHTML = `
+                        <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #10b981;">
+                            <p style="color: #065f46; font-weight: 500;">✅ File processed successfully!</p>
+                            <p style="color: #047857; font-size: 0.875rem; margin-top: 0.5rem;">${fileData.advisors.length} advisors with ${Object.keys(fileData.ttv).length} TTV records</p>
+                        </div>
+                    `;
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    document.getElementById('file-status').innerHTML = `
+                        <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #dc2626;">
+                            <p style="color: #dc2626; font-weight: 500;">❌ Error reading file: ${error.message}</p>
+                        </div>
+                    `;
                 }
-            });
-            return geoMap;
-        }
+            };
+            reader.readAsArrayBuffer(file);
+        });
 
         function runMatching() {
             if (!fileData) {
-                alert('⚠️  Please upload your Excel file first');
+                alert('Please upload data first');
                 return;
             }
-            
-            console.log('🎯 Starting matching process...');
-            
-            // Show processing with better feedback
+
             document.getElementById('upload-step').classList.add('hidden');
             document.getElementById('processing-step').classList.remove('hidden');
-            
-            const statusDiv = document.getElementById('processing-status');
-            statusDiv.innerHTML = '<p style="color: #334155;">🔄 Initializing matching algorithm...</p>';
-            
-            // Simulate realistic processing time with status updates
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += 10;
-                if (progress <= 30) {
-                    statusDiv.innerHTML = '<p style="color: #334155;">📊 Analyzing advisor preferences and TTV data...</p>';
-                } else if (progress <= 60) {
-                    statusDiv.innerHTML = '<p style="color: #334155;">🎯 Running optimization algorithm...</p>';
-                } else if (progress <= 90) {
-                    statusDiv.innerHTML = '<p style="color: #334155;">✅ Generating matches and checking eligibility...</p>';
-                }
-            }, 200);
-            
-            // Run the actual matching algorithm after delay
+
             setTimeout(() => {
-                clearInterval(progressInterval);
                 try {
-                    console.log('⚡ Executing matching algorithm...');
-                    realMatches = runRealMatchingAlgorithm(fileData);
-                    console.log('🎉 Matching completed successfully!');
-                    showRealResults();
+                    realMatches = generateMatches();
+                    showResults();
                 } catch (error) {
-                    console.error('❌ Matching algorithm error:', error);
-                    statusDiv.innerHTML = `<p style="color: #dc2626;">❌ Error: ${error.message}</p>`;
-                    
-                    // Show error state
-                    setTimeout(() => {
-                        document.getElementById('processing-step').classList.add('hidden');
-                        document.getElementById('upload-step').classList.remove('hidden');
-                        alert('Error running matching algorithm. Please check the console and try again.');
-                    }, 2000);
+                    console.error('Matching error:', error);
+                    alert('Error running matching: ' + error.message);
                 }
-            }, 3000);
+            }, 2000);
         }
 
-        function runRealMatchingAlgorithm(data) {
-            const { advisors, ttv, geo, conferences } = data;
-            
-            console.log('🚀 Starting optimized matching algorithm...');
-            console.log('📊 Data summary:', { 
-                advisorCount: advisors.length, 
-                ttvCount: Object.keys(ttv).length, 
-                confCount: conferences.length 
-            });
-            
-            // Optimize: Pre-filter and enrich advisors
-            const enrichedAdvisors = advisors
-                .filter(advisor => {
-                    // Must have advisor ID, TTV data, and at least one preference
-                    return advisor.id && ttv[advisor.id] && advisor.preferences && advisor.preferences.length > 0;
-                })
+        function generateMatches() {
+            const enrichedAdvisors = fileData.advisors
+                .filter(advisor => advisor.id && fileData.ttv[advisor.id] && advisor.preferences.length > 0)
                 .map(advisor => ({
                     ...advisor,
-                    totalTTV: ttv[advisor.id] || 0,
-                    geoTTV: geo[advisor.id] || {},
-                    // Pre-calculate advisor tier for faster processing
-                    tier: ttv[advisor.id] >= 2000000 ? 'premium' : 
-                          ttv[advisor.id] >= 1000000 ? 'professional' : 'rising'
+                    totalTTV: fileData.ttv[advisor.id] || 0,
+                    geoTTV: fileData.geo[advisor.id] || {}
                 }))
-                // Optimize: Sort by TTV descending for business priority
                 .sort((a, b) => b.totalTTV - a.totalTTV);
-            
-            console.log(`✅ Processed ${enrichedAdvisors.length} eligible advisors`);
-            
-            // Optimize: Build efficient conference lookup
+
+            const conferenceCapacity = {};
             const requestedConferences = new Set();
-            const conferenceRequestCounts = {};
-            
-            // Analyze demand patterns
             enrichedAdvisors.forEach(advisor => {
                 advisor.preferences.forEach(pref => {
                     requestedConferences.add(pref.conference);
-                    conferenceRequestCounts[pref.conference] = (conferenceRequestCounts[pref.conference] || 0) + 1;
                 });
             });
-            
-            // Initialize optimized conference data structure
-            const conferenceCapacity = {};
-            const availableConferences = [];
-            
+
             requestedConferences.forEach(confName => {
-                const confData = conferences.find(c => c.Conference === confName);
-                const dbData = conferenceDatabase[confName];
-                
-                // Smart capacity allocation based on demand
-                const baseCapacity = confData ? (confData.Capacity || 6) : 6;
-                const demand = conferenceRequestCounts[confName] || 0;
-                const adjustedCapacity = Math.min(baseCapacity, Math.max(1, Math.ceil(demand * 0.3))); // Cap at 30% of demand or base capacity
-                
-                conferenceCapacity[confName] = adjustedCapacity;
-                availableConferences.push({
-                    Conference: confName,
-                    Location: dbData ? dbData.location : (confData ? confData.Location : 'Location TBD'),
-                    Dates: dbData ? dbData.dates : 'Dates TBD',
-                    Capacity: adjustedCapacity,
-                    Demand: demand,
-                    CompetitiveRatio: demand / adjustedCapacity
-                });
+                conferenceCapacity[confName] = 6; // Default capacity
             });
-            
-            // Sort conferences by competitive ratio for strategic allocation
-            availableConferences.sort((a, b) => b.CompetitiveRatio - a.CompetitiveRatio);
-            
-            console.log('🎯 Conference demand analysis:', 
-                availableConferences.map(c => `${c.Conference}: ${c.Demand} requests, ${c.Capacity} spots (${c.CompetitiveRatio.toFixed(1)}x)`).join('\n')
-            );
-            
+
             const matches = [];
-            const unmatchedAdvisors = [];
-            const matchingLog = [];
-            
-            // Optimized matching algorithm with strategic allocation
+
             for (const advisor of enrichedAdvisors) {
                 if (matches.length >= 25) break;
-                
+
                 let bestMatch = null;
                 let bestScore = -1;
-                const attemptedMatches = [];
-                
-                // Process preferences in order (1st choice first)
+
                 for (const preference of advisor.preferences) {
                     const confName = preference.conference;
                     
-                    if (conferenceCapacity[confName] <= 0) {
-                        attemptedMatches.push(`${confName}: No capacity`);
-                        continue;
-                    }
-                    
-                    const conference = availableConferences.find(c => c.Conference === confName);
-                    if (!conference) {
-                        attemptedMatches.push(`${confName}: Not found`);
-                        continue;
-                    }
-                    
-                    const score = calculateRealMatchScore(advisor, conference, preference.ranking);
-                    attemptedMatches.push(`${confName}: Score ${score.total.toFixed(1)}, Eligible: ${score.eligible}`);
-                    
-                    if (score.eligible && score.total > bestScore) {
+                    if (conferenceCapacity[confName] <= 0) continue;
+
+                    const conference = {
+                        Conference: confName,
+                        Location: conferenceDatabase[confName]?.location || 'Location TBD',
+                        Dates: conferenceDatabase[confName]?.dates || 'Dates TBD'
+                    };
+
+                    const eligibility = checkEligibility(advisor, conference);
+                    if (!eligibility.eligible) continue;
+
+                    const businessScore = Math.min(advisor.totalTTV / 2000000, 1.0) * 100 * 0.4;
+                    const preferenceScore = (6 - preference.ranking) * 20 * 0.35;
+                    const qualificationScore = 100 * 0.25;
+                    const totalScore = businessScore + preferenceScore + qualificationScore;
+
+                    if (totalScore > bestScore) {
                         bestMatch = {
                             advisor,
                             conference,
-                            score,
-                            preferenceRank: preference.ranking
+                            preferenceRank: preference.ranking,
+                            score: {
+                                total: totalScore,
+                                business: businessScore,
+                                preference: preferenceScore,
+                                qualification: qualificationScore,
+                                eligible: true
+                            }
                         };
-                        bestScore = score.total;
+                        bestScore = totalScore;
                     }
                 }
-                
+
                 if (bestMatch) {
                     matches.push(bestMatch);
                     conferenceCapacity[bestMatch.conference.Conference]--;
-                    
-                    matchingLog.push(`✅ Advisor ${advisor.id} (${advisor.tier}, ${advisor.totalTTV.toLocaleString()}) → ${bestMatch.conference.Conference} (Pref #${bestMatch.preferenceRank}, Score: ${bestScore.toFixed(1)})`);
-                } else {
-                    unmatchedAdvisors.push(advisor);
-                    matchingLog.push(`❌ Advisor ${advisor.id} (${advisor.tier}, ${advisor.totalTTV.toLocaleString()}) - No eligible matches. Attempted: ${attemptedMatches.join(', ')}`);
                 }
             }
-            
-            console.log('📋 Matching Results:\n' + matchingLog.slice(0, 10).join('\n'));
-            console.log(`\n🎉 Final Results: ${matches.length} matches, ${unmatchedAdvisors.length} unmatched`);
-            
-            // Calculate success metrics
-            const totalMatchedTTV = matches.reduce((sum, m) => sum + m.advisor.totalTTV, 0);
-            const topPrefMatches = matches.filter(m => m.preferenceRank <= 3).length;
-            const avgScore = matches.reduce((sum, m) => sum + m.score.total, 0) / matches.length;
-            
-            console.log(`💰 Total TTV Matched: ${totalMatchedTTV.toLocaleString()}`);
-            console.log(`🎯 Top-3 Preference Rate: ${((topPrefMatches / matches.length) * 100).toFixed(1)}%`);
-            console.log(`📊 Average Match Score: ${avgScore.toFixed(1)}/100`);
-            
+
             return matches;
         }
 
-        function calculateRealMatchScore(advisor, conference, preferenceRank) {
-            // Business priority (40% weight) - based on TTV
-            const businessPriority = Math.min(advisor.totalTTV / 2000000, 1.0) * 100 * 0.4;
-            
-            // Preference score (35% weight) - higher score for better ranking
-            const preferenceScore = preferenceRank ? (6 - preferenceRank) * 20 * 0.35 : 0;
-            
-            // Check eligibility
-            const eligibility = checkRealEligibility(advisor, conference);
-            const qualificationScore = eligibility.eligible ? 100 * 0.25 : 0;
-            
-            return {
-                total: businessPriority + preferenceScore + qualificationScore,
-                business: businessPriority,
-                preference: preferenceScore,
-                qualification: qualificationScore,
-                eligible: eligibility.eligible,
-                reason: eligibility.reason,
-                preferenceRank: preferenceRank
-            };
-        }
-
-        function checkRealEligibility(advisor, conference) {
+        function checkEligibility(advisor, conference) {
             const conf = conference.Conference;
-            
-            // Enhanced repeat attendance checking - look for conference names in previous attendance
+
+            // Check repeat attendance
             if (advisor.previousConference && advisor.previousConference !== 'None!' && advisor.previousConference.toLowerCase() !== 'none') {
                 const prevConf = advisor.previousConference.toLowerCase();
                 const currentConf = conf.toLowerCase();
                 
-                // Check for exact match
                 if (prevConf === currentConf) {
                     return { eligible: false, reason: 'Attended same conference last year' };
                 }
                 
-                // Check for conference family matches (e.g., "DUCO Italy" and "DUCO France" are same family)
+                // Check conference families
                 if (prevConf.includes('duco') && currentConf.includes('duco')) {
                     return { eligible: false, reason: 'Attended DUCO family conference last year' };
                 }
-                
                 if (prevConf.includes('iltm') && currentConf.includes('iltm')) {
                     return { eligible: false, reason: 'Attended ILTM family conference last year' };
                 }
-                
                 if (prevConf.includes('emotions') && currentConf.includes('emotions')) {
                     return { eligible: false, reason: 'Attended Emotions family conference last year' };
                 }
-                
-                if (prevConf.includes('true') && currentConf.includes('true')) {
-                    return { eligible: false, reason: 'Attended TRUE family conference last year' };
-                }
             }
-            
-            // Parse notes for additional attendance history
-            if (advisor.notes) {
-                const notes = advisor.notes.toLowerCase();
-                const currentConf = conf.toLowerCase();
-                
-                // Check if notes mention attending this conference recently
-                if (notes.includes(currentConf) && (notes.includes('attended') || notes.includes('went to') || notes.includes('2024') || notes.includes('2023'))) {
-                    return { eligible: false, reason: 'Recent attendance mentioned in notes' };
-                }
-            }
-            
-            // Geographic and TTV requirements
-            if (conf === 'DUCO Italy') {
-                const italyTTV = advisor.geoTTV['Italy'] || 0;
-                if (italyTTV < 200000) {
-                    return { eligible: false, reason: `Italy TTV: ${italyTTV.toLocaleString()} < $200k required` };
-                }
-            }
-            
-            if (conf === 'DUCO France') {
-                const franceTTV = advisor.geoTTV['France'] || 0;
-                if (franceTTV < 200000) {
-                    return { eligible: false, reason: `France TTV: ${franceTTV.toLocaleString()} < $200k required` };
-                }
-            }
-            
-            if (conf === 'DUCO Spain/Portugal' || conf === 'DUCO Portugal/Spain') {
-                const spainTTV = (advisor.geoTTV['Spain'] || 0) + (advisor.geoTTV['Portugal'] || 0);
-                if (spainTTV < 200000) {
-                    return { eligible: false, reason: `Iberia TTV: ${spainTTV.toLocaleString()} < $200k required` };
-                }
-            }
-            
-            // Premium conference TTV requirements
+
+            // TTV requirements
             if (conf === 'ILTM Cannes' && advisor.totalTTV < 2000000) {
                 return { eligible: false, reason: `Total TTV: ${advisor.totalTTV.toLocaleString()} < $2M required` };
             }
-            
-            if (conf === 'ILTM Americas' && advisor.totalTTV < 1500000) {
-                return { eligible: false, reason: `Total TTV: ${advisor.totalTTV.toLocaleString()} < $1.5M recommended` };
-            }
-            
-            // Experience and tier requirements
-            if (advisor.totalTTV < 100000) {
-                const premiumConferences = ['ILTM Cannes', 'ILTM Americas', 'LE Miami', 'Do Not Disturb'];
-                if (premiumConferences.includes(conf)) {
-                    return { eligible: false, reason: `Minimum $100k TTV required for premium conferences` };
-                }
-            }
-            
-            return { eligible: true, reason: 'Meets all requirements' };
+
+            return { eligible: true, reason: 'Qualified' };
         }
 
-        function showRealResults() {
+        function showResults() {
             document.getElementById('processing-step').classList.add('hidden');
             document.getElementById('results-step').classList.remove('hidden');
-            
+
             // Update stats
             const totalTTV = realMatches.reduce((sum, match) => sum + match.advisor.totalTTV, 0);
-            const topPrefCount = realMatches.filter(match => match.preferenceRank && match.preferenceRank <= 3).length;
-            const eligibleCount = realMatches.filter(match => match.score.eligible).length;
-            
+            const topPrefCount = realMatches.filter(match => match.preferenceRank <= 3).length;
+
             document.getElementById('results-title').textContent = `${realMatches.length} Matches Generated`;
             document.getElementById('pref-stat').textContent = realMatches.length > 0 ? `${Math.round((topPrefCount / realMatches.length) * 100)}%` : '0%';
             document.getElementById('ttv-stat').textContent = `${Math.round(totalTTV / 1000000)}M`;
-            document.getElementById('qual-stat').textContent = realMatches.length > 0 ? `${Math.round((eligibleCount / realMatches.length) * 100)}%` : '0%';
-            
+            document.getElementById('qual-stat').textContent = '100%';
+
             // Populate matches
             const matchesList = document.getElementById('matches-list');
-            if (realMatches.length === 0) {
-                matchesList.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #6c757d;">
-                        <p>No matches found. This might be due to:</p>
-                        <ul style="text-align: left; margin-top: 1rem;">
-                            <li>Missing TTV data for advisors</li>
-                            <li>No advisor preferences found</li>
-                            <li>All advisors already attended their preferred conferences</li>
-                        </ul>
-                        <p style="margin-top: 1rem;">Check the debug info above for more details.</p>
+            matchesList.innerHTML = realMatches.map((match, i) => `
+                <div class="match-item">
+                    <div style="flex: 1;">
+                        <div class="advisor-info">#${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
+                        <div class="conference-location">${match.conference.Location} • ${match.conference.Dates}</div>
+                        ${match.advisor.notes ? `<div style="color: #64748b; font-size: 0.75rem; margin-top: 0.5rem; font-style: italic;">${match.advisor.notes.substring(0, 80)}...</div>` : ''}
                     </div>
-                `;
-                return;
-            }
-            
-            matchesList.innerHTML = realMatches.map((match, i) => {
-                const dbData = conferenceDatabase[match.conference.Conference];
-                const location = dbData ? dbData.location : (match.conference.Location || 'Location TBD');
-                const dates = dbData ? dbData.dates : 'Dates TBD';
-                
-                return `
-                    <div class="match-item">
-                        <div style="flex: 1;">
-                            <div class="advisor-info">#${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
-                            <div class="conference-location">${location} • ${dates}</div>
-                            ${match.advisor.notes ? `<div class="advisor-notes">${match.advisor.notes.substring(0, 80)}...</div>` : ''}
-                        </div>
-                        <div class="ttv-info">
-                            <div class="ttv-amount">${match.advisor.totalTTV.toLocaleString()}</div>
-                            <div class="preference-rank">${match.preferenceRank ? `#${match.preferenceRank} preference` : 'Not ranked'}</div>
-                            <div class="score-badge">
-                                Score: ${Math.round(match.score.total)}/100
-                            </div>
-                        </div>
+                    <div class="ttv-info">
+                        <div class="ttv-amount">${match.advisor.totalTTV.toLocaleString()}</div>
+                        <div class="preference-rank">#${match.preferenceRank} preference</div>
+                        <div class="score-badge">Score: ${Math.round(match.score.total)}/100</div>
                     </div>
-                `;
-            }).join('');.advisor.notes ? `<div style="color: #6c757d; font-size: 0.75rem; font-style: italic;">${match.advisor.notes.substring(0, 60)}...</div>` : ''}
-                        </div>
-                        <div class="ttv-info">
-                            <div>${match.advisor.totalTTV.toLocaleString()}</div>
-                            <div>${match.preferenceRank ? `#${match.preferenceRank} preference` : 'Not ranked'}</div>
-                            <div style="background: #f3f4f6; color: #374151; padding: 0.25rem 0.5rem; margin-top: 0.25rem; border: 1px solid #d1d5db;">
-                                Score: ${Math.round(match.score.total)}/100
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function downloadCSV(data, filename) {
-            const blob = new Blob([data], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+                </div>
+            `).join('');
         }
 
         function downloadMatches() {
-            if (realMatches.length === 0) {
-                alert('No matches to download. Please run the matching algorithm first.');
-                return;
-            }
-            
-            const csvContent = realMatches.map((match, i) => {
-                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
-                return [
-                    i + 1,
-                    match.advisor.id,
-                    match.conference.Conference,
-                    match.advisor.totalTTV,
-                    pref ? pref.ranking : 'Not ranked',
-                    Math.round(match.score.total),
-                    match.conference.Location || 'TBD',
-                    match.advisor.notes.replace(/,/g, ';') // Replace commas to avoid CSV issues
-                ].join(',');
-            }).join('\n');
-            
-            const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location,Notes\n';
-            downloadCSV(header + csvContent, 'fora_conference_matches_real.csv');
+            if (realMatches.length === 0) return;
+
+            const csvContent = realMatches.map((match, i) => 
+                [i + 1, match.advisor.id, match.conference.Conference, match.advisor.totalTTV, match.preferenceRank, Math.round(match.score.total), match.conference.Location, match.conference.Dates, match.advisor.notes.replace(/,/g, ';')].join(',')
+            ).join('\n');
+
+            const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location,Dates,Notes\n';
+            downloadCSV(header + csvContent, 'fora_conference_matches.csv');
         }
 
         function downloadEmails() {
-            if (realMatches.length === 0) {
-                alert('No matches to download. Please run the matching algorithm first.');
-                return;
-            }
-            
+            if (realMatches.length === 0) return;
+
             const emailTemplates = realMatches.map((match) => {
                 const tier = match.advisor.totalTTV >= 2000000 ? 'Premium ($2M+)' : 
                              match.advisor.totalTTV >= 1000000 ? 'Professional ($1M+)' : 'Rising Star';
                 
-                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
                 const conference = conferenceDatabase[match.conference.Conference] || {
                     description: `An exclusive conference focused on ${match.conference.Conference}.`,
-                    dates: "Dates TBD",
-                    location: match.conference.Location || "Location TBD"
+                    dates: match.conference.Dates,
+                    location: match.conference.Location
                 };
                 
                 const emailBody = `Dear Advisor ${match.advisor.id},
@@ -1297,7 +867,7 @@ CONFERENCE DETAILS:
 
 WHY THIS IS PERFECT FOR YOU:
 • Your ${tier} status with ${match.advisor.totalTTV.toLocaleString()} TTV qualifies you for this premium event
-• ${pref ? `This was your #${pref.ranking} preference choice - excellent alignment!` : 'This conference aligns perfectly with your business focus and expertise'}
+• This was your #${match.preferenceRank} preference choice - excellent alignment!
 • The conference focus matches your expertise and client portfolio
 • Excellent networking opportunities with peers in your market segment
 
@@ -1314,9 +884,23 @@ The Fora Conference Team`;
             }).join('\n');
             
             const emailHeader = 'Advisor ID,Email Subject,Email Body\n';
-            downloadCSV(emailHeader + emailTemplates, 'fora_conference_emails_real.csv');
+            downloadCSV(emailHeader + emailTemplates, 'fora_conference_emails.csv');
         }
+
+        function downloadCSV(data, filename) {
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize conferences section on page load
+        populateConferences();
     </script>
 </body>
 </html>
-
