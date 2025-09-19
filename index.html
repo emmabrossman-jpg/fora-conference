@@ -423,13 +423,13 @@
                 <div class="upload-section">
                     <h3>Upload Advisor Data File</h3>
                     <p>Upload your Excel file containing advisor preferences and TTV data.<br>
-                    <small style="color: #64748b;">File should include: Advisor Preferences sheet, Advisor 12 month trailing TTV sheet, and optionally Geo Values sheet</small></p>
+                    <small style="color: #666666;">File should have "Sheet1" with advisor data and "Sheet2" with geographic TTV breakdown</small></p>
                     <input type="file" id="file-input" accept=".xlsx,.xls" style="display: none;">
                     <button class="upload-button" onclick="document.getElementById('file-input').click()">
                         Choose Advisor Data File
                     </button>
                     <div style="margin-top: 2rem;">
-                        <button onclick="loadSampleData()" class="upload-button" style="background: linear-gradient(135deg, #475569 0%, #64748b 100%);">
+                        <button onclick="loadSampleData()" class="upload-button" style="background: #666666;">
                             Load Sample Data
                         </button>
                     </div>
@@ -799,24 +799,34 @@
                     const data = new Uint8Array(event.target.result);
                     const workbook = XLSX.read(data, {type: 'array'});
                     
-                    // Process advisor preferences
-                    const advisorSheet = workbook.Sheets['Advisor Preferences'];
+                    // Process the consolidated advisor data from Sheet1
+                    const advisorSheet = workbook.Sheets['Sheet1'] || workbook.Sheets['Advisor Preferences'];
+                    if (!advisorSheet) {
+                        throw new Error('Could not find advisor data sheet. Please ensure your file has either "Sheet1" or "Advisor Preferences" sheet.');
+                    }
+                    
                     const rawAdvisorData = XLSX.utils.sheet_to_json(advisorSheet, { header: 1 });
                     const headers = rawAdvisorData[0];
                     const advisorRows = rawAdvisorData.slice(1);
 
+                    // Find the TTV column (should be last column with TTV data)
+                    const ttvColumnIndex = headers.findIndex(header => 
+                        header && header.toString().toLowerCase().includes('ttv')
+                    ) || headers.length - 1;
+
                     const advisors = advisorRows.map(row => {
                         // Skip rows with missing advisor ID
-                        if (!row[1]) return null;
+                        if (!row[0]) return null;
                         
                         const advisor = {
-                            id: row[1],
-                            previousConference: row[2] === 'None!' ? null : row[2],
+                            id: row[0],
+                            previousConference: row[1] === 'None!' ? null : row[1],
                             preferences: [],
-                            notes: row[25] || ''
+                            notes: row[24] || '', // Notes column
+                            totalTTV: row[ttvColumnIndex] || 0
                         };
                         
-                        // Convert previousConference to string if it's a number, null if undefined
+                        // Handle previousConference data type issues
                         if (advisor.previousConference !== null) {
                             if (typeof advisor.previousConference === 'number') {
                                 advisor.previousConference = advisor.previousConference.toString();
@@ -825,9 +835,10 @@
                             }
                         }
                         
-                        const conferenceColumns = headers.slice(3, 22);
+                        // Process conference preference rankings (columns 2-21)
+                        const conferenceColumns = headers.slice(2, 22);
                         conferenceColumns.forEach((confName, index) => {
-                            const ranking = row[3 + index];
+                            const ranking = row[2 + index];
                             if (typeof ranking === 'number' && ranking >= 1 && ranking <= 5) {
                                 advisor.preferences.push({
                                     conference: confName,
@@ -838,35 +849,33 @@
                         
                         advisor.preferences.sort((a, b) => a.ranking - b.ranking);
                         return advisor;
-                    }).filter(advisor => advisor !== null); // Remove null entries
+                    }).filter(advisor => advisor !== null);
 
-                    // Process TTV data
-                    const ttvSheet = workbook.Sheets['Advisor 12 month trailing TTV'];
-                    const ttvRows = XLSX.utils.sheet_to_json(ttvSheet);
+                    // Build TTV map from the consolidated data
                     const ttvMap = {};
-                    ttvRows.forEach(row => {
-                        if (row['Advisor ID']) {
-                            ttvMap[row['Advisor ID']] = row['Commissionable Booking Value (12 Months)'] || 0;
+                    advisors.forEach(advisor => {
+                        if (advisor.id && advisor.totalTTV) {
+                            ttvMap[advisor.id] = advisor.totalTTV;
                         }
                     });
 
-                    // Process geo data
-                    const geoSheet = workbook.Sheets['Geo Values'];
+                    // Process geo data from Sheet2
+                    const geoSheet = workbook.Sheets['Sheet2'] || workbook.Sheets['Geo Values'];
                     const geoRows = geoSheet ? XLSX.utils.sheet_to_json(geoSheet) : [];
                     const geoMap = {};
                     geoRows.forEach(row => {
-                        if (row['Advisor ID']) {
-                            const id = row['Advisor ID'];
-                            if (!geoMap[id]) geoMap[id] = {};
+                        const advisorId = row['Advisor ID'];
+                        if (advisorId) {
+                            if (!geoMap[advisorId]) geoMap[advisorId] = {};
                             const country = row.Country;
                             const value = row['Commissionable Booking Value'] || 0;
-                            if (!geoMap[id][country]) geoMap[id][country] = 0;
-                            geoMap[id][country] += value;
+                            if (!geoMap[advisorId][country]) geoMap[advisorId][country] = 0;
+                            geoMap[advisorId][country] += value;
                         }
                     });
 
                     fileData = {
-                        advisors: advisors.filter(a => a.id),
+                        advisors: advisors,
                         ttv: ttvMap,
                         geo: geoMap,
                         conferences: []
@@ -875,12 +884,12 @@
                     // Enable processing
                     const processBtn = document.getElementById('process-btn');
                     processBtn.disabled = false;
-                    processBtn.textContent = '🚀 Generate Real Matches';
+                    processBtn.textContent = 'Generate Matches';
                     processBtn.style.background = '#2c2c2c';
 
                     document.getElementById('file-status').innerHTML = `
                         <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #10b981;">
-                            <p style="color: #065f46; font-weight: 500;">✅ File processed successfully!</p>
+                            <p style="color: #065f46; font-weight: 500;">File processed successfully!</p>
                             <p style="color: #047857; font-size: 0.875rem; margin-top: 0.5rem;">${fileData.advisors.length} advisors with ${Object.keys(fileData.ttv).length} TTV records</p>
                         </div>
                     `;
@@ -889,7 +898,7 @@
                     console.error('Error:', error);
                     document.getElementById('file-status').innerHTML = `
                         <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #dc2626;">
-                            <p style="color: #dc2626; font-weight: 500;">❌ Error reading file: ${error.message}</p>
+                            <p style="color: #dc2626; font-weight: 500;">Error reading file: ${error.message}</p>
                         </div>
                     `;
                 }
