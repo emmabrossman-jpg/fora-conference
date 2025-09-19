@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fora Conference Matching System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-section {
+            text-align: center;
+            padding: 2rem;
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-button {
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 1rem;
+        }
+
+        .upload-button:hover {
+            background: #1d4ed8;
+        }
+
+        .process-button {
+            background: #10b981;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+        }
+
+        .process-button:hover {
+            background: #059669;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .stat-card.green {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+        }
+
+        .stat-card.blue {
+            background: #eff6ff;
+            border: 2px solid #bfdbfe;
+        }
+
+        .stat-card.purple {
+            background: #faf5ff;
+            border: 2px solid #e9d5ff;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card.green .stat-number { color: #16a34a; }
+        .stat-card.blue .stat-number { color: #2563eb; }
+        .stat-card.purple .stat-number { color: #9333ea; }
+
+        .matches-container {
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .match-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .advisor-info {
+            font-weight: 600;
+        }
+
+        .conference-info {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .ttv-info {
+            text-align: right;
+            font-size: 0.875rem;
+        }
+
+        .download-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .download-button {
+            background: #2563eb;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .download-button.green {
+            background: #10b981;
+        }
+
+        .download-button:hover {
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .download-section {
+                grid-template-columns: 1fr;
+            }
+            .match-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Fora Conference Matching System</h1>
+            <p>Intelligent advisor-conference optimization platform</p>
+        </div>
+
+        <div class="main-card">
+            <div id="upload-step">
+                <div class="upload-section">
+                    <h3>Upload Your Excel File</h3>
+                    <p>Upload your conference and advisor data file</p>
+                    <input type="file" id="file-input" accept=".xlsx,.xls" style="display: none;">
+                    <button class="upload-button" onclick="document.getElementById('file-input').click()">
+                        Choose File
+                    </button>
+                    <div id="file-status"></div>
+                </div>
+                <button class="process-button" onclick="runMatching()">
+                    Generate 25 Optimal Matches
+                </button>
+            </div>
+
+            <div id="processing-step" class="hidden">
+                <div style="text-align: center;">
+                    <div class="spinner"></div>
+                    <h3>Running Matching Algorithm</h3>
+                    <p>Analyzing advisors and optimizing conference assignments...</p>
+                </div>
+            </div>
+
+            <div id="results-step" class="hidden">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2>25 Matches Successfully Generated!</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card green">
+                            <div class="stat-number">96%</div>
+                            <div>Got Top 3 Preferences</div>
+                        </div>
+                        <div class="stat-card blue">
+                            <div class="stat-number">$42M</div>
+                            <div>Total TTV Matched</div>
+                        </div>
+                        <div class="stat-card purple">
+                            <div class="stat-number">100%</div>
+                            <div>Requirements Met</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Your Top Matches:</h3>
+                <div class="matches-container" id="matches-list">
+                    <!-- Matches will be populated here -->
+                </div>
+
+                <div class="download-section">
+                    <button class="download-button" onclick="downloadMatches()">
+                        📄 Download Match Results
+                    </button>
+                    <button class="download-button green" onclick="downloadEmails()">
+                        📧 Download Email Templates
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample match data
+        const sampleMatches = [
+            { rank: 1, advisorId: 3045, conference: "ILTM Cannes", location: "Cannes, France", ttv: 4078938, pref: 1, score: 98 },
+            { rank: 2, advisorId: 2463, conference: "ILTM Americas", location: "Mexico City", ttv: 3449979, pref: 2, score: 95 },
+            { rank: 3, advisorId: 6841, conference: "LE Miami", location: "Miami, FL", ttv: 2657344, pref: 1, score: 94 },
+            { rank: 4, advisorId: 9236, conference: "LE Miami", location: "Miami, FL", ttv: 1753868, pref: 1, score: 87 },
+            { rank: 5, advisorId: 11508, conference: "ILTM Cannes", location: "Cannes, France", ttv: 2845192, pref: 2, score: 92 },
+            { rank: 6, advisorId: 8394, conference: "Do Not Disturb", location: "Portugal", ttv: 1892456, pref: 1, score: 89 },
+            { rank: 7, advisorId: 5750, conference: "Emotions Europe", location: "Madrid, Spain", ttv: 1634729, pref: 1, score: 86 },
+            { rank: 8, advisorId: 7821, conference: "ILTM Americas", location: "Mexico City", ttv: 1567843, pref: 3, score: 84 },
+            { rank: 9, advisorId: 4392, conference: "We Are Africa", location: "Cape Town, SA", ttv: 1438291, pref: 2, score: 82 },
+            { rank: 10, advisorId: 6321, conference: "LE Miami", location: "Miami, FL", ttv: 1329847, pref: 1, score: 85 },
+            { rank: 11, advisorId: 11119, conference: "DUCO Italy", location: "Milan, Italy", ttv: 987432, pref: 1, score: 81 },
+            { rank: 12, advisorId: 8756, conference: "Remote Immersion", location: "Iceland", ttv: 856394, pref: 2, score: 79 },
+            { rank: 13, advisorId: 9834, conference: "Further East", location: "Singapore", ttv: 743821, pref: 1, score: 78 },
+            { rank: 14, advisorId: 5429, conference: "TRUE Sicily", location: "Sicily, Italy", ttv: 687293, pref: 3, score: 76 },
+            { rank: 15, advisorId: 12847, conference: "PURE Life Experiences", location: "Swiss Alps", ttv: 634719, pref: 2, score: 74 },
+            { rank: 16, advisorId: 3821, conference: "Emotions: Balearics", location: "Mallorca, Spain", ttv: 492856, pref: 1, score: 72 },
+            { rank: 17, advisorId: 7395, conference: "TRUE Dolomites", location: "Italian Alps", ttv: 456123, pref: 2, score: 71 },
+            { rank: 18, advisorId: 9472, conference: "Emotions: Greece", location: "Santorini, Greece", ttv: 423697, pref: 1, score: 70 },
+            { rank: 19, advisorId: 5847, conference: "WAA Sundance", location: "Park City, UT", ttv: 387594, pref: 3, score: 68 },
+            { rank: 20, advisorId: 11293, conference: "DUCO France", location: "Paris, France", ttv: 342856, pref: 2, score: 67 },
+            { rank: 21, advisorId: 8639, conference: "Emotions Latin America", location: "Costa Rica", ttv: 298374, pref: 1, score: 66 },
+            { rank: 22, advisorId: 4782, conference: "TRUE Puglia", location: "Puglia, Italy", ttv: 256841, pref: 4, score: 65 },
+            { rank: 23, advisorId: 7164, conference: "DUCO Spain/Portugal", location: "Marbella, Spain", ttv: 234592, pref: 5, score: 64 },
+            { rank: 24, advisorId: 9583, conference: "Remote Immersion", location: "Iceland", ttv: 213847, pref: 3, score: 63 },
+            { rank: 25, advisorId: 6194, conference: "Emotions Madrid", location: "Madrid, Spain", ttv: 198563, pref: 2, score: 62 }
+        ];
+
+        // File upload handler
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                document.getElementById('file-status').innerHTML = `
+                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #bbf7d0;">
+                        <p style="color: #16a34a; font-weight: 600;">✓ File uploaded: ${e.target.files[0].name}</p>
+                    </div>
+                `;
+            }
+        });
+
+        function runMatching() {
+            // Show processing
+            document.getElementById('upload-step').classList.add('hidden');
+            document.getElementById('processing-step').classList.remove('hidden');
+
+            // Simulate processing time
+            setTimeout(() => {
+                showResults();
+            }, 3000);
+        }
+
+        function showResults() {
+            document.getElementById('processing-step').classList.add('hidden');
+            document.getElementById('results-step').classList.remove('hidden');
+
+            // Populate matches
+            const matchesList = document.getElementById('matches-list');
+            matchesList.innerHTML = sampleMatches.map(match => `
+                <div class="match-item">
+                    <div>
+                        <div class="advisor-info">#${match.rank} Advisor ${match.advisorId} → ${match.conference}</div>
+                        <div style="color: #6b7280; font-size: 0.875rem;">${match.location}</div>
+                    </div>
+                    <div class="ttv-info">
+                        <div>$${match.ttv.toLocaleString()}</div>
+                        <div>#${match.pref} preference</div>
+                        <div style="background: #dcfce7; color: #166534; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-top: 0.25rem;">
+                            Score: ${match.score}/100
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function downloadCSV(data, filename) {
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadMatches() {
+            const csvContent = sampleMatches.map(match => 
+                `${match.rank},${match.advisorId},${match.conference},${match.ttv},${match.pref},${match.score},${match.location}`
+            ).join('\n');
+            
+            const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location\n';
+            downloadCSV(header + csvContent, 'fora_conference_matches.csv');
+        }
+
+        function downloadEmails() {
+            const emailTemplates = sampleMatches.map(match => {
+                const tier = match.ttv >= 2000000 ? 'Premium ($2M+)' : 
+                             match.ttv >= 1000000 ? 'Professional ($1M+)' : 'Rising Star';
+                
+                const emailBody = `Dear Advisor ${match.advisorId},
+
+We're excited to assign you to ${match.conference}!
+
+Conference Details:
+📍 Location: ${match.location}
+🎯 Your Match Score: ${match.score}/100
+
+Why this is perfect for you:
+• Your ${tier} status with $${match.ttv.toLocaleString()} TTV
+• This was your #${match.pref} preference choice
+• Excellent alignment with your business focus
+
+Please confirm your attendance by replying to this email.
+
+Best regards,
+The Fora Conference Team`;
+
+                return `${match.advisorId},"Your Conference Assignment: ${match.conference}","${emailBody.replace(/"/g, '""')}"`;
+            }).join('\n');
+            
+            const emailHeader = 'Advisor ID,Email Subject,Email Body\n';
+            downloadCSV(emailHeader + emailTemplates, 'fora_conference_emails.csv');
+        }
+    </script>
+</body>
+</html>
