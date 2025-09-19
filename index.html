@@ -14,7 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: #fafbfc;
             min-height: 100vh;
             padding: 2rem;
         }
@@ -31,30 +31,29 @@
 
         .header h1 {
             font-size: 2.5rem;
-            font-weight: 800;
-            color: #212529;
+            font-weight: 600;
+            color: #1a1d29;
             margin-bottom: 1rem;
         }
 
         .header p {
             font-size: 1.125rem;
-            color: #6c757d;
+            color: #6b7280;
             margin-bottom: 2rem;
         }
 
         .algorithm-section {
             background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
             padding: 2rem;
             margin-bottom: 2rem;
-            border-left: 4px solid #007bff;
         }
 
         .algorithm-section h2 {
-            color: #212529;
+            color: #1a1d29;
             margin-bottom: 1rem;
             font-size: 1.5rem;
+            font-weight: 600;
         }
 
         .algorithm-grid {
@@ -65,40 +64,38 @@
         }
 
         .algorithm-card {
-            background: #f8f9fa;
+            background: #f9fafb;
             padding: 1.5rem;
-            border-radius: 0.5rem;
-            border-left: 3px solid #007bff;
+            border: 1px solid #e5e7eb;
         }
 
         .algorithm-card h3 {
-            color: #007bff;
+            color: #374151;
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         .algorithm-card p {
-            color: #495057;
+            color: #6b7280;
             font-size: 0.9rem;
             line-height: 1.5;
         }
 
         .scoring-formula {
-            background: #e7f3ff;
-            border: 1px solid #b3d9ff;
-            border-radius: 0.5rem;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
             padding: 1rem;
             margin-top: 1rem;
             font-family: monospace;
-            color: #004085;
+            color: #374151;
             text-align: center;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .main-card {
             background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
             padding: 2rem;
             margin-bottom: 2rem;
         }
@@ -106,35 +103,32 @@
         .upload-section {
             text-align: center;
             padding: 2rem;
-            border: 2px dashed #ced4da;
-            border-radius: 0.5rem;
+            border: 2px dashed #d1d5db;
             margin-bottom: 2rem;
         }
 
         .upload-button {
-            background: #007bff;
+            background: #374151;
             color: white;
             padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             margin: 1rem;
             transition: background-color 0.2s;
         }
 
         .upload-button:hover {
-            background: #0056b3;
+            background: #1f2937;
         }
 
         .process-button {
-            background: #28a745;
+            background: #111827;
             color: white;
             padding: 1rem 2rem;
             border: none;
-            border-radius: 0.5rem;
             font-size: 1.125rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             display: block;
             margin: 2rem auto;
@@ -142,11 +136,11 @@
         }
 
         .process-button:hover {
-            background: #1e7e34;
+            background: #030712;
         }
 
         .process-button:disabled {
-            background: #6c757d;
+            background: #9ca3af;
             cursor: not-allowed;
         }
 
@@ -182,8 +176,8 @@
         }
 
         .matches-container {
-            background: #f8f9fa;
-            border-radius: 0.5rem;
+            background: #fafbfc;
+            border: 1px solid #e5e7eb;
             padding: 1.5rem;
             margin: 2rem 0;
             max-height: 400px;
@@ -194,17 +188,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 1.5rem;
             background: white;
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-            border-left: 3px solid #007bff;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 0.5rem;
         }
 
         .advisor-info {
-            font-weight: 600;
-            color: #212529;
+            font-weight: 500;
+            color: #1a1d29;
         }
 
         .ttv-info {
@@ -220,22 +212,17 @@
         }
 
         .download-button {
-            background: #007bff;
+            background: #374151;
             color: white;
             padding: 1rem;
             border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s;
         }
 
-        .download-button.green {
-            background: #28a745;
-        }
-
         .download-button:hover {
-            opacity: 0.9;
+            background: #1f2937;
         }
 
         .hidden {
@@ -245,8 +232,8 @@
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid #e9ecef;
-            border-top: 4px solid #007bff;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #374151;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 2rem auto;
@@ -258,12 +245,12 @@
         }
 
         .debug-info {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 0.5rem;
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
             padding: 1rem;
             margin: 1rem 0;
             font-size: 0.875rem;
+            color: #92400e;
         }
 
         @media (max-width: 768px) {
@@ -366,7 +353,7 @@
                     <button class="download-button" onclick="downloadMatches()">
                         📄 Download Match Results
                     </button>
-                    <button class="download-button green" onclick="downloadEmails()">
+                    <button class="download-button" onclick="downloadEmails()">
                         📧 Download Email Templates
                     </button>
                 </div>
@@ -378,28 +365,30 @@
         let fileData = null;
         let realMatches = [];
 
-        // Conference details with descriptions
-        const conferenceDetails = {
-            "ILTM Cannes": { description: "The world's leading luxury travel trade show, featuring exclusive networking opportunities with top-tier suppliers and buyers in the luxury travel sector.", dates: "December 1-4, 2025", location: "Cannes, France" },
-            "ILTM Americas": { description: "The premier luxury travel event for the Americas, connecting regional specialists with international luxury travel suppliers.", dates: "September 2-5, 2025", location: "Mexico City, Mexico" },
-            "LE Miami": { description: "Luxury Exchange Miami brings together the most influential luxury travel advisors and suppliers for an intensive networking experience.", dates: "February 10-13, 2026", location: "Miami, FL" },
-            "Do Not Disturb": { description: "An exclusive wellness and retreat-focused conference for advisors specializing in transformative and mindful travel experiences.", dates: "April 20-23, 2026", location: "Portugal" },
-            "Emotions Europe": { description: "A conference focused on European travel specialization, featuring cultural immersion and authentic European travel experiences.", dates: "May 15-18, 2026", location: "Madrid, Spain" },
-            "We Are Africa": { description: "The definitive African travel showcase, connecting advisors with authentic safari and cultural experiences across the continent.", dates: "July 8-11, 2026", location: "Cape Town, South Africa" },
-            "DUCO Italy": { description: "An exclusive Italy-focused conference for advisors with significant Italian market expertise and client base.", dates: "March 23-27, 2026", location: "Milan, Italy" },
-            "Remote Immersion": { description: "Specializing in off-the-beaten-path and adventure travel, perfect for advisors booking unique remote destinations.", dates: "August 12-15, 2026", location: "Iceland" },
-            "Further East": { description: "Asia-Pacific travel conference focusing on emerging destinations and luxury experiences across Southeast Asia.", dates: "October 5-8, 2026", location: "Singapore" },
-            "TRUE Sicily": { description: "An intimate conference showcasing authentic Sicilian culture, cuisine, and luxury accommodations.", dates: "June 14-17, 2026", location: "Sicily, Italy" },
-            "PURE Life Experiences": { description: "Focusing on experiential and transformative luxury travel, emphasizing unique life-changing experiences.", dates: "November 18-21, 2026", location: "Swiss Alps" },
-            "Emotions: Balearics": { description: "Showcasing the luxury side of Spain's Balearic Islands, featuring exclusive resorts and yacht experiences.", dates: "May 28-31, 2026", location: "Mallorca, Spain" },
-            "TRUE Dolomites": { description: "Mountain luxury and alpine adventure conference set in Italy's stunning Dolomites region.", dates: "September 15-18, 2026", location: "Italian Alps" },
-            "Emotions: Greece": { description: "Greek island luxury travel conference featuring yacht charters, private villa experiences, and cultural immersion.", dates: "June 5-8, 2026", location: "Santorini, Greece" },
-            "WAA Sundance": { description: "Winter luxury travel conference coinciding with Sundance Film Festival, focusing on US mountain destinations.", dates: "January 20-23, 2026", location: "Park City, Utah" },
-            "DUCO France": { description: "Exclusive French market conference for advisors with substantial France booking volume and expertise.", dates: "November 2-6, 2026", location: "Paris, France" },
-            "Emotions Latin America": { description: "Central and South American travel showcase emphasizing adventure, culture, and eco-luxury experiences.", dates: "March 8-11, 2026", location: "Costa Rica" },
-            "TRUE Puglia": { description: "Southern Italian cultural and culinary conference showcasing Puglia's authentic charm and luxury properties.", dates: "April 12-15, 2026", location: "Puglia, Italy" },
-            "DUCO Spain/Portugal": { description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence.", dates: "October 19-23, 2026", location: "Marbella, Spain" },
-            "Emotions Madrid": { description: "Spanish mainland cultural conference focusing on art, cuisine, and luxury city experiences.", dates: "June 1-4, 2026", location: "Madrid, Spain" }
+        // Complete conference database with all details
+        const conferenceDatabase = {
+            "DUCO Italy": { location: "Milan, Italy", dates: "Mar 23–27, 2026", description: "Exclusive Italy-focused conference for advisors with significant Italian market expertise." },
+            "DUCO Portugal/Spain": { location: "Marbella, Spain", dates: "Oct 19–23, 2026", description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence." },
+            "DUCO Spain/Portugal": { location: "Marbella, Spain", dates: "Oct 19–23, 2026", description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence." },
+            "DUCO France": { location: "Paris, France", dates: "Nov 2–6, 2026", description: "Exclusive French market conference for advisors with substantial France booking volume." },
+            "Emotions Latin America & Car": { location: "Costa Rica", dates: "Mar 8–11, 2026", description: "Central and South American travel showcase emphasizing adventure and eco-luxury." },
+            "Emotions Latin America": { location: "Costa Rica", dates: "Mar 8–11, 2026", description: "Central and South American travel showcase emphasizing adventure and eco-luxury." },
+            "Emotions Europe": { location: "Madrid, Spain", dates: "May 15–18, 2026", description: "European travel specialization conference featuring cultural immersion experiences." },
+            "Emotions Madrid": { location: "Madrid, Spain", dates: "Jun 1–4, 2026", description: "Spanish mainland cultural conference focusing on art, cuisine, and luxury city experiences." },
+            "Emotions: Balearics": { location: "Mallorca, Spain", dates: "May 28–31, 2026", description: "Luxury Balearic Islands conference featuring exclusive resorts and yacht experiences." },
+            "Emotions: Greece": { location: "Santorini, Greece", dates: "Jun 5–8, 2026", description: "Greek island luxury travel conference featuring yacht charters and villa experiences." },
+            "ILTM Americas": { location: "Mexico City, Mexico", dates: "Sep 2–5, 2025", description: "Premier luxury travel event for the Americas connecting regional specialists." },
+            "ILTM Cannes": { location: "Cannes, France", dates: "Dec 1–4, 2025", description: "World's leading luxury travel trade show with exclusive networking opportunities." },
+            "Remote Immersion": { location: "Iceland", dates: "Aug 12–15, 2026", description: "Specializing in off-the-beaten-path and adventure travel destinations." },
+            "Further East": { location: "Singapore", dates: "Oct 5–8, 2026", description: "Asia-Pacific travel conference focusing on emerging destinations and luxury experiences." },
+            "We Are Africa": { location: "Cape Town, South Africa", dates: "Jul 8–11, 2026", description: "Definitive African travel showcase connecting advisors with authentic safari experiences." },
+            "WAA Sundance": { location: "Park City, Utah", dates: "Jan 20–23, 2026", description: "Winter luxury travel conference coinciding with Sundance Film Festival." },
+            "LE Miami": { location: "Miami, FL", dates: "Feb 10–13, 2026", description: "Luxury Exchange Miami for influential luxury travel advisors and suppliers." },
+            "PURE Life Experiences": { location: "Swiss Alps", dates: "Nov 18–21, 2026", description: "Focusing on experiential and transformative luxury travel experiences." },
+            "Do Not Disturb": { location: "Portugal", dates: "Apr 20–23, 2026", description: "Exclusive wellness and retreat-focused conference for transformative travel." },
+            "TRUE Sicily": { location: "Sicily, Italy", dates: "Jun 14–17, 2026", description: "Intimate conference showcasing authentic Sicilian culture and cuisine." },
+            "TRUE Dolomites": { location: "Italian Alps", dates: "Sep 15–18, 2026", description: "Mountain luxury and alpine adventure conference in Italy's Dolomites." },
+            "TRUE Puglia": { location: "Puglia, Italy", dates: "Apr 12–15, 2026", description: "Southern Italian cultural and culinary conference showcasing Puglia's charm." }
         };
 
         // File upload handler with real Excel processing
@@ -476,8 +465,8 @@
                 processBtn.style.background = '#28a745';
                 
                 document.getElementById('file-status').innerHTML = `
-                    <div style="background: #d4edda; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #28a745;">
-                        <p style="color: #28a745; font-weight: 600;">✓ File processed successfully!</p>
+                    <div style="background: #d1fae5; padding: 1rem; margin-top: 1rem; border: 1px solid #10b981;">
+                        <p style="color: #065f46; font-weight: 500;">✓ File processed successfully!</p>
                     </div>
                 `;
                 
@@ -603,11 +592,15 @@
             
             // Set capacity for requested conferences
             requestedConferences.forEach(confName => {
+                // Find conference data from Excel or use database
                 const confData = conferences.find(c => c.Conference === confName);
+                const dbData = conferenceDatabase[confName];
+                
                 conferenceCapacity[confName] = confData ? (confData.Capacity || 6) : 6;
                 availableConferences.push({
                     Conference: confName,
-                    Location: confData ? confData.Location : 'TBD',
+                    Location: dbData ? dbData.location : (confData ? confData.Location : 'Location TBD'),
+                    Dates: dbData ? dbData.dates : 'Dates TBD',
                     Capacity: conferenceCapacity[confName]
                 });
             });
@@ -765,7 +758,7 @@
                         <div class="ttv-info">
                             <div>${match.advisor.totalTTV.toLocaleString()}</div>
                             <div>${match.preferenceRank ? `#${match.preferenceRank} preference` : 'Not ranked'}</div>
-                            <div style="background: #f8f9fa; color: #495057; padding: 0.25rem 0.5rem; border-radius: 0.125rem; margin-top: 0.25rem; border: 1px solid #dee2e6;">
+                            <div style="background: #f3f4f6; color: #374151; padding: 0.25rem 0.5rem; margin-top: 0.25rem; border: 1px solid #d1d5db;">
                                 Score: ${Math.round(match.score.total)}/100
                             </div>
                         </div>
@@ -821,7 +814,7 @@
                              match.advisor.totalTTV >= 1000000 ? 'Professional ($1M+)' : 'Rising Star';
                 
                 const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
-                const conference = conferenceDetails[match.conference.Conference] || {
+                const conference = conferenceDatabase[match.conference.Conference] || {
                     description: `An exclusive conference focused on ${match.conference.Conference}.`,
                     dates: "Dates TBD",
                     location: match.conference.Location || "Location TBD"
