@@ -988,8 +988,12 @@
                 return { eligible: false, reason: 'Conference not found in database' };
             }
 
-            // Check repeat attendance
-            if (advisor.previousConference && advisor.previousConference !== 'None!' && advisor.previousConference.toLowerCase() !== 'none') {
+            // Check repeat attendance - ensure previousConference exists and is a string
+            if (advisor.previousConference && 
+                typeof advisor.previousConference === 'string' && 
+                advisor.previousConference !== 'None!' && 
+                advisor.previousConference.toLowerCase() !== 'none') {
+                
                 const prevConf = advisor.previousConference.toLowerCase();
                 const currentConf = conf.toLowerCase();
                 
