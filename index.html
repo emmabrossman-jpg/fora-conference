@@ -806,12 +806,24 @@
                     const advisorRows = rawAdvisorData.slice(1);
 
                     const advisors = advisorRows.map(row => {
+                        // Skip rows with missing advisor ID
+                        if (!row[1]) return null;
+                        
                         const advisor = {
                             id: row[1],
                             previousConference: row[2] === 'None!' ? null : row[2],
                             preferences: [],
                             notes: row[25] || ''
                         };
+                        
+                        // Convert previousConference to string if it's a number, null if undefined
+                        if (advisor.previousConference !== null) {
+                            if (typeof advisor.previousConference === 'number') {
+                                advisor.previousConference = advisor.previousConference.toString();
+                            } else if (typeof advisor.previousConference === 'undefined') {
+                                advisor.previousConference = null;
+                            }
+                        }
                         
                         const conferenceColumns = headers.slice(3, 22);
                         conferenceColumns.forEach((confName, index) => {
@@ -826,7 +838,7 @@
                         
                         advisor.preferences.sort((a, b) => a.ranking - b.ranking);
                         return advisor;
-                    });
+                    }).filter(advisor => advisor !== null); // Remove null entries
 
                     // Process TTV data
                     const ttvSheet = workbook.Sheets['Advisor 12 month trailing TTV'];
