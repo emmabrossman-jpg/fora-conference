@@ -421,11 +421,12 @@
         <div class="main-card">
             <div id="upload-step">
                 <div class="upload-section">
-                    <h3>Upload Your Excel File</h3>
-                    <p>Upload your conference and advisor data file</p>
+                    <h3>Upload Advisor Data File</h3>
+                    <p>Upload your Excel file containing advisor preferences and TTV data.<br>
+                    <small style="color: #64748b;">File should include: Advisor Preferences sheet, Advisor 12 month trailing TTV sheet, and optionally Geo Values sheet</small></p>
                     <input type="file" id="file-input" accept=".xlsx,.xls" style="display: none;">
                     <button class="upload-button" onclick="document.getElementById('file-input').click()">
-                        Choose File
+                        Choose Advisor Data File
                     </button>
                     <div style="margin-top: 2rem;">
                         <button onclick="loadSampleData()" class="upload-button" style="background: linear-gradient(135deg, #475569 0%, #64748b 100%);">
@@ -435,7 +436,7 @@
                     <div id="file-status"></div>
                 </div>
                 <button class="process-button" id="process-btn" onclick="runMatching()" disabled>
-                    Upload Data First
+                    Upload Advisor Data First
                 </button>
             </div>
 
@@ -487,28 +488,221 @@
         let fileData = null;
         let realMatches = [];
 
-        // Complete conference database with all details in date order
+        // Complete conference database with all details, requirements, and capacity
         const conferenceDatabase = {
-            "WAA Sundance": { location: "Park City, Utah", dates: "Jan 20–23, 2026", description: "Winter luxury travel conference coinciding with Sundance Film Festival." },
-            "LE Miami": { location: "Miami, FL", dates: "Feb 10–13, 2026", description: "Luxury Exchange Miami for influential luxury travel advisors and suppliers." },
-            "Emotions Latin America": { location: "Costa Rica", dates: "Mar 8–11, 2026", description: "Central and South American travel showcase emphasizing adventure and eco-luxury." },
-            "DUCO Italy": { location: "Milan, Italy", dates: "Mar 23–27, 2026", description: "Exclusive Italy-focused conference for advisors with significant Italian market expertise." },
-            "TRUE Puglia": { location: "Puglia, Italy", dates: "Apr 12–15, 2026", description: "Southern Italian cultural and culinary conference showcasing Puglia's charm." },
-            "Do Not Disturb": { location: "Portugal", dates: "Apr 20–23, 2026", description: "Exclusive wellness and retreat-focused conference for transformative travel." },
-            "Emotions Europe": { location: "Madrid, Spain", dates: "May 15–18, 2026", description: "European travel specialization conference featuring cultural immersion experiences." },
-            "Emotions: Balearics": { location: "Mallorca, Spain", dates: "May 28–31, 2026", description: "Luxury Balearic Islands conference featuring exclusive resorts and yacht experiences." },
-            "Emotions Madrid": { location: "Madrid, Spain", dates: "Jun 1–4, 2026", description: "Spanish mainland cultural conference focusing on art, cuisine, and luxury city experiences." },
-            "Emotions: Greece": { location: "Santorini, Greece", dates: "Jun 5–8, 2026", description: "Greek island luxury travel conference featuring yacht charters and villa experiences." },
-            "TRUE Sicily": { location: "Sicily, Italy", dates: "Jun 14–17, 2026", description: "Intimate conference showcasing authentic Sicilian culture and cuisine." },
-            "We Are Africa": { location: "Cape Town, South Africa", dates: "Jul 8–11, 2026", description: "Definitive African travel showcase connecting advisors with authentic safari experiences." },
-            "Remote Immersion": { location: "Iceland", dates: "Aug 12–15, 2026", description: "Specializing in off-the-beaten-path and adventure travel destinations." },
-            "ILTM Americas": { location: "Mexico City, Mexico", dates: "Sep 2–5, 2025", description: "Premier luxury travel event for the Americas connecting regional specialists." },
-            "TRUE Dolomites": { location: "Italian Alps", dates: "Sep 15–18, 2026", description: "Mountain luxury and alpine adventure conference in Italy's Dolomites." },
-            "Further East": { location: "Singapore", dates: "Oct 5–8, 2026", description: "Asia-Pacific travel conference focusing on emerging destinations and luxury experiences." },
-            "DUCO Spain/Portugal": { location: "Marbella, Spain", dates: "Oct 19–23, 2026", description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence." },
-            "DUCO France": { location: "Paris, France", dates: "Nov 2–6, 2026", description: "Exclusive French market conference for advisors with substantial France booking volume." },
-            "PURE Life Experiences": { location: "Swiss Alps", dates: "Nov 18–21, 2026", description: "Focusing on experiential and transformative luxury travel experiences." },
-            "ILTM Cannes": { location: "Cannes, France", dates: "Dec 1–4, 2025", description: "World's leading luxury travel trade show with exclusive networking opportunities." }
+            "DUCO Italy": { 
+                location: "Milan, Italy", 
+                dates: "Mar 23–27, 2026", 
+                description: "A niche, destination-oriented event highlighting the excellence of Italian hospitality. Focuses ONLY on travel products in Italy.",
+                capacity: 6,
+                requirements: {
+                    minTTV: 200000,
+                    geoRequirement: "Italy",
+                    geoMinTTV: 200000,
+                    minExperience: 3,
+                    repeatRule: "once every 3 years"
+                },
+                fee: "$375 EUR registration fee",
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "DUCO France": { 
+                location: "Paris, France", 
+                dates: "Nov 2–6, 2026", 
+                description: "A niche, destination-oriented event highlighting the excellence of French hospitality. Focuses ONLY on travel products in France.",
+                capacity: 6,
+                requirements: {
+                    minTTV: 200000,
+                    geoRequirement: "France",
+                    geoMinTTV: 200000,
+                    minExperience: 3,
+                    repeatRule: "once every 3 years"
+                },
+                fee: "$375 EUR registration fee",
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "DUCO Spain/Portugal": { 
+                location: "Marbella, Spain", 
+                dates: "Oct 19–23, 2026", 
+                description: "A niche, destination-oriented event highlighting Spanish & Portuguese hospitality. Focuses ONLY on travel products in Spain and Portugal.",
+                capacity: 2,
+                requirements: {
+                    minTTV: 200000,
+                    geoRequirement: "Spain/Portugal",
+                    geoMinTTV: 200000,
+                    minExperience: 3,
+                    repeatRule: "once every 3 years"
+                },
+                fee: "$375 EUR registration fee",
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "Emotions Madrid": { 
+                location: "Madrid, Spain", 
+                dates: "Jun 1–4, 2026", 
+                description: "European travel product conference with rich history, scenic capital cities. Great generalist European opportunity.",
+                capacity: 6,
+                requirements: {},
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "Emotions Latin America & Caribbean": { 
+                location: "Buenos Aires, Argentina", 
+                dates: "Apr 20–23, 2026", 
+                description: "Gathering of exclusive luxury experiences from Latin America and The Caribbean. Great for advisors looking to expand knowledge in these regions.",
+                capacity: 4,
+                requirements: {},
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "Emotions: Balearics": { 
+                location: "Balearic Islands, Spain", 
+                dates: "Late Sep/Early Oct 2026", 
+                description: "Maestro Event focusing solely on Balearic Islands. Immersive experience for specialists.",
+                capacity: 1,
+                requirements: {
+                    geoRequirement: "Balearics",
+                    geoMinPercent: 15
+                },
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "Emotions: Greece": { 
+                location: "Athens, Greece", 
+                dates: "Early Oct 2026", 
+                description: "Original Maestro Event focusing solely on Greek exhibitors. Immersive Greek experience for specialists.",
+                capacity: 3,
+                requirements: {
+                    geoRequirement: "Greece",
+                    geoMinPercent: 15
+                },
+                notes: "Hosted stay included, flights at own expense"
+            },
+            "ILTM Americas": { 
+                location: "Baha Mar, Bahamas", 
+                dates: "Early Oct 2026", 
+                description: "Great first conference! Accessible alternative to Virtuoso Travel Week with same vendors but more low-key atmosphere. Fantastic generalist conference.",
+                capacity: 35,
+                requirements: {},
+                fee: "$250 USD + up to $700 flight reimbursement",
+                notes: "Perfect for new advisors building travel knowledge"
+            },
+            "ILTM Cannes": { 
+                location: "Cannes, France", 
+                dates: "Dec 1–4, 2025", 
+                description: "Flagship ILTM event. World's leading luxury travel trade show with exclusive networking opportunities.",
+                capacity: 13,
+                requirements: {
+                    minTTV: 2000000,
+                    minExperience: 1
+                },
+                fee: "$250 USD",
+                notes: "Hosted accommodation, flights at own expense"
+            },
+            "TRUE Sicily": { 
+                location: "Palermo, Sicily", 
+                dates: "Nov 2026", 
+                description: "Invitation-only luxury trade show for authentic, high-end Sicilian hospitality brands. Regional focus only.",
+                capacity: 10,
+                requirements: {
+                    geoRequirement: "Italy/Sicily"
+                },
+                notes: "Hosted stay included, optional pre/post FAMs available"
+            },
+            "TRUE Dolomites": { 
+                location: "Alta Badia, Dolomites", 
+                dates: "Jun 2026", 
+                description: "Invitation-only luxury trade show for Dolomites and surrounding areas. Regional mountain luxury focus.",
+                capacity: 10,
+                requirements: {
+                    geoRequirement: "Italy/Dolomites"
+                },
+                notes: "Hosted stay included, optional pre/post FAMs available"
+            },
+            "TRUE Puglia": { 
+                location: "Puglia, Italy", 
+                dates: "Apr 13–16, 2026", 
+                description: "Invitation-only luxury trade show for Puglia and South Italy. Regional focus on authentic hospitality brands.",
+                capacity: 10,
+                requirements: {
+                    geoRequirement: "Italy/Puglia"
+                },
+                notes: "Hosted stay included, optional pre/post FAMs available"
+            },
+            "We Are Africa": { 
+                location: "Cape Town, South Africa", 
+                dates: "May 4–8, 2026", 
+                description: "World's most vibrant gathering of luxury African travel brands. For advisors already selling Africa at high level - requires 3 supplier references.",
+                capacity: 5,
+                requirements: {
+                    geoRequirement: "Africa",
+                    supplierReferences: 3
+                },
+                fee: "249 GBP commitment fee",
+                notes: "Not for beginners - enhances existing Africa knowledge"
+            },
+            "We Are Africa Sundance": { 
+                location: "Sundance Mountain Resort, Utah", 
+                dates: "Early Oct 2026", 
+                description: "Stateside edition for advisors with established business wanting to book Africa. Combines thought-leadership with business meetings.",
+                capacity: 4,
+                requirements: {
+                    establishedBusiness: true
+                },
+                fee: "699 GBP plus flights",
+                notes: "Good for advisors new to Africa with established client base"
+            },
+            "LE Miami": { 
+                location: "Miami, Florida", 
+                dates: "Jun 1–4, 2026", 
+                description: "Lifestyle and hotel, high-end contemporary travel conference. Forward-thinking, senior-level buyers for creative class travelers.",
+                capacity: 10,
+                requirements: {
+                    minTTV: 1000000,
+                    supplierReferences: 3
+                },
+                notes: "Fun conference with lots of content. Global reach focus."
+            },
+            "PURE Life Experiences": { 
+                location: "Marrakech, Morocco", 
+                dates: "Sep 8–11, 2026", 
+                description: "World's leading experiential travel show. Exceptional generalist conference for advisors operating at the highest level.",
+                capacity: 4,
+                requirements: {
+                    supplierReferences: 3,
+                    highEndExperiential: true,
+                    notAttendedRecently: "3 years"
+                },
+                fee: "429 GBP plus flights",
+                notes: "For top agents selling high-end experiential travel globally"
+            },
+            "Do Not Disturb": { 
+                location: "Puglia, Italy", 
+                dates: "Nov 10–14, 2026", 
+                description: "Global private travel community for Ultra High Net Worth clients. Focus on space, seclusion, and sustainability.",
+                capacity: 4,
+                requirements: {
+                    clientType: "UHNW",
+                    privateExclusive: true
+                },
+                notes: "Deep dive conference with fewer, longer meetings"
+            },
+            "Further East": { 
+                location: "Seminyak, Bali", 
+                dates: "Early Nov 2026", 
+                description: "APAC's most innovative high-end travel trade show. Four-day ideas festival focused on future of APAC luxury travel.",
+                capacity: 4,
+                requirements: {
+                    geoRequirement: "Asia-Pacific"
+                },
+                notes: "Exceptional opportunity for Asia-focused advisors"
+            },
+            "Remote Immersion": { 
+                location: "Boquete, Panama", 
+                dates: "May 4–8, 2026", 
+                description: "Community bringing together creative Latin America hoteliers with innovative travel designers. Adventure-focused, not luxury oriented.",
+                capacity: 6,
+                requirements: {
+                    geoRequirement: "Latin America",
+                    adventureFocus: true
+                },
+                notes: "Immersive adventure experience, good existing Latin America knowledge helpful"
+            }
         };
 
         // Populate conferences section
@@ -523,11 +717,20 @@
 
             conferencesList.innerHTML = sortedConferences.map(([name, details]) => `
                 <div class="conference-card">
-                    <div class="conference-name">${name}</div>
+                    <div class="conference-name">${name} (${details.capacity} spots)</div>
                     <div class="conference-details">
                         <div style="margin-bottom: 0.5rem;"><strong>📅 ${details.dates}</strong></div>
                         <div style="margin-bottom: 0.5rem;"><strong>📍 ${details.location}</strong></div>
-                        <div>${details.description}</div>
+                        <div style="margin-bottom: 0.5rem;">${details.description}</div>
+                        ${details.fee ? `<div style="margin-bottom: 0.5rem; color: #059669;"><strong>💰 ${details.fee}</strong></div>` : ''}
+                        ${Object.keys(details.requirements || {}).length > 0 ? 
+                            `<div style="margin-top: 0.5rem; font-size: 0.8rem; color: #dc2626;">
+                                <strong>Requirements:</strong> 
+                                ${details.requirements.minTTV ? `$${(details.requirements.minTTV/1000).toFixed(0)}K+ TTV` : ''}
+                                ${details.requirements.geoRequirement ? `, ${details.requirements.geoRequirement} focus` : ''}
+                                ${details.requirements.geoMinPercent ? `, ${details.requirements.geoMinPercent}% regional business` : ''}
+                            </div>` : ''
+                        }
                     </div>
                 </div>
             `).join('');
@@ -535,18 +738,18 @@
 
         // Load sample data function
         function loadSampleData() {
-            // Create sample advisor data
+            // Create sample advisor data with realistic conference preferences
             const sampleAdvisors = [
-                { id: 3045, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'LE Miami', ranking: 2}], previousConference: null, notes: 'Luxury specialist with strong European network' },
-                { id: 2463, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'DUCO Italy', ranking: 2}], previousConference: null, notes: 'High-volume Americas advisor' },
-                { id: 6841, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'Do Not Disturb', ranking: 2}], previousConference: 'ILTM Cannes', notes: 'Strong luxury leisure focus' },
-                { id: 9236, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'ILTM Cannes', ranking: 2}], previousConference: null, notes: 'Can\'t travel Feb-June. LE is the only first half conference I can attend.' },
-                { id: 11508, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}], previousConference: null, notes: 'European specialist with luxury focus' },
-                { id: 8394, preferences: [{conference: 'Do Not Disturb', ranking: 1}, {conference: 'Emotions Europe', ranking: 2}], previousConference: null, notes: 'Wellness and retreat specialist' },
-                { id: 5750, preferences: [{conference: 'Emotions Europe', ranking: 1}, {conference: 'LE Miami', ranking: 2}], previousConference: null, notes: 'European market focus' },
-                { id: 7821, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'We Are Africa', ranking: 2}], previousConference: null, notes: 'Americas regional specialist' },
-                { id: 4392, preferences: [{conference: 'We Are Africa', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}], previousConference: null, notes: 'Africa and safari expert' },
-                { id: 6321, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'ILTM Cannes', ranking: 2}], previousConference: null, notes: 'Luxury beach and resort specialist' }
+                { id: 3045, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO France', ranking: 3}], previousConference: null, notes: 'Luxury specialist with strong European network. 5+ years experience.' },
+                { id: 2463, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'DUCO Italy', ranking: 2}, {conference: 'LE Miami', ranking: 3}], previousConference: null, notes: 'High-volume Americas advisor with established Italian client base.' },
+                { id: 6841, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'Do Not Disturb', ranking: 2}, {conference: 'ILTM Cannes', ranking: 3}], previousConference: 'ILTM Americas', notes: 'Strong luxury leisure focus with UHNW clients.' },
+                { id: 9236, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'ILTM Cannes', ranking: 2}], previousConference: null, notes: 'Can\'t travel Feb-June due to family commitments. LE is only first half conference I can attend.' },
+                { id: 11508, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'PURE Life Experiences', ranking: 3}], previousConference: null, notes: 'European specialist with luxury focus and experiential expertise.' },
+                { id: 8394, preferences: [{conference: 'Do Not Disturb', ranking: 1}, {conference: 'Emotions Madrid', ranking: 2}], previousConference: null, notes: 'Wellness and retreat specialist with UHNW private travel expertise.' },
+                { id: 5750, preferences: [{conference: 'Emotions Madrid', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO Spain/Portugal', ranking: 3}], previousConference: null, notes: 'European market focus with strong Spanish/Portuguese expertise.' },
+                { id: 7821, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'We Are Africa', ranking: 2}], previousConference: null, notes: 'Americas regional specialist with emerging Africa interest.' },
+                { id: 4392, preferences: [{conference: 'We Are Africa', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'We Are Africa Sundance', ranking: 3}], previousConference: null, notes: 'Established advisor wanting to expand into African market.' },
+                { id: 6321, preferences: [{conference: 'Further East', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}], previousConference: null, notes: 'Asia-Pacific specialist focusing on luxury APAC experiences.' }
             ];
 
             const sampleTTV = {
@@ -554,10 +757,20 @@
                 8394: 1892456, 5750: 1634729, 7821: 1567843, 4392: 1438291, 6321: 1329847
             };
 
+            // Sample geographic TTV data to test requirements
+            const sampleGeoTTV = {
+                3045: { "France": 800000, "Italy": 300000, "Spain": 200000 },
+                2463: { "Italy": 650000, "Spain": 400000, "Portugal": 150000 },
+                6841: { "France": 400000, "Italy": 300000 },
+                5750: { "Spain": 450000, "Portugal": 250000, "Italy": 200000 },
+                8394: { "Italy": 300000, "Spain": 200000 },
+                6321: { "Asia": 800000, "Japan": 300000, "Thailand": 200000 }
+            };
+
             fileData = {
                 advisors: sampleAdvisors,
                 ttv: sampleTTV,
-                geo: {},
+                geo: sampleGeoTTV,
                 conferences: []
             };
 
@@ -702,6 +915,7 @@
                 }))
                 .sort((a, b) => b.totalTTV - a.totalTTV);
 
+            // Initialize conference capacities from database
             const conferenceCapacity = {};
             const requestedConferences = new Set();
             enrichedAdvisors.forEach(advisor => {
@@ -711,7 +925,8 @@
             });
 
             requestedConferences.forEach(confName => {
-                conferenceCapacity[confName] = 6; // Default capacity
+                const confData = conferenceDatabase[confName];
+                conferenceCapacity[confName] = confData ? confData.capacity : 6; // Use database capacity or default
             });
 
             const matches = [];
@@ -769,17 +984,23 @@
 
         function checkEligibility(advisor, conference) {
             const conf = conference.Conference;
+            const confData = conferenceDatabase[conf];
+            
+            if (!confData) {
+                return { eligible: false, reason: 'Conference not found in database' };
+            }
 
             // Check repeat attendance
             if (advisor.previousConference && advisor.previousConference !== 'None!' && advisor.previousConference.toLowerCase() !== 'none') {
                 const prevConf = advisor.previousConference.toLowerCase();
                 const currentConf = conf.toLowerCase();
                 
+                // Exact same conference
                 if (prevConf === currentConf) {
                     return { eligible: false, reason: 'Attended same conference last year' };
                 }
                 
-                // Check conference families
+                // Conference family restrictions
                 if (prevConf.includes('duco') && currentConf.includes('duco')) {
                     return { eligible: false, reason: 'Attended DUCO family conference last year' };
                 }
@@ -789,11 +1010,45 @@
                 if (prevConf.includes('emotions') && currentConf.includes('emotions')) {
                     return { eligible: false, reason: 'Attended Emotions family conference last year' };
                 }
+                if (prevConf.includes('true') && currentConf.includes('true')) {
+                    return { eligible: false, reason: 'Attended TRUE family conference last year' };
+                }
+                if (prevConf.includes('we are africa') && currentConf.includes('we are africa')) {
+                    return { eligible: false, reason: 'Attended We Are Africa family conference last year' };
+                }
             }
 
-            // TTV requirements
-            if (conf === 'ILTM Cannes' && advisor.totalTTV < 2000000) {
-                return { eligible: false, reason: `Total TTV: ${advisor.totalTTV.toLocaleString()} < $2M required` };
+            const requirements = confData.requirements || {};
+
+            // Check minimum TTV requirements
+            if (requirements.minTTV && advisor.totalTTV < requirements.minTTV) {
+                return { 
+                    eligible: false, 
+                    reason: `Total TTV: ${advisor.totalTTV.toLocaleString()} < ${requirements.minTTV.toLocaleString()} required` 
+                };
+            }
+
+            // Check geographic TTV requirements
+            if (requirements.geoRequirement && requirements.geoMinTTV) {
+                const geoTTV = advisor.geoTTV[requirements.geoRequirement] || 0;
+                if (geoTTV < requirements.geoMinTTV) {
+                    return { 
+                        eligible: false, 
+                        reason: `${requirements.geoRequirement} TTV: ${geoTTV.toLocaleString()} < ${requirements.geoMinTTV.toLocaleString()} required` 
+                    };
+                }
+            }
+
+            // Check geographic percentage requirements (for Emotions Maestro events)
+            if (requirements.geoRequirement && requirements.geoMinPercent) {
+                const geoTTV = advisor.geoTTV[requirements.geoRequirement] || 0;
+                const geoPercent = advisor.totalTTV > 0 ? (geoTTV / advisor.totalTTV) * 100 : 0;
+                if (geoPercent < requirements.geoMinPercent) {
+                    return { 
+                        eligible: false, 
+                        reason: `${requirements.geoRequirement} business: ${geoPercent.toFixed(1)}% < ${requirements.geoMinPercent}% required` 
+                    };
+                }
             }
 
             return { eligible: true, reason: 'Qualified' };
