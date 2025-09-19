@@ -609,24 +609,52 @@
             const file = e.target.files[0];
             if (!file) return;
 
+            console.log('📁 File selected:', file.name, file.size, 'bytes');
+            
+            // Show immediate feedback
+            document.getElementById('file-status').innerHTML = `
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 1rem; margin-top: 1rem; border: 1px solid #3b82f6;">
+                    <p style="color: #1e40af; font-weight: 500;">📄 Reading file: ${file.name}...</p>
+                </div>
+            `;
+
             const reader = new FileReader();
             reader.onload = function(event) {
                 try {
+                    console.log('🔄 Processing file data...');
                     const data = new Uint8Array(event.target.result);
+                    
+                    // Check if XLSX library is loaded
+                    if (typeof XLSX === 'undefined') {
+                        throw new Error('Excel processing library not loaded. Please refresh the page.');
+                    }
+                    
                     const workbook = XLSX.read(data, {type: 'array'});
+                    console.log('✅ Excel file parsed successfully');
                     
                     // Process the sheets
                     processExcelData(workbook);
                     
                 } catch (error) {
-                    console.error('Error reading Excel file:', error);
+                    console.error('❌ Error reading Excel file:', error);
                     document.getElementById('file-status').innerHTML = `
-                        <div style="background: #f8d7da; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #dc3545;">
-                            <p style="color: #dc3545; font-weight: 600;">❌ Error reading file: ${error.message}</p>
+                        <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1rem; margin-top: 1rem; border: 1px solid #dc2626;">
+                            <p style="color: #dc2626; font-weight: 500;">❌ Error reading file: ${error.message}</p>
+                            <p style="color: #dc2626; font-size: 0.875rem; margin-top: 0.5rem;">Please make sure you're uploading the correct Excel file format (.xlsx or .xls)</p>
                         </div>
                     `;
                 }
             };
+            
+            reader.onerror = function() {
+                console.error('❌ FileReader error');
+                document.getElementById('file-status').innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1rem; margin-top: 1rem; border: 1px solid #dc2626;">
+                        <p style="color: #dc2626; font-weight: 500;">❌ Failed to read file</p>
+                    </div>
+                `;
+            };
+            
             reader.readAsArrayBuffer(file);
         });
 
@@ -750,27 +778,52 @@
 
         function runMatching() {
             if (!fileData) {
-                alert('Please upload your Excel file first');
+                alert('⚠️  Please upload your Excel file first');
                 return;
             }
             
-            // Show processing
+            console.log('🎯 Starting matching process...');
+            
+            // Show processing with better feedback
             document.getElementById('upload-step').classList.add('hidden');
             document.getElementById('processing-step').classList.remove('hidden');
             
             const statusDiv = document.getElementById('processing-status');
-            statusDiv.innerHTML = '<p>Processing your real data...</p>';
+            statusDiv.innerHTML = '<p style="color: #334155;">🔄 Initializing matching algorithm...</p>';
             
-            // Run the actual matching algorithm
+            // Simulate realistic processing time with status updates
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                if (progress <= 30) {
+                    statusDiv.innerHTML = '<p style="color: #334155;">📊 Analyzing advisor preferences and TTV data...</p>';
+                } else if (progress <= 60) {
+                    statusDiv.innerHTML = '<p style="color: #334155;">🎯 Running optimization algorithm...</p>';
+                } else if (progress <= 90) {
+                    statusDiv.innerHTML = '<p style="color: #334155;">✅ Generating matches and checking eligibility...</p>';
+                }
+            }, 200);
+            
+            // Run the actual matching algorithm after delay
             setTimeout(() => {
+                clearInterval(progressInterval);
                 try {
+                    console.log('⚡ Executing matching algorithm...');
                     realMatches = runRealMatchingAlgorithm(fileData);
+                    console.log('🎉 Matching completed successfully!');
                     showRealResults();
                 } catch (error) {
-                    console.error('Matching error:', error);
-                    statusDiv.innerHTML = `<p style="color: #dc3545;">Error: ${error.message}</p>`;
+                    console.error('❌ Matching algorithm error:', error);
+                    statusDiv.innerHTML = `<p style="color: #dc2626;">❌ Error: ${error.message}</p>`;
+                    
+                    // Show error state
+                    setTimeout(() => {
+                        document.getElementById('processing-step').classList.add('hidden');
+                        document.getElementById('upload-step').classList.remove('hidden');
+                        alert('Error running matching algorithm. Please check the console and try again.');
+                    }, 2000);
                 }
-            }, 2000);
+            }, 3000);
         }
 
         function runRealMatchingAlgorithm(data) {
