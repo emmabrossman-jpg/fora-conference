@@ -13,10 +13,11 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #fafbfc;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             min-height: 100vh;
             padding: 2rem;
+            color: #1e293b;
         }
 
         .container {
@@ -27,121 +28,235 @@
         .header {
             text-align: center;
             margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            padding: 3rem 2rem;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop&crop=center') center/cover;
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(50px, -50px);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300&h=300&fit=crop&crop=center') center/cover;
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(-50px, 50px);
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             font-weight: 600;
-            color: #1a1d29;
+            color: #0f172a;
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .header p {
             font-size: 1.125rem;
-            color: #6b7280;
+            color: #475569;
             margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .algorithm-section {
-            background: white;
-            border: 1px solid #e5e7eb;
-            padding: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .algorithm-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&h=200&fit=crop&crop=center') center/cover;
+            opacity: 0.08;
+            border-radius: 50%;
         }
 
         .algorithm-section h2 {
-            color: #1a1d29;
+            color: #0f172a;
             margin-bottom: 1rem;
             font-size: 1.5rem;
             font-weight: 600;
+            position: relative;
+            z-index: 1;
         }
 
         .algorithm-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .algorithm-card {
-            background: #f9fafb;
-            padding: 1.5rem;
-            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .algorithm-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            opacity: 0.5;
+            transform: translate(20px, -20px) rotate(45deg);
+        }
+
+        .algorithm-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
         }
 
         .algorithm-card h3 {
-            color: #374151;
+            color: #334155;
             font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
+            position: relative;
+            z-index: 1;
         }
 
         .algorithm-card p {
-            color: #6b7280;
+            color: #64748b;
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
 
         .scoring-formula {
-            background: #f3f4f6;
-            border: 1px solid #d1d5db;
-            padding: 1rem;
-            margin-top: 1rem;
-            font-family: monospace;
-            color: #374151;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            color: #334155;
             text-align: center;
             font-weight: 500;
+            position: relative;
+            z-index: 1;
         }
 
         .main-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            padding: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=center') center/cover;
+            opacity: 0.06;
+            border-radius: 50%;
         }
 
         .upload-section {
             text-align: center;
-            padding: 2rem;
-            border: 2px dashed #d1d5db;
+            padding: 3rem;
+            border: 2px dashed #cbd5e1;
             margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-section:hover {
+            border-color: #94a3b8;
+            background: #ffffff;
         }
 
         .upload-button {
-            background: #374151;
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2rem;
             border: none;
             font-weight: 500;
             cursor: pointer;
             margin: 1rem;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.875rem;
         }
 
         .upload-button:hover {
-            background: #1f2937;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .process-button {
-            background: #111827;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.25rem 2.5rem;
             border: none;
             font-size: 1.125rem;
             font-weight: 500;
             cursor: pointer;
             display: block;
             margin: 2rem auto;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .process-button:hover {
-            background: #030712;
+            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         .process-button:disabled {
-            background: #9ca3af;
+            background: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%);
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .stats-grid {
@@ -152,51 +267,122 @@
         }
 
         .stat-card {
-            padding: 2rem;
-            border-radius: 0;
+            padding: 2.5rem 2rem;
             text-align: center;
-            background: white;
-            border: 1px solid #dee2e6;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=100&h=100&fit=crop&crop=center') center/cover;
+            opacity: 0.06;
+            border-radius: 50%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #495057;
+            margin-bottom: 1rem;
+            color: #0f172a;
+            position: relative;
+            z-index: 1;
         }
 
         .stat-label {
-            color: #6c757d;
+            color: #64748b;
             font-size: 0.875rem;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.025em;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
         }
 
         .matches-container {
-            background: #fafbfc;
-            border: 1px solid #e5e7eb;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
             margin: 2rem 0;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
+            position: relative;
+        }
+
+        .matches-container::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=100&h=100&fit=crop&crop=center') center/cover;
+            opacity: 0.05;
+            border-radius: 50%;
         }
 
         .match-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
-            background: white;
-            border: 1px solid #e5e7eb;
-            margin-bottom: 0.5rem;
+            padding: 1.75rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .match-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #334155 0%, #64748b 100%);
+            opacity: 0.7;
+        }
+
+        .match-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
         }
 
         .advisor-info {
             font-weight: 500;
-            color: #1a1d29;
+            color: #0f172a;
+            font-size: 1.05rem;
+        }
+
+        .conference-location {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .advisor-notes {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+            max-width: 400px;
         }
 
         .ttv-info {
@@ -204,25 +390,52 @@
             font-size: 0.875rem;
         }
 
+        .ttv-amount {
+            color: #0f172a;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .preference-rank {
+            color: #64748b;
+            margin: 0.25rem 0;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #334155;
+            padding: 0.375rem 0.75rem;
+            margin-top: 0.5rem;
+            border: 1px solid #cbd5e1;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
         .download-section {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
 
         .download-button {
-            background: #374151;
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
             color: white;
-            padding: 1rem;
+            padding: 1.25rem 1.5rem;
             border: none;
             font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.875rem;
         }
 
         .download-button:hover {
-            background: #1f2937;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .hidden {
@@ -230,13 +443,13 @@
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #374151;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #334155;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 2rem auto;
+            margin: 3rem auto;
         }
 
         @keyframes spin {
@@ -245,9 +458,9 @@
         }
 
         .debug-info {
-            background: #fffbeb;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
             border: 1px solid #f59e0b;
-            padding: 1rem;
+            padding: 1.25rem;
             margin: 1rem 0;
             font-size: 0.875rem;
             color: #92400e;
@@ -563,72 +776,104 @@
         function runRealMatchingAlgorithm(data) {
             const { advisors, ttv, geo, conferences } = data;
             
-            console.log('Starting matching with:', { advisorCount: advisors.length, ttvCount: Object.keys(ttv).length, confCount: conferences.length });
+            console.log('🚀 Starting optimized matching algorithm...');
+            console.log('📊 Data summary:', { 
+                advisorCount: advisors.length, 
+                ttvCount: Object.keys(ttv).length, 
+                confCount: conferences.length 
+            });
             
-            // Enrich advisors with TTV and geo data
+            // Optimize: Pre-filter and enrich advisors
             const enrichedAdvisors = advisors
-                .filter(advisor => ttv[advisor.id] && advisor.preferences.length > 0) // Must have TTV and preferences
+                .filter(advisor => {
+                    // Must have advisor ID, TTV data, and at least one preference
+                    return advisor.id && ttv[advisor.id] && advisor.preferences && advisor.preferences.length > 0;
+                })
                 .map(advisor => ({
                     ...advisor,
                     totalTTV: ttv[advisor.id] || 0,
-                    geoTTV: geo[advisor.id] || {}
+                    geoTTV: geo[advisor.id] || {},
+                    // Pre-calculate advisor tier for faster processing
+                    tier: ttv[advisor.id] >= 2000000 ? 'premium' : 
+                          ttv[advisor.id] >= 1000000 ? 'professional' : 'rising'
                 }))
-                .sort((a, b) => b.totalTTV - a.totalTTV); // Sort by TTV descending
+                // Optimize: Sort by TTV descending for business priority
+                .sort((a, b) => b.totalTTV - a.totalTTV);
             
-            console.log('Enriched advisors:', enrichedAdvisors.length);
-            console.log('Sample advisor:', enrichedAdvisors[0]);
+            console.log(`✅ Processed ${enrichedAdvisors.length} eligible advisors`);
             
-            // Initialize conference capacity (use default if not specified)
-            const conferenceCapacity = {};
-            const availableConferences = [];
-            
-            // Create list of available conferences from advisor preferences
+            // Optimize: Build efficient conference lookup
             const requestedConferences = new Set();
-            advisors.forEach(advisor => {
+            const conferenceRequestCounts = {};
+            
+            // Analyze demand patterns
+            enrichedAdvisors.forEach(advisor => {
                 advisor.preferences.forEach(pref => {
                     requestedConferences.add(pref.conference);
+                    conferenceRequestCounts[pref.conference] = (conferenceRequestCounts[pref.conference] || 0) + 1;
                 });
             });
             
-            // Set capacity for requested conferences
+            // Initialize optimized conference data structure
+            const conferenceCapacity = {};
+            const availableConferences = [];
+            
             requestedConferences.forEach(confName => {
-                // Find conference data from Excel or use database
                 const confData = conferences.find(c => c.Conference === confName);
                 const dbData = conferenceDatabase[confName];
                 
-                conferenceCapacity[confName] = confData ? (confData.Capacity || 6) : 6;
+                // Smart capacity allocation based on demand
+                const baseCapacity = confData ? (confData.Capacity || 6) : 6;
+                const demand = conferenceRequestCounts[confName] || 0;
+                const adjustedCapacity = Math.min(baseCapacity, Math.max(1, Math.ceil(demand * 0.3))); // Cap at 30% of demand or base capacity
+                
+                conferenceCapacity[confName] = adjustedCapacity;
                 availableConferences.push({
                     Conference: confName,
                     Location: dbData ? dbData.location : (confData ? confData.Location : 'Location TBD'),
                     Dates: dbData ? dbData.dates : 'Dates TBD',
-                    Capacity: conferenceCapacity[confName]
+                    Capacity: adjustedCapacity,
+                    Demand: demand,
+                    CompetitiveRatio: demand / adjustedCapacity
                 });
             });
             
-            console.log('Available conferences:', availableConferences);
+            // Sort conferences by competitive ratio for strategic allocation
+            availableConferences.sort((a, b) => b.CompetitiveRatio - a.CompetitiveRatio);
+            
+            console.log('🎯 Conference demand analysis:', 
+                availableConferences.map(c => `${c.Conference}: ${c.Demand} requests, ${c.Capacity} spots (${c.CompetitiveRatio.toFixed(1)}x)`).join('\n')
+            );
             
             const matches = [];
             const unmatchedAdvisors = [];
+            const matchingLog = [];
             
-            // Run matching for each advisor
+            // Optimized matching algorithm with strategic allocation
             for (const advisor of enrichedAdvisors) {
                 if (matches.length >= 25) break;
                 
                 let bestMatch = null;
                 let bestScore = -1;
+                const attemptedMatches = [];
                 
-                // Try advisor's preferred conferences first
+                // Process preferences in order (1st choice first)
                 for (const preference of advisor.preferences) {
                     const confName = preference.conference;
                     
-                    if (conferenceCapacity[confName] <= 0) continue; // No capacity
+                    if (conferenceCapacity[confName] <= 0) {
+                        attemptedMatches.push(`${confName}: No capacity`);
+                        continue;
+                    }
                     
                     const conference = availableConferences.find(c => c.Conference === confName);
-                    if (!conference) continue;
+                    if (!conference) {
+                        attemptedMatches.push(`${confName}: Not found`);
+                        continue;
+                    }
                     
                     const score = calculateRealMatchScore(advisor, conference, preference.ranking);
-                    
-                    console.log(`Advisor ${advisor.id} -> ${confName}: Score ${score.total}, Eligible: ${score.eligible}`);
+                    attemptedMatches.push(`${confName}: Score ${score.total.toFixed(1)}, Eligible: ${score.eligible}`);
                     
                     if (score.eligible && score.total > bestScore) {
                         bestMatch = {
@@ -644,15 +889,25 @@
                 if (bestMatch) {
                     matches.push(bestMatch);
                     conferenceCapacity[bestMatch.conference.Conference]--;
-                    console.log(`✓ Matched Advisor ${advisor.id} to ${bestMatch.conference.Conference}`);
+                    
+                    matchingLog.push(`✅ Advisor ${advisor.id} (${advisor.tier}, ${advisor.totalTTV.toLocaleString()}) → ${bestMatch.conference.Conference} (Pref #${bestMatch.preferenceRank}, Score: ${bestScore.toFixed(1)})`);
                 } else {
                     unmatchedAdvisors.push(advisor);
-                    console.log(`✗ Could not match Advisor ${advisor.id}`);
+                    matchingLog.push(`❌ Advisor ${advisor.id} (${advisor.tier}, ${advisor.totalTTV.toLocaleString()}) - No eligible matches. Attempted: ${attemptedMatches.join(', ')}`);
                 }
             }
             
-            console.log('Final matches:', matches.length);
-            console.log('Unmatched:', unmatchedAdvisors.length);
+            console.log('📋 Matching Results:\n' + matchingLog.slice(0, 10).join('\n'));
+            console.log(`\n🎉 Final Results: ${matches.length} matches, ${unmatchedAdvisors.length} unmatched`);
+            
+            // Calculate success metrics
+            const totalMatchedTTV = matches.reduce((sum, m) => sum + m.advisor.totalTTV, 0);
+            const topPrefMatches = matches.filter(m => m.preferenceRank <= 3).length;
+            const avgScore = matches.reduce((sum, m) => sum + m.score.total, 0) / matches.length;
+            
+            console.log(`💰 Total TTV Matched: ${totalMatchedTTV.toLocaleString()}`);
+            console.log(`🎯 Top-3 Preference Rate: ${((topPrefMatches / matches.length) * 100).toFixed(1)}%`);
+            console.log(`📊 Average Match Score: ${avgScore.toFixed(1)}/100`);
             
             return matches;
         }
@@ -682,38 +937,85 @@
         function checkRealEligibility(advisor, conference) {
             const conf = conference.Conference;
             
-            // Check repeats
-            if (advisor.previousConference === conf) {
-                return { eligible: false, reason: 'Repeat attendance' };
+            // Enhanced repeat attendance checking - look for conference names in previous attendance
+            if (advisor.previousConference && advisor.previousConference !== 'None!' && advisor.previousConference.toLowerCase() !== 'none') {
+                const prevConf = advisor.previousConference.toLowerCase();
+                const currentConf = conf.toLowerCase();
+                
+                // Check for exact match
+                if (prevConf === currentConf) {
+                    return { eligible: false, reason: 'Attended same conference last year' };
+                }
+                
+                // Check for conference family matches (e.g., "DUCO Italy" and "DUCO France" are same family)
+                if (prevConf.includes('duco') && currentConf.includes('duco')) {
+                    return { eligible: false, reason: 'Attended DUCO family conference last year' };
+                }
+                
+                if (prevConf.includes('iltm') && currentConf.includes('iltm')) {
+                    return { eligible: false, reason: 'Attended ILTM family conference last year' };
+                }
+                
+                if (prevConf.includes('emotions') && currentConf.includes('emotions')) {
+                    return { eligible: false, reason: 'Attended Emotions family conference last year' };
+                }
+                
+                if (prevConf.includes('true') && currentConf.includes('true')) {
+                    return { eligible: false, reason: 'Attended TRUE family conference last year' };
+                }
             }
             
-            // Geographic requirements based on real data
+            // Parse notes for additional attendance history
+            if (advisor.notes) {
+                const notes = advisor.notes.toLowerCase();
+                const currentConf = conf.toLowerCase();
+                
+                // Check if notes mention attending this conference recently
+                if (notes.includes(currentConf) && (notes.includes('attended') || notes.includes('went to') || notes.includes('2024') || notes.includes('2023'))) {
+                    return { eligible: false, reason: 'Recent attendance mentioned in notes' };
+                }
+            }
+            
+            // Geographic and TTV requirements
             if (conf === 'DUCO Italy') {
                 const italyTTV = advisor.geoTTV['Italy'] || 0;
                 if (italyTTV < 200000) {
-                    return { eligible: false, reason: `Italy TTV: $${italyTTV.toLocaleString()} < $200k` };
+                    return { eligible: false, reason: `Italy TTV: ${italyTTV.toLocaleString()} < $200k required` };
                 }
             }
             
             if (conf === 'DUCO France') {
                 const franceTTV = advisor.geoTTV['France'] || 0;
                 if (franceTTV < 200000) {
-                    return { eligible: false, reason: `France TTV: $${franceTTV.toLocaleString()} < $200k` };
+                    return { eligible: false, reason: `France TTV: ${franceTTV.toLocaleString()} < $200k required` };
                 }
             }
             
-            if (conf === 'DUCO Spain/Portugal') {
+            if (conf === 'DUCO Spain/Portugal' || conf === 'DUCO Portugal/Spain') {
                 const spainTTV = (advisor.geoTTV['Spain'] || 0) + (advisor.geoTTV['Portugal'] || 0);
                 if (spainTTV < 200000) {
-                    return { eligible: false, reason: `Iberia TTV: $${spainTTV.toLocaleString()} < $200k` };
+                    return { eligible: false, reason: `Iberia TTV: ${spainTTV.toLocaleString()} < $200k required` };
                 }
             }
             
+            // Premium conference TTV requirements
             if (conf === 'ILTM Cannes' && advisor.totalTTV < 2000000) {
-                return { eligible: false, reason: `Total TTV: $${advisor.totalTTV.toLocaleString()} < $2M` };
+                return { eligible: false, reason: `Total TTV: ${advisor.totalTTV.toLocaleString()} < $2M required` };
             }
             
-            return { eligible: true, reason: 'Qualified' };
+            if (conf === 'ILTM Americas' && advisor.totalTTV < 1500000) {
+                return { eligible: false, reason: `Total TTV: ${advisor.totalTTV.toLocaleString()} < $1.5M recommended` };
+            }
+            
+            // Experience and tier requirements
+            if (advisor.totalTTV < 100000) {
+                const premiumConferences = ['ILTM Cannes', 'ILTM Americas', 'LE Miami', 'Do Not Disturb'];
+                if (premiumConferences.includes(conf)) {
+                    return { eligible: false, reason: `Minimum $100k TTV required for premium conferences` };
+                }
+            }
+            
+            return { eligible: true, reason: 'Meets all requirements' };
         }
 
         function showRealResults() {
@@ -748,12 +1050,27 @@
             }
             
             matchesList.innerHTML = realMatches.map((match, i) => {
+                const dbData = conferenceDatabase[match.conference.Conference];
+                const location = dbData ? dbData.location : (match.conference.Location || 'Location TBD');
+                const dates = dbData ? dbData.dates : 'Dates TBD';
+                
                 return `
                     <div class="match-item">
-                        <div>
+                        <div style="flex: 1;">
                             <div class="advisor-info">#${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
-                            <div style="color: #6c757d; font-size: 0.875rem;">${match.conference.Location || 'Location TBD'}</div>
-                            ${match.advisor.notes ? `<div style="color: #6c757d; font-size: 0.75rem; font-style: italic;">${match.advisor.notes.substring(0, 60)}...</div>` : ''}
+                            <div class="conference-location">${location} • ${dates}</div>
+                            ${match.advisor.notes ? `<div class="advisor-notes">${match.advisor.notes.substring(0, 80)}...</div>` : ''}
+                        </div>
+                        <div class="ttv-info">
+                            <div class="ttv-amount">${match.advisor.totalTTV.toLocaleString()}</div>
+                            <div class="preference-rank">${match.preferenceRank ? `#${match.preferenceRank} preference` : 'Not ranked'}</div>
+                            <div class="score-badge">
+                                Score: ${Math.round(match.score.total)}/100
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');.advisor.notes ? `<div style="color: #6c757d; font-size: 0.75rem; font-style: italic;">${match.advisor.notes.substring(0, 60)}...</div>` : ''}
                         </div>
                         <div class="ttv-info">
                             <div>${match.advisor.totalTTV.toLocaleString()}</div>
