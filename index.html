@@ -158,35 +158,28 @@
         }
 
         .stat-card {
-            padding: 1.5rem;
-            border-radius: 0.5rem;
+            padding: 2rem;
+            border-radius: 0;
             text-align: center;
-        }
-
-        .stat-card.green {
-            background: #d4edda;
-            border: 2px solid #28a745;
-        }
-
-        .stat-card.blue {
-            background: #cce7ff;
-            border: 2px solid #007bff;
-        }
-
-        .stat-card.gray {
-            background: #e9ecef;
-            border: 2px solid #6c757d;
+            background: white;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #495057;
         }
 
-        .stat-card.green .stat-number { color: #28a745; }
-        .stat-card.blue .stat-number { color: #007bff; }
-        .stat-card.gray .stat-number { color: #6c757d; }
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
 
         .matches-container {
             background: #f8f9fa;
@@ -347,19 +340,19 @@
 
             <div id="results-step" class="hidden">
                 <div style="text-align: center; margin-bottom: 2rem;">
-                    <h2 id="results-title">Matches Generated!</h2>
+                    <h2 id="results-title">Matches Generated</h2>
                     <div class="stats-grid">
-                        <div class="stat-card green">
+                        <div class="stat-card">
                             <div class="stat-number" id="pref-stat">--%</div>
-                            <div>Got Top 3 Preferences</div>
+                            <div class="stat-label">Top 3 Preferences</div>
                         </div>
-                        <div class="stat-card blue">
+                        <div class="stat-card">
                             <div class="stat-number" id="ttv-stat">$--M</div>
-                            <div>Total TTV Matched</div>
+                            <div class="stat-label">Total TTV Matched</div>
                         </div>
-                        <div class="stat-card gray">
+                        <div class="stat-card">
                             <div class="stat-number" id="qual-stat">--%</div>
-                            <div>Requirements Met</div>
+                            <div class="stat-label">Eligible Matches</div>
                         </div>
                     </div>
                 </div>
@@ -581,9 +574,11 @@
         function runRealMatchingAlgorithm(data) {
             const { advisors, ttv, geo, conferences } = data;
             
+            console.log('Starting matching with:', { advisorCount: advisors.length, ttvCount: Object.keys(ttv).length, confCount: conferences.length });
+            
             // Enrich advisors with TTV and geo data
             const enrichedAdvisors = advisors
-                .filter(advisor => ttv[advisor.id]) // Only advisors with TTV data
+                .filter(advisor => ttv[advisor.id] && advisor.preferences.length > 0) // Must have TTV and preferences
                 .map(advisor => ({
                     ...advisor,
                     totalTTV: ttv[advisor.id] || 0,
@@ -591,13 +586,36 @@
                 }))
                 .sort((a, b) => b.totalTTV - a.totalTTV); // Sort by TTV descending
             
-            // Initialize conference capacity
+            console.log('Enriched advisors:', enrichedAdvisors.length);
+            console.log('Sample advisor:', enrichedAdvisors[0]);
+            
+            // Initialize conference capacity (use default if not specified)
             const conferenceCapacity = {};
-            conferences.forEach(conf => {
-                conferenceCapacity[conf.Conference] = conf.Capacity || 10; // Default capacity
+            const availableConferences = [];
+            
+            // Create list of available conferences from advisor preferences
+            const requestedConferences = new Set();
+            advisors.forEach(advisor => {
+                advisor.preferences.forEach(pref => {
+                    requestedConferences.add(pref.conference);
+                });
             });
             
+            // Set capacity for requested conferences
+            requestedConferences.forEach(confName => {
+                const confData = conferences.find(c => c.Conference === confName);
+                conferenceCapacity[confName] = confData ? (confData.Capacity || 6) : 6;
+                availableConferences.push({
+                    Conference: confName,
+                    Location: confData ? confData.Location : 'TBD',
+                    Capacity: conferenceCapacity[confName]
+                });
+            });
+            
+            console.log('Available conferences:', availableConferences);
+            
             const matches = [];
+            const unmatchedAdvisors = [];
             
             // Run matching for each advisor
             for (const advisor of enrichedAdvisors) {
@@ -606,17 +624,25 @@
                 let bestMatch = null;
                 let bestScore = -1;
                 
-                // Try each conference
-                for (const conference of conferences) {
-                    if (conferenceCapacity[conference.Conference] <= 0) continue;
+                // Try advisor's preferred conferences first
+                for (const preference of advisor.preferences) {
+                    const confName = preference.conference;
                     
-                    const score = calculateRealMatchScore(advisor, conference);
+                    if (conferenceCapacity[confName] <= 0) continue; // No capacity
+                    
+                    const conference = availableConferences.find(c => c.Conference === confName);
+                    if (!conference) continue;
+                    
+                    const score = calculateRealMatchScore(advisor, conference, preference.ranking);
+                    
+                    console.log(`Advisor ${advisor.id} -> ${confName}: Score ${score.total}, Eligible: ${score.eligible}`);
                     
                     if (score.eligible && score.total > bestScore) {
                         bestMatch = {
                             advisor,
                             conference,
-                            score
+                            score,
+                            preferenceRank: preference.ranking
                         };
                         bestScore = score.total;
                     }
@@ -625,19 +651,25 @@
                 if (bestMatch) {
                     matches.push(bestMatch);
                     conferenceCapacity[bestMatch.conference.Conference]--;
+                    console.log(`✓ Matched Advisor ${advisor.id} to ${bestMatch.conference.Conference}`);
+                } else {
+                    unmatchedAdvisors.push(advisor);
+                    console.log(`✗ Could not match Advisor ${advisor.id}`);
                 }
             }
+            
+            console.log('Final matches:', matches.length);
+            console.log('Unmatched:', unmatchedAdvisors.length);
             
             return matches;
         }
 
-        function calculateRealMatchScore(advisor, conference) {
-            // Business priority (40% weight)
+        function calculateRealMatchScore(advisor, conference, preferenceRank) {
+            // Business priority (40% weight) - based on TTV
             const businessPriority = Math.min(advisor.totalTTV / 2000000, 1.0) * 100 * 0.4;
             
-            // Preference score (35% weight)
-            const preference = advisor.preferences.find(p => p.conference === conference.Conference);
-            const preferenceScore = preference ? (6 - preference.ranking) * 20 * 0.35 : 0;
+            // Preference score (35% weight) - higher score for better ranking
+            const preferenceScore = preferenceRank ? (6 - preferenceRank) * 20 * 0.35 : 0;
             
             // Check eligibility
             const eligibility = checkRealEligibility(advisor, conference);
@@ -649,7 +681,8 @@
                 preference: preferenceScore,
                 qualification: qualificationScore,
                 eligible: eligibility.eligible,
-                reason: eligibility.reason
+                reason: eligibility.reason,
+                preferenceRank: preferenceRank
             };
         }
 
@@ -696,31 +729,43 @@
             
             // Update stats
             const totalTTV = realMatches.reduce((sum, match) => sum + match.advisor.totalTTV, 0);
-            const topPrefCount = realMatches.filter(match => {
-                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
-                return pref && pref.ranking <= 3;
-            }).length;
+            const topPrefCount = realMatches.filter(match => match.preferenceRank && match.preferenceRank <= 3).length;
+            const eligibleCount = realMatches.filter(match => match.score.eligible).length;
             
-            document.getElementById('results-title').textContent = `${realMatches.length} Real Matches Generated!`;
-            document.getElementById('pref-stat').textContent = `${Math.round((topPrefCount / realMatches.length) * 100)}%`;
-            document.getElementById('ttv-stat').textContent = `$${Math.round(totalTTV / 1000000)}M`;
-            document.getElementById('qual-stat').textContent = '100%';
+            document.getElementById('results-title').textContent = `${realMatches.length} Matches Generated`;
+            document.getElementById('pref-stat').textContent = realMatches.length > 0 ? `${Math.round((topPrefCount / realMatches.length) * 100)}%` : '0%';
+            document.getElementById('ttv-stat').textContent = `${Math.round(totalTTV / 1000000)}M`;
+            document.getElementById('qual-stat').textContent = realMatches.length > 0 ? `${Math.round((eligibleCount / realMatches.length) * 100)}%` : '0%';
             
             // Populate matches
             const matchesList = document.getElementById('matches-list');
+            if (realMatches.length === 0) {
+                matchesList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #6c757d;">
+                        <p>No matches found. This might be due to:</p>
+                        <ul style="text-align: left; margin-top: 1rem;">
+                            <li>Missing TTV data for advisors</li>
+                            <li>No advisor preferences found</li>
+                            <li>All advisors already attended their preferred conferences</li>
+                        </ul>
+                        <p style="margin-top: 1rem;">Check the debug info above for more details.</p>
+                    </div>
+                `;
+                return;
+            }
+            
             matchesList.innerHTML = realMatches.map((match, i) => {
-                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
                 return `
                     <div class="match-item">
                         <div>
                             <div class="advisor-info">#${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
                             <div style="color: #6c757d; font-size: 0.875rem;">${match.conference.Location || 'Location TBD'}</div>
-                            ${match.advisor.notes ? `<div style="color: #6c757d; font-size: 0.75rem; font-style: italic;">${match.advisor.notes.substring(0, 50)}...</div>` : ''}
+                            ${match.advisor.notes ? `<div style="color: #6c757d; font-size: 0.75rem; font-style: italic;">${match.advisor.notes.substring(0, 60)}...</div>` : ''}
                         </div>
                         <div class="ttv-info">
-                            <div>$${match.advisor.totalTTV.toLocaleString()}</div>
-                            <div>${pref ? `#${pref.ranking} preference` : 'Not ranked'}</div>
-                            <div style="background: #d4edda; color: #28a745; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-top: 0.25rem;">
+                            <div>${match.advisor.totalTTV.toLocaleString()}</div>
+                            <div>${match.preferenceRank ? `#${match.preferenceRank} preference` : 'Not ranked'}</div>
+                            <div style="background: #f8f9fa; color: #495057; padding: 0.25rem 0.5rem; border-radius: 0.125rem; margin-top: 0.25rem; border: 1px solid #dee2e6;">
                                 Score: ${Math.round(match.score.total)}/100
                             </div>
                         </div>
