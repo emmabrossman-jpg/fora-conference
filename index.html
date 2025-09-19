@@ -515,17 +515,72 @@
         <div class="main-card">
             <div id="upload-step">
                 <div class="upload-section">
-                    <h3>Upload Your Excel File</h3>
-                    <p>Upload your "Brossman Case Study Fora.xlsx" file to run real matching</p>
-                    <input type="file" id="file-input" accept=".xlsx,.xls" style="display: none;">
-                    <button class="upload-button" onclick="document.getElementById('file-input').click()">
-                        Choose File
-                    </button>
+                    <h3>Upload Your Data</h3>
+                    <p>Choose your preferred data format</p>
+                    
+                    <!-- Multiple upload options -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #cbd5e1; background: #ffffff;">
+                            <h4 style="color: #334155; margin-bottom: 0.5rem;">📄 CSV Upload</h4>
+                            <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">Simple CSV format</p>
+                            <input type="file" id="csv-input" accept=".csv" style="display: none;">
+                            <button class="upload-button" onclick="document.getElementById('csv-input').click()">
+                                Upload CSV
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #cbd5e1; background: #ffffff;">
+                            <h4 style="color: #334155; margin-bottom: 0.5rem;">📊 Excel Upload</h4>
+                            <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">Full Excel file</p>
+                            <input type="file" id="excel-input" accept=".xlsx,.xls" style="display: none;">
+                            <button class="upload-button" onclick="document.getElementById('excel-input').click()">
+                                Upload Excel
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1.5rem; border: 1px solid #cbd5e1; background: #ffffff;">
+                            <h4 style="color: #334155; margin-bottom: 0.5rem;">✏️ Manual Entry</h4>
+                            <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">Paste your data</p>
+                            <button class="upload-button" onclick="showManualEntry()">
+                                Enter Data
+                            </button>
+                        </div>
+                    </div>
+                    
                     <div id="file-status"></div>
                     <div id="debug-info" class="debug-info" style="display: none;"></div>
+                    
+                    <!-- Manual data entry area -->
+                    <div id="manual-entry" style="display: none; margin-top: 2rem; text-align: left;">
+                        <h4 style="margin-bottom: 1rem;">📝 Paste Your Advisor Data</h4>
+                        <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">
+                            Format: Advisor ID, Conference Preference 1, Conference Preference 2, TTV, Previous Conference<br>
+                            Example: 3045, ILTM Cannes, LE Miami, 4078938, None
+                        </p>
+                        <textarea 
+                            id="manual-data" 
+                            placeholder="3045, ILTM Cannes, LE Miami, 4078938, None
+2463, ILTM Americas, DUCO Italy, 3449979, None
+6841, LE Miami, Do Not Disturb, 2657344, ILTM Cannes"
+                            style="width: 100%; height: 200px; padding: 1rem; border: 1px solid #cbd5e1; font-family: monospace; font-size: 0.875rem;"
+                        ></textarea>
+                        <button onclick="processManualData()" class="upload-button" style="margin-top: 1rem;">
+                            Process Data
+                        </button>
+                    </div>
+                    
+                    <!-- Sample data option -->
+                    <div style="margin-top: 2rem; padding: 1rem; background: #f1f5f9; border: 1px solid #cbd5e1;">
+                        <p style="font-size: 0.875rem; color: #475569; margin-bottom: 0.5rem;">
+                            <strong>🚀 Want to test the system?</strong>
+                        </p>
+                        <button onclick="loadSampleData()" class="upload-button" style="background: linear-gradient(135deg, #475569 0%, #64748b 100%);">
+                            Load Sample Data
+                        </button>
+                    </div>
                 </div>
                 <button class="process-button" id="process-btn" onclick="runMatching()" disabled>
-                    Upload File First
+                    Upload Data First
                 </button>
             </div>
 
@@ -604,59 +659,264 @@
             "TRUE Puglia": { location: "Puglia, Italy", dates: "Apr 12–15, 2026", description: "Southern Italian cultural and culinary conference showcasing Puglia's charm." }
         };
 
-        // File upload handler with real Excel processing
-        document.getElementById('file-input').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            console.log('📁 File selected:', file.name, file.size, 'bytes');
-            
-            // Show immediate feedback
-            document.getElementById('file-status').innerHTML = `
-                <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 1rem; margin-top: 1rem; border: 1px solid #3b82f6;">
-                    <p style="color: #1e40af; font-weight: 500;">📄 Reading file: ${file.name}...</p>
-                </div>
-            `;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    console.log('🔄 Processing file data...');
-                    const data = new Uint8Array(event.target.result);
+        // Multiple data input handlers
+        
+        // Simple CSV handler
+        document.addEventListener('DOMContentLoaded', function() {
+            // CSV Upload
+            const csvInput = document.getElementById('csv-input');
+            if (csvInput) {
+                csvInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
                     
-                    // Check if XLSX library is loaded
-                    if (typeof XLSX === 'undefined') {
-                        throw new Error('Excel processing library not loaded. Please refresh the page.');
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        try {
+                            const csvData = event.target.result;
+                            processCSVData(csvData, file.name);
+                        } catch (error) {
+                            showError('Error reading CSV file: ' + error.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                });
+            }
+
+            // Excel Upload (simplified)
+            const excelInput = document.getElementById('excel-input');
+            if (excelInput) {
+                excelInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    showStatus('📄 Processing Excel file (this may take a moment)...', 'info');
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        try {
+                            if (typeof XLSX === 'undefined') {
+                                showError('Excel processing not available. Please use CSV format instead.');
+                                return;
+                            }
+                            
+                            const data = new Uint8Array(event.target.result);
+                            const workbook = XLSX.read(data, {type: 'array'});
+                            processExcelDataSimple(workbook, file.name);
+                        } catch (error) {
+                            showError('Error reading Excel file. Try converting to CSV format: ' + error.message);
+                        }
+                    };
+                    reader.readAsArrayBuffer(file);
+                });
+            }
+        });
+
+        // Simple CSV processor
+        function processCSVData(csvText, filename) {
+            console.log('📊 Processing CSV data...');
+            
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            
+            console.log('CSV Headers:', headers);
+            
+            const advisors = [];
+            const ttvData = {};
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                
+                if (values.length >= 4) {
+                    const advisorId = parseInt(values[0]);
+                    const ttv = parseFloat(values[3]) || 0;
+                    
+                    if (advisorId && !isNaN(advisorId)) {
+                        const advisor = {
+                            id: advisorId,
+                            preferences: [],
+                            previousConference: values[4] && values[4] !== 'None' ? values[4] : null,
+                            notes: values[5] || ''
+                        };
+                        
+                        // Add preferences
+                        if (values[1] && values[1] !== '') {
+                            advisor.preferences.push({ conference: values[1], ranking: 1 });
+                        }
+                        if (values[2] && values[2] !== '') {
+                            advisor.preferences.push({ conference: values[2], ranking: 2 });
+                        }
+                        
+                        advisors.push(advisor);
+                        ttvData[advisorId] = ttv;
+                    }
+                }
+            }
+            
+            if (advisors.length === 0) {
+                showError('No valid advisor data found in CSV');
+                return;
+            }
+            
+            fileData = {
+                advisors: advisors,
+                ttv: ttvData,
+                geo: {},
+                conferences: []
+            };
+            
+            showSuccess(`✅ Processed ${advisors.length} advisors from ${filename}`);
+            enableProcessing();
+        }
+
+        // Manual data entry
+        function showManualEntry() {
+            document.getElementById('manual-entry').style.display = 'block';
+        }
+
+        function processManualData() {
+            const textData = document.getElementById('manual-data').value.trim();
+            if (!textData) {
+                showError('Please enter some data first');
+                return;
+            }
+            
+            try {
+                processCSVData(textData, 'manual entry');
+            } catch (error) {
+                showError('Error processing manual data: ' + error.message);
+            }
+        }
+
+        // Load sample data for testing
+        function loadSampleData() {
+            const sampleData = `Advisor ID,Conference 1,Conference 2,TTV,Previous Conference,Notes
+3045,ILTM Cannes,LE Miami,4078938,None,Luxury specialist
+2463,ILTM Americas,DUCO Italy,3449979,None,High-volume Americas advisor
+6841,LE Miami,Do Not Disturb,2657344,ILTM Cannes,Strong luxury leisure focus
+9236,LE Miami,ILTM Cannes,1753868,None,Can't travel Feb-June
+11508,ILTM Cannes,ILTM Americas,2845192,None,European specialist
+8394,Do Not Disturb,Emotions Europe,1892456,None,Wellness specialist
+5750,Emotions Europe,LE Miami,1634729,None,European market focus
+7821,ILTM Americas,We Are Africa,1567843,None,Americas specialist
+4392,We Are Africa,ILTM Americas,1438291,None,Africa safari expert
+6321,LE Miami,ILTM Cannes,1329847,None,Luxury beach specialist`;
+            
+            processCSVData(sampleData, 'sample data');
+        }
+
+        // Simplified Excel processor (fallback)
+        function processExcelDataSimple(workbook, filename) {
+            try {
+                console.log('📋 Available sheets:', workbook.SheetNames);
+                
+                // Try to find advisor data in any sheet
+                let advisorData = null;
+                let ttvData = {};
+                
+                // Look for advisor preferences
+                for (const sheetName of workbook.SheetNames) {
+                    if (sheetName.toLowerCase().includes('advisor') || sheetName.toLowerCase().includes('preference')) {
+                        const sheet = workbook.Sheets[sheetName];
+                        advisorData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                        console.log(`Found advisor data in sheet: ${sheetName}`);
+                        break;
+                    }
+                }
+                
+                if (!advisorData) {
+                    showError('No advisor data sheet found. Please use CSV format or check sheet names.');
+                    return;
+                }
+                
+                // Process the data
+                const headers = advisorData[0];
+                const rows = advisorData.slice(1);
+                
+                const advisors = [];
+                
+                for (const row of rows) {
+                    if (!row[1]) continue; // Skip empty rows
+                    
+                    const advisorId = parseInt(row[1]);
+                    if (!advisorId) continue;
+                    
+                    const advisor = {
+                        id: advisorId,
+                        preferences: [],
+                        previousConference: row[2] === 'None!' ? null : row[2],
+                        notes: row[25] || ''
+                    };
+                    
+                    // Extract preferences from columns
+                    for (let i = 3; i <= 21; i++) {
+                        if (headers[i] && typeof row[i] === 'number' && row[i] >= 1 && row[i] <= 5) {
+                            advisor.preferences.push({
+                                conference: headers[i],
+                                ranking: row[i]
+                            });
+                        }
                     }
                     
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    console.log('✅ Excel file parsed successfully');
+                    advisor.preferences.sort((a, b) => a.ranking - b.ranking);
                     
-                    // Process the sheets
-                    processExcelData(workbook);
-                    
-                } catch (error) {
-                    console.error('❌ Error reading Excel file:', error);
-                    document.getElementById('file-status').innerHTML = `
-                        <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1rem; margin-top: 1rem; border: 1px solid #dc2626;">
-                            <p style="color: #dc2626; font-weight: 500;">❌ Error reading file: ${error.message}</p>
-                            <p style="color: #dc2626; font-size: 0.875rem; margin-top: 0.5rem;">Please make sure you're uploading the correct Excel file format (.xlsx or .xls)</p>
-                        </div>
-                    `;
+                    if (advisor.preferences.length > 0) {
+                        advisors.push(advisor);
+                        ttvData[advisorId] = 1000000; // Default TTV if not provided
+                    }
                 }
+                
+                if (advisors.length === 0) {
+                    showError('No valid advisors with preferences found');
+                    return;
+                }
+                
+                fileData = {
+                    advisors: advisors,
+                    ttv: ttvData,
+                    geo: {},
+                    conferences: []
+                };
+                
+                showSuccess(`✅ Processed ${advisors.length} advisors from ${filename}`);
+                enableProcessing();
+                
+            } catch (error) {
+                showError('Error processing Excel file: ' + error.message);
+            }
+        }
+
+        // Helper functions
+        function showStatus(message, type = 'info') {
+            const colors = {
+                info: { bg: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)', border: '#3b82f6', text: '#1e40af' },
+                error: { bg: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)', border: '#dc2626', text: '#dc2626' },
+                success: { bg: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)', border: '#10b981', text: '#065f46' }
             };
             
-            reader.onerror = function() {
-                console.error('❌ FileReader error');
-                document.getElementById('file-status').innerHTML = `
-                    <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 1rem; margin-top: 1rem; border: 1px solid #dc2626;">
-                        <p style="color: #dc2626; font-weight: 500;">❌ Failed to read file</p>
-                    </div>
-                `;
-            };
-            
-            reader.readAsArrayBuffer(file);
-        });
+            const color = colors[type];
+            document.getElementById('file-status').innerHTML = `
+                <div style="background: ${color.bg}; padding: 1.25rem; margin-top: 1rem; border: 1px solid ${color.border};">
+                    <p style="color: ${color.text}; font-weight: 500;">${message}</p>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            showStatus('❌ ' + message, 'error');
+        }
+
+        function showSuccess(message) {
+            showStatus(message, 'success');
+        }
+
+        function enableProcessing() {
+            const processBtn = document.getElementById('process-btn');
+            processBtn.disabled = false;
+            processBtn.textContent = '🚀 Generate Optimized Matches';
+            processBtn.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
+            processBtn.style.cursor = 'pointer';
+        }
 
         function processExcelData(workbook) {
             try {
