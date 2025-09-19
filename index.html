@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fora Conference Matching System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,7 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
             padding: 2rem;
         }
@@ -31,19 +32,73 @@
         .header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #1f2937;
+            color: #212529;
             margin-bottom: 1rem;
         }
 
         .header p {
             font-size: 1.125rem;
-            color: #6b7280;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .algorithm-section {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #007bff;
+        }
+
+        .algorithm-section h2 {
+            color: #212529;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .algorithm-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 3px solid #007bff;
+        }
+
+        .algorithm-card h3 {
+            color: #007bff;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .algorithm-card p {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .scoring-formula {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            color: #004085;
+            text-align: center;
+            font-weight: 600;
         }
 
         .main-card {
             background: white;
             border-radius: 0.75rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 2rem;
             margin-bottom: 2rem;
         }
@@ -51,13 +106,13 @@
         .upload-section {
             text-align: center;
             padding: 2rem;
-            border: 2px dashed #d1d5db;
+            border: 2px dashed #ced4da;
             border-radius: 0.5rem;
             margin-bottom: 2rem;
         }
 
         .upload-button {
-            background: #2563eb;
+            background: #007bff;
             color: white;
             padding: 0.75rem 1.5rem;
             border: none;
@@ -65,14 +120,15 @@
             font-weight: 600;
             cursor: pointer;
             margin: 1rem;
+            transition: background-color 0.2s;
         }
 
         .upload-button:hover {
-            background: #1d4ed8;
+            background: #0056b3;
         }
 
         .process-button {
-            background: #10b981;
+            background: #28a745;
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -82,14 +138,16 @@
             cursor: pointer;
             display: block;
             margin: 2rem auto;
+            transition: background-color 0.2s;
         }
 
         .process-button:hover {
-            background: #059669;
+            background: #1e7e34;
         }
 
-        .results-section {
-            display: none;
+        .process-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
         }
 
         .stats-grid {
@@ -106,18 +164,18 @@
         }
 
         .stat-card.green {
-            background: #f0fdf4;
-            border: 2px solid #bbf7d0;
+            background: #d4edda;
+            border: 2px solid #28a745;
         }
 
         .stat-card.blue {
-            background: #eff6ff;
-            border: 2px solid #bfdbfe;
+            background: #cce7ff;
+            border: 2px solid #007bff;
         }
 
-        .stat-card.purple {
-            background: #faf5ff;
-            border: 2px solid #e9d5ff;
+        .stat-card.gray {
+            background: #e9ecef;
+            border: 2px solid #6c757d;
         }
 
         .stat-number {
@@ -126,12 +184,12 @@
             margin-bottom: 0.5rem;
         }
 
-        .stat-card.green .stat-number { color: #16a34a; }
-        .stat-card.blue .stat-number { color: #2563eb; }
-        .stat-card.purple .stat-number { color: #9333ea; }
+        .stat-card.green .stat-number { color: #28a745; }
+        .stat-card.blue .stat-number { color: #007bff; }
+        .stat-card.gray .stat-number { color: #6c757d; }
 
         .matches-container {
-            background: #f9fafb;
+            background: #f8f9fa;
             border-radius: 0.5rem;
             padding: 1.5rem;
             margin: 2rem 0;
@@ -147,16 +205,13 @@
             background: white;
             border-radius: 0.5rem;
             margin-bottom: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            border-left: 3px solid #007bff;
         }
 
         .advisor-info {
             font-weight: 600;
-        }
-
-        .conference-info {
-            color: #2563eb;
-            font-weight: 600;
+            color: #212529;
         }
 
         .ttv-info {
@@ -172,17 +227,18 @@
         }
 
         .download-button {
-            background: #2563eb;
+            background: #007bff;
             color: white;
             padding: 1rem;
             border: none;
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
 
         .download-button.green {
-            background: #10b981;
+            background: #28a745;
         }
 
         .download-button:hover {
@@ -196,8 +252,8 @@
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid #e5e7eb;
-            border-top: 4px solid #2563eb;
+            border: 4px solid #e9ecef;
+            border-top: 4px solid #007bff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 2rem auto;
@@ -208,7 +264,19 @@
             100% { transform: rotate(360deg); }
         }
 
+        .debug-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
         @media (max-width: 768px) {
+            .algorithm-grid {
+                grid-template-columns: 1fr;
+            }
             .stats-grid {
                 grid-template-columns: 1fr;
             }
@@ -230,52 +298,75 @@
             <p>Intelligent advisor-conference optimization platform</p>
         </div>
 
+        <div class="algorithm-section">
+            <h2>🧠 How Our Matching Algorithm Works</h2>
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <h3>Business Priority (40%)</h3>
+                    <p>Advisors with higher Total Travel Value (TTV) receive priority placement. This ensures our most valuable advisors get first choice at premium conferences.</p>
+                </div>
+                <div class="algorithm-card">
+                    <h3>Preference Matching (35%)</h3>
+                    <p>Your ranked preferences (1-5) are heavily weighted. We prioritize matching you to conferences you specifically requested and ranked highly.</p>
+                </div>
+                <div class="algorithm-card">
+                    <h3>Qualification Requirements (25%)</h3>
+                    <p>Geographic TTV thresholds, experience levels, and repeat attendance rules ensure all matches meet conference partner requirements.</p>
+                </div>
+            </div>
+            <div class="scoring-formula">
+                Final Score = (Business Priority × 0.4) + (Preference Score × 0.35) + (Qualification Match × 0.25)
+            </div>
+        </div>
+
         <div class="main-card">
             <div id="upload-step">
                 <div class="upload-section">
                     <h3>Upload Your Excel File</h3>
-                    <p>Upload your conference and advisor data file</p>
+                    <p>Upload your "Brossman Case Study Fora.xlsx" file to run real matching</p>
                     <input type="file" id="file-input" accept=".xlsx,.xls" style="display: none;">
                     <button class="upload-button" onclick="document.getElementById('file-input').click()">
                         Choose File
                     </button>
                     <div id="file-status"></div>
+                    <div id="debug-info" class="debug-info" style="display: none;"></div>
                 </div>
-                <button class="process-button" onclick="runMatching()">
-                    Generate 25 Optimal Matches
+                <button class="process-button" id="process-btn" onclick="runMatching()" disabled>
+                    Upload File First
                 </button>
             </div>
 
             <div id="processing-step" class="hidden">
                 <div style="text-align: center;">
                     <div class="spinner"></div>
-                    <h3>Running Matching Algorithm</h3>
-                    <p>Analyzing advisors and optimizing conference assignments...</p>
+                    <h3>Running Real Matching Algorithm</h3>
+                    <p>Processing your actual advisor preferences and TTV data...</p>
+                    <div id="processing-status"></div>
                 </div>
             </div>
 
             <div id="results-step" class="hidden">
                 <div style="text-align: center; margin-bottom: 2rem;">
-                    <h2>25 Matches Successfully Generated!</h2>
+                    <h2 id="results-title">Matches Generated!</h2>
                     <div class="stats-grid">
                         <div class="stat-card green">
-                            <div class="stat-number">96%</div>
+                            <div class="stat-number" id="pref-stat">--%</div>
                             <div>Got Top 3 Preferences</div>
                         </div>
                         <div class="stat-card blue">
-                            <div class="stat-number">$42M</div>
+                            <div class="stat-number" id="ttv-stat">$--M</div>
                             <div>Total TTV Matched</div>
                         </div>
-                        <div class="stat-card purple">
-                            <div class="stat-number">100%</div>
+                        <div class="stat-card gray">
+                            <div class="stat-number" id="qual-stat">--%</div>
                             <div>Requirements Met</div>
                         </div>
                     </div>
                 </div>
 
-                <h3>Your Top Matches:</h3>
+                <h3>Your Matches:</h3>
                 <div class="matches-container" id="matches-list">
-                    <!-- Matches will be populated here -->
+                    <!-- Real matches will be populated here -->
                 </div>
 
                 <div class="download-section">
@@ -291,78 +382,351 @@
     </div>
 
     <script>
-        // Sample match data
-        const sampleMatches = [
-            { rank: 1, advisorId: 3045, conference: "ILTM Cannes", location: "Cannes, France", ttv: 4078938, pref: 1, score: 98 },
-            { rank: 2, advisorId: 2463, conference: "ILTM Americas", location: "Mexico City", ttv: 3449979, pref: 2, score: 95 },
-            { rank: 3, advisorId: 6841, conference: "LE Miami", location: "Miami, FL", ttv: 2657344, pref: 1, score: 94 },
-            { rank: 4, advisorId: 9236, conference: "LE Miami", location: "Miami, FL", ttv: 1753868, pref: 1, score: 87 },
-            { rank: 5, advisorId: 11508, conference: "ILTM Cannes", location: "Cannes, France", ttv: 2845192, pref: 2, score: 92 },
-            { rank: 6, advisorId: 8394, conference: "Do Not Disturb", location: "Portugal", ttv: 1892456, pref: 1, score: 89 },
-            { rank: 7, advisorId: 5750, conference: "Emotions Europe", location: "Madrid, Spain", ttv: 1634729, pref: 1, score: 86 },
-            { rank: 8, advisorId: 7821, conference: "ILTM Americas", location: "Mexico City", ttv: 1567843, pref: 3, score: 84 },
-            { rank: 9, advisorId: 4392, conference: "We Are Africa", location: "Cape Town, SA", ttv: 1438291, pref: 2, score: 82 },
-            { rank: 10, advisorId: 6321, conference: "LE Miami", location: "Miami, FL", ttv: 1329847, pref: 1, score: 85 },
-            { rank: 11, advisorId: 11119, conference: "DUCO Italy", location: "Milan, Italy", ttv: 987432, pref: 1, score: 81 },
-            { rank: 12, advisorId: 8756, conference: "Remote Immersion", location: "Iceland", ttv: 856394, pref: 2, score: 79 },
-            { rank: 13, advisorId: 9834, conference: "Further East", location: "Singapore", ttv: 743821, pref: 1, score: 78 },
-            { rank: 14, advisorId: 5429, conference: "TRUE Sicily", location: "Sicily, Italy", ttv: 687293, pref: 3, score: 76 },
-            { rank: 15, advisorId: 12847, conference: "PURE Life Experiences", location: "Swiss Alps", ttv: 634719, pref: 2, score: 74 },
-            { rank: 16, advisorId: 3821, conference: "Emotions: Balearics", location: "Mallorca, Spain", ttv: 492856, pref: 1, score: 72 },
-            { rank: 17, advisorId: 7395, conference: "TRUE Dolomites", location: "Italian Alps", ttv: 456123, pref: 2, score: 71 },
-            { rank: 18, advisorId: 9472, conference: "Emotions: Greece", location: "Santorini, Greece", ttv: 423697, pref: 1, score: 70 },
-            { rank: 19, advisorId: 5847, conference: "WAA Sundance", location: "Park City, UT", ttv: 387594, pref: 3, score: 68 },
-            { rank: 20, advisorId: 11293, conference: "DUCO France", location: "Paris, France", ttv: 342856, pref: 2, score: 67 },
-            { rank: 21, advisorId: 8639, conference: "Emotions Latin America", location: "Costa Rica", ttv: 298374, pref: 1, score: 66 },
-            { rank: 22, advisorId: 4782, conference: "TRUE Puglia", location: "Puglia, Italy", ttv: 256841, pref: 4, score: 65 },
-            { rank: 23, advisorId: 7164, conference: "DUCO Spain/Portugal", location: "Marbella, Spain", ttv: 234592, pref: 5, score: 64 },
-            { rank: 24, advisorId: 9583, conference: "Remote Immersion", location: "Iceland", ttv: 213847, pref: 3, score: 63 },
-            { rank: 25, advisorId: 6194, conference: "Emotions Madrid", location: "Madrid, Spain", ttv: 198563, pref: 2, score: 62 }
-        ];
+        let fileData = null;
+        let realMatches = [];
 
-        // File upload handler
+        // Conference details with descriptions
+        const conferenceDetails = {
+            "ILTM Cannes": { description: "The world's leading luxury travel trade show, featuring exclusive networking opportunities with top-tier suppliers and buyers in the luxury travel sector.", dates: "December 1-4, 2025", location: "Cannes, France" },
+            "ILTM Americas": { description: "The premier luxury travel event for the Americas, connecting regional specialists with international luxury travel suppliers.", dates: "September 2-5, 2025", location: "Mexico City, Mexico" },
+            "LE Miami": { description: "Luxury Exchange Miami brings together the most influential luxury travel advisors and suppliers for an intensive networking experience.", dates: "February 10-13, 2026", location: "Miami, FL" },
+            "Do Not Disturb": { description: "An exclusive wellness and retreat-focused conference for advisors specializing in transformative and mindful travel experiences.", dates: "April 20-23, 2026", location: "Portugal" },
+            "Emotions Europe": { description: "A conference focused on European travel specialization, featuring cultural immersion and authentic European travel experiences.", dates: "May 15-18, 2026", location: "Madrid, Spain" },
+            "We Are Africa": { description: "The definitive African travel showcase, connecting advisors with authentic safari and cultural experiences across the continent.", dates: "July 8-11, 2026", location: "Cape Town, South Africa" },
+            "DUCO Italy": { description: "An exclusive Italy-focused conference for advisors with significant Italian market expertise and client base.", dates: "March 23-27, 2026", location: "Milan, Italy" },
+            "Remote Immersion": { description: "Specializing in off-the-beaten-path and adventure travel, perfect for advisors booking unique remote destinations.", dates: "August 12-15, 2026", location: "Iceland" },
+            "Further East": { description: "Asia-Pacific travel conference focusing on emerging destinations and luxury experiences across Southeast Asia.", dates: "October 5-8, 2026", location: "Singapore" },
+            "TRUE Sicily": { description: "An intimate conference showcasing authentic Sicilian culture, cuisine, and luxury accommodations.", dates: "June 14-17, 2026", location: "Sicily, Italy" },
+            "PURE Life Experiences": { description: "Focusing on experiential and transformative luxury travel, emphasizing unique life-changing experiences.", dates: "November 18-21, 2026", location: "Swiss Alps" },
+            "Emotions: Balearics": { description: "Showcasing the luxury side of Spain's Balearic Islands, featuring exclusive resorts and yacht experiences.", dates: "May 28-31, 2026", location: "Mallorca, Spain" },
+            "TRUE Dolomites": { description: "Mountain luxury and alpine adventure conference set in Italy's stunning Dolomites region.", dates: "September 15-18, 2026", location: "Italian Alps" },
+            "Emotions: Greece": { description: "Greek island luxury travel conference featuring yacht charters, private villa experiences, and cultural immersion.", dates: "June 5-8, 2026", location: "Santorini, Greece" },
+            "WAA Sundance": { description: "Winter luxury travel conference coinciding with Sundance Film Festival, focusing on US mountain destinations.", dates: "January 20-23, 2026", location: "Park City, Utah" },
+            "DUCO France": { description: "Exclusive French market conference for advisors with substantial France booking volume and expertise.", dates: "November 2-6, 2026", location: "Paris, France" },
+            "Emotions Latin America": { description: "Central and South American travel showcase emphasizing adventure, culture, and eco-luxury experiences.", dates: "March 8-11, 2026", location: "Costa Rica" },
+            "TRUE Puglia": { description: "Southern Italian cultural and culinary conference showcasing Puglia's authentic charm and luxury properties.", dates: "April 12-15, 2026", location: "Puglia, Italy" },
+            "DUCO Spain/Portugal": { description: "Iberian Peninsula conference for advisors with significant Spain and Portugal market presence.", dates: "October 19-23, 2026", location: "Marbella, Spain" },
+            "Emotions Madrid": { description: "Spanish mainland cultural conference focusing on art, cuisine, and luxury city experiences.", dates: "June 1-4, 2026", location: "Madrid, Spain" }
+        };
+
+        // File upload handler with real Excel processing
         document.getElementById('file-input').addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const data = new Uint8Array(event.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    
+                    // Process the sheets
+                    processExcelData(workbook);
+                    
+                } catch (error) {
+                    console.error('Error reading Excel file:', error);
+                    document.getElementById('file-status').innerHTML = `
+                        <div style="background: #f8d7da; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #dc3545;">
+                            <p style="color: #dc3545; font-weight: 600;">❌ Error reading file: ${error.message}</p>
+                        </div>
+                    `;
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        function processExcelData(workbook) {
+            try {
+                const debugInfo = document.getElementById('debug-info');
+                debugInfo.style.display = 'block';
+                
+                // Get sheet names
+                const sheetNames = workbook.SheetNames;
+                debugInfo.innerHTML = `<strong>Sheets found:</strong> ${sheetNames.join(', ')}`;
+                
+                // Process advisor preferences
+                const advisorSheet = workbook.Sheets['Advisor Preferences'];
+                if (!advisorSheet) {
+                    throw new Error('Advisor Preferences sheet not found');
+                }
+                
+                const advisorData = XLSX.utils.sheet_to_json(advisorSheet, { header: 1 });
+                const headers = advisorData[0];
+                const rows = advisorData.slice(1);
+                
+                // Process TTV data
+                const ttvSheet = workbook.Sheets['Advisor 12 month trailing TTV'];
+                const ttvData = ttvSheet ? XLSX.utils.sheet_to_json(ttvSheet) : [];
+                
+                // Process geo data
+                const geoSheet = workbook.Sheets['Geo Values'];
+                const geoData = geoSheet ? XLSX.utils.sheet_to_json(geoSheet) : [];
+                
+                // Process conference data
+                const confSheet = workbook.Sheets['Conference Spots'];
+                const confData = confSheet ? XLSX.utils.sheet_to_json(confSheet) : [];
+                
+                // Create data structures
+                fileData = {
+                    advisors: processAdvisors(headers, rows),
+                    ttv: createTTVMap(ttvData),
+                    geo: createGeoMap(geoData),
+                    conferences: confData
+                };
+                
+                debugInfo.innerHTML += `<br><strong>Processed:</strong> ${fileData.advisors.length} advisors, ${Object.keys(fileData.ttv).length} TTV records, ${confData.length} conferences`;
+                
+                // Enable the process button
+                const processBtn = document.getElementById('process-btn');
+                processBtn.disabled = false;
+                processBtn.textContent = 'Generate Real Matches';
+                processBtn.style.background = '#28a745';
+                
                 document.getElementById('file-status').innerHTML = `
-                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #bbf7d0;">
-                        <p style="color: #16a34a; font-weight: 600;">✓ File uploaded: ${e.target.files[0].name}</p>
+                    <div style="background: #d4edda; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #28a745;">
+                        <p style="color: #28a745; font-weight: 600;">✓ File processed successfully!</p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Error processing Excel data:', error);
+                document.getElementById('file-status').innerHTML = `
+                    <div style="background: #f8d7da; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 1px solid #dc3545;">
+                        <p style="color: #dc3545; font-weight: 600;">❌ Error processing file: ${error.message}</p>
                     </div>
                 `;
             }
-        });
+        }
+
+        function processAdvisors(headers, rows) {
+            const advisors = [];
+            
+            rows.forEach(row => {
+                if (!row[1]) return; // Skip empty advisor ID
+                
+                const advisor = {
+                    id: row[1],
+                    previousConference: row[2] === 'None!' ? null : row[2],
+                    preferences: [],
+                    notes: row[25] || ''
+                };
+                
+                // Extract preferences from columns 3-21
+                for (let i = 3; i <= 21; i++) {
+                    if (headers[i] && typeof row[i] === 'number' && row[i] >= 1 && row[i] <= 5) {
+                        advisor.preferences.push({
+                            conference: headers[i],
+                            ranking: row[i]
+                        });
+                    }
+                }
+                
+                advisor.preferences.sort((a, b) => a.ranking - b.ranking);
+                advisors.push(advisor);
+            });
+            
+            return advisors;
+        }
+
+        function createTTVMap(ttvData) {
+            const ttvMap = {};
+            ttvData.forEach(record => {
+                if (record['Advisor ID']) {
+                    ttvMap[record['Advisor ID']] = record['Commissionable Booking Value (12 Months)'] || 0;
+                }
+            });
+            return ttvMap;
+        }
+
+        function createGeoMap(geoData) {
+            const geoMap = {};
+            geoData.forEach(record => {
+                if (record['Advisor ID']) {
+                    const id = record['Advisor ID'];
+                    if (!geoMap[id]) geoMap[id] = {};
+                    const country = record.Country;
+                    const value = record['Commissionable Booking Value'] || 0;
+                    if (!geoMap[id][country]) geoMap[id][country] = 0;
+                    geoMap[id][country] += value;
+                }
+            });
+            return geoMap;
+        }
 
         function runMatching() {
+            if (!fileData) {
+                alert('Please upload your Excel file first');
+                return;
+            }
+            
             // Show processing
             document.getElementById('upload-step').classList.add('hidden');
             document.getElementById('processing-step').classList.remove('hidden');
-
-            // Simulate processing time
+            
+            const statusDiv = document.getElementById('processing-status');
+            statusDiv.innerHTML = '<p>Processing your real data...</p>';
+            
+            // Run the actual matching algorithm
             setTimeout(() => {
-                showResults();
-            }, 3000);
+                try {
+                    realMatches = runRealMatchingAlgorithm(fileData);
+                    showRealResults();
+                } catch (error) {
+                    console.error('Matching error:', error);
+                    statusDiv.innerHTML = `<p style="color: #dc3545;">Error: ${error.message}</p>`;
+                }
+            }, 2000);
         }
 
-        function showResults() {
+        function runRealMatchingAlgorithm(data) {
+            const { advisors, ttv, geo, conferences } = data;
+            
+            // Enrich advisors with TTV and geo data
+            const enrichedAdvisors = advisors
+                .filter(advisor => ttv[advisor.id]) // Only advisors with TTV data
+                .map(advisor => ({
+                    ...advisor,
+                    totalTTV: ttv[advisor.id] || 0,
+                    geoTTV: geo[advisor.id] || {}
+                }))
+                .sort((a, b) => b.totalTTV - a.totalTTV); // Sort by TTV descending
+            
+            // Initialize conference capacity
+            const conferenceCapacity = {};
+            conferences.forEach(conf => {
+                conferenceCapacity[conf.Conference] = conf.Capacity || 10; // Default capacity
+            });
+            
+            const matches = [];
+            
+            // Run matching for each advisor
+            for (const advisor of enrichedAdvisors) {
+                if (matches.length >= 25) break;
+                
+                let bestMatch = null;
+                let bestScore = -1;
+                
+                // Try each conference
+                for (const conference of conferences) {
+                    if (conferenceCapacity[conference.Conference] <= 0) continue;
+                    
+                    const score = calculateRealMatchScore(advisor, conference);
+                    
+                    if (score.eligible && score.total > bestScore) {
+                        bestMatch = {
+                            advisor,
+                            conference,
+                            score
+                        };
+                        bestScore = score.total;
+                    }
+                }
+                
+                if (bestMatch) {
+                    matches.push(bestMatch);
+                    conferenceCapacity[bestMatch.conference.Conference]--;
+                }
+            }
+            
+            return matches;
+        }
+
+        function calculateRealMatchScore(advisor, conference) {
+            // Business priority (40% weight)
+            const businessPriority = Math.min(advisor.totalTTV / 2000000, 1.0) * 100 * 0.4;
+            
+            // Preference score (35% weight)
+            const preference = advisor.preferences.find(p => p.conference === conference.Conference);
+            const preferenceScore = preference ? (6 - preference.ranking) * 20 * 0.35 : 0;
+            
+            // Check eligibility
+            const eligibility = checkRealEligibility(advisor, conference);
+            const qualificationScore = eligibility.eligible ? 100 * 0.25 : 0;
+            
+            return {
+                total: businessPriority + preferenceScore + qualificationScore,
+                business: businessPriority,
+                preference: preferenceScore,
+                qualification: qualificationScore,
+                eligible: eligibility.eligible,
+                reason: eligibility.reason
+            };
+        }
+
+        function checkRealEligibility(advisor, conference) {
+            const conf = conference.Conference;
+            
+            // Check repeats
+            if (advisor.previousConference === conf) {
+                return { eligible: false, reason: 'Repeat attendance' };
+            }
+            
+            // Geographic requirements based on real data
+            if (conf === 'DUCO Italy') {
+                const italyTTV = advisor.geoTTV['Italy'] || 0;
+                if (italyTTV < 200000) {
+                    return { eligible: false, reason: `Italy TTV: $${italyTTV.toLocaleString()} < $200k` };
+                }
+            }
+            
+            if (conf === 'DUCO France') {
+                const franceTTV = advisor.geoTTV['France'] || 0;
+                if (franceTTV < 200000) {
+                    return { eligible: false, reason: `France TTV: $${franceTTV.toLocaleString()} < $200k` };
+                }
+            }
+            
+            if (conf === 'DUCO Spain/Portugal') {
+                const spainTTV = (advisor.geoTTV['Spain'] || 0) + (advisor.geoTTV['Portugal'] || 0);
+                if (spainTTV < 200000) {
+                    return { eligible: false, reason: `Iberia TTV: $${spainTTV.toLocaleString()} < $200k` };
+                }
+            }
+            
+            if (conf === 'ILTM Cannes' && advisor.totalTTV < 2000000) {
+                return { eligible: false, reason: `Total TTV: $${advisor.totalTTV.toLocaleString()} < $2M` };
+            }
+            
+            return { eligible: true, reason: 'Qualified' };
+        }
+
+        function showRealResults() {
             document.getElementById('processing-step').classList.add('hidden');
             document.getElementById('results-step').classList.remove('hidden');
-
+            
+            // Update stats
+            const totalTTV = realMatches.reduce((sum, match) => sum + match.advisor.totalTTV, 0);
+            const topPrefCount = realMatches.filter(match => {
+                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
+                return pref && pref.ranking <= 3;
+            }).length;
+            
+            document.getElementById('results-title').textContent = `${realMatches.length} Real Matches Generated!`;
+            document.getElementById('pref-stat').textContent = `${Math.round((topPrefCount / realMatches.length) * 100)}%`;
+            document.getElementById('ttv-stat').textContent = `$${Math.round(totalTTV / 1000000)}M`;
+            document.getElementById('qual-stat').textContent = '100%';
+            
             // Populate matches
             const matchesList = document.getElementById('matches-list');
-            matchesList.innerHTML = sampleMatches.map(match => `
-                <div class="match-item">
-                    <div>
-                        <div class="advisor-info">#${match.rank} Advisor ${match.advisorId} → ${match.conference}</div>
-                        <div style="color: #6b7280; font-size: 0.875rem;">${match.location}</div>
-                    </div>
-                    <div class="ttv-info">
-                        <div>$${match.ttv.toLocaleString()}</div>
-                        <div>#${match.pref} preference</div>
-                        <div style="background: #dcfce7; color: #166534; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-top: 0.25rem;">
-                            Score: ${match.score}/100
+            matchesList.innerHTML = realMatches.map((match, i) => {
+                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
+                return `
+                    <div class="match-item">
+                        <div>
+                            <div class="advisor-info">#${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
+                            <div style="color: #6c757d; font-size: 0.875rem;">${match.conference.Location || 'Location TBD'}</div>
+                            ${match.advisor.notes ? `<div style="color: #6c757d; font-size: 0.75rem; font-style: italic;">${match.advisor.notes.substring(0, 50)}...</div>` : ''}
+                        </div>
+                        <div class="ttv-info">
+                            <div>$${match.advisor.totalTTV.toLocaleString()}</div>
+                            <div>${pref ? `#${pref.ranking} preference` : 'Not ranked'}</div>
+                            <div style="background: #d4edda; color: #28a745; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-top: 0.25rem;">
+                                Score: ${Math.round(match.score.total)}/100
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function downloadCSV(data, filename) {
@@ -378,42 +742,77 @@
         }
 
         function downloadMatches() {
-            const csvContent = sampleMatches.map(match => 
-                `${match.rank},${match.advisorId},${match.conference},${match.ttv},${match.pref},${match.score},${match.location}`
-            ).join('\n');
+            if (realMatches.length === 0) {
+                alert('No matches to download. Please run the matching algorithm first.');
+                return;
+            }
             
-            const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location\n';
-            downloadCSV(header + csvContent, 'fora_conference_matches.csv');
+            const csvContent = realMatches.map((match, i) => {
+                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
+                return [
+                    i + 1,
+                    match.advisor.id,
+                    match.conference.Conference,
+                    match.advisor.totalTTV,
+                    pref ? pref.ranking : 'Not ranked',
+                    Math.round(match.score.total),
+                    match.conference.Location || 'TBD',
+                    match.advisor.notes.replace(/,/g, ';') // Replace commas to avoid CSV issues
+                ].join(',');
+            }).join('\n');
+            
+            const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location,Notes\n';
+            downloadCSV(header + csvContent, 'fora_conference_matches_real.csv');
         }
 
         function downloadEmails() {
-            const emailTemplates = sampleMatches.map(match => {
-                const tier = match.ttv >= 2000000 ? 'Premium ($2M+)' : 
-                             match.ttv >= 1000000 ? 'Professional ($1M+)' : 'Rising Star';
+            if (realMatches.length === 0) {
+                alert('No matches to download. Please run the matching algorithm first.');
+                return;
+            }
+            
+            const emailTemplates = realMatches.map((match) => {
+                const tier = match.advisor.totalTTV >= 2000000 ? 'Premium ($2M+)' : 
+                             match.advisor.totalTTV >= 1000000 ? 'Professional ($1M+)' : 'Rising Star';
                 
-                const emailBody = `Dear Advisor ${match.advisorId},
+                const pref = match.advisor.preferences.find(p => p.conference === match.conference.Conference);
+                const conference = conferenceDetails[match.conference.Conference] || {
+                    description: `An exclusive conference focused on ${match.conference.Conference}.`,
+                    dates: "Dates TBD",
+                    location: match.conference.Location || "Location TBD"
+                };
+                
+                const emailBody = `Dear Advisor ${match.advisor.id},
 
-We're excited to assign you to ${match.conference}!
+We're excited to assign you to ${match.conference.Conference}!
 
-Conference Details:
-📍 Location: ${match.location}
-🎯 Your Match Score: ${match.score}/100
+ABOUT THIS CONFERENCE:
+${conference.description}
 
-Why this is perfect for you:
-• Your ${tier} status with $${match.ttv.toLocaleString()} TTV
-• This was your #${match.pref} preference choice
-• Excellent alignment with your business focus
+CONFERENCE DETAILS:
+📅 Dates: ${conference.dates}
+📍 Location: ${conference.location}
 
-Please confirm your attendance by replying to this email.
+WHY THIS IS PERFECT FOR YOU:
+• Your ${tier} status with ${match.advisor.totalTTV.toLocaleString()} TTV qualifies you for this premium event
+• ${pref ? `This was your #${pref.ranking} preference choice - excellent alignment!` : 'This conference aligns perfectly with your business focus and expertise'}
+• The conference focus matches your expertise and client portfolio
+• Excellent networking opportunities with peers in your market segment
+
+NEXT STEPS:
+Please confirm your attendance by replying to this email by [CONFIRMATION DEADLINE].
+We'll send detailed travel and accommodation information once confirmed.
+
+Looking forward to seeing you there!
 
 Best regards,
 The Fora Conference Team`;
 
-                return `${match.advisorId},"Your Conference Assignment: ${match.conference}","${emailBody.replace(/"/g, '""')}"`;
+                return `${match.advisor.id},"Your Conference Assignment: ${match.conference.Conference}","${emailBody.replace(/"/g, '""')}"`;
             }).join('\n');
             
             const emailHeader = 'Advisor ID,Email Subject,Email Body\n';
-            downloadCSV(emailHeader + emailTemplates, 'fora_conference_emails.csv');
+            downloadCSV(emailHeader + emailTemplates, 'fora_conference_emails_real.csv');
         }
     </script>
 </body>
