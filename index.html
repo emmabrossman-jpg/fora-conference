@@ -1233,53 +1233,16 @@ The Fora Conference Team`;
             downloadCSV(emailHeader + emailTemplates, 'fora_conference_emails.csv');
         }
 
-        function downloadUnmatchedList() {
-            if (unmatchedAdvisors.length === 0) return;
-
-            const csvContent = unmatchedAdvisors.map((unmatched, i) => 
-                [i + 1, unmatched.advisor.id, unmatched.advisor.totalTTV, unmatched.reasons.join('; '), `"${unmatched.advisor.notes.replace(/"/g, '""')}"`].join(',')
-            ).join('\n');
-
-            const header = 'Rank,Advisor ID,TTV,Reasons Not Matched,Notes\n';
-            downloadCSV(header + csvContent, 'fora_unmatched_advisors.csv');
-        }
-
-        function downloadUnmatchedEmails() {
-            if (unmatchedAdvisors.length === 0) return;
-
-            const emailTemplates = unmatchedAdvisors.map((unmatched) => {
-                const tier = unmatched.advisor.totalTTV >= 2000000 ? 'Premium ($2M+)' : 
-                             unmatched.advisor.totalTTV >= 1000000 ? 'Professional ($1M+)' : 'Rising Star';
-                
-                const emailBody = `Dear Advisor ${unmatched.advisor.id},
-
-Thank you for submitting your conference preferences for the 2025-2026 season.
-
-CURRENT STATUS:
-Unfortunately, we were unable to secure a placement for you at this time due to high demand for the conferences you selected.
-
-YOUR PROFILE:
-• ${tier} status with ${unmatched.advisor.totalTTV.toLocaleString()} TTV
-• Reasons for no placement: ${unmatched.reasons.join(', ')}
-
-NEXT STEPS:
-1. We will contact you immediately if any spots become available due to cancellations
-2. You will have priority consideration for 2026-2027 conference selections
-3. We recommend expanding your preferences to include additional conferences with availability
-
-ALTERNATIVE OPPORTUNITIES:
-We'd be happy to discuss other professional development opportunities that might align with your expertise and schedule.
-
-Please don't hesitate to reach out if you have any questions or would like to discuss alternative options.
-
-Best regards,
-The Fora Conference Team`;
-
-                return `${unmatched.advisor.id},"Conference Application Update - Priority Waitlist","${emailBody.replace(/"/g, '""')}"`;
-            }).join('\n');
-            
-            const emailHeader = 'Advisor ID,Email Subject,Email Body\n';
-            downloadCSV(emailHeader + emailTemplates, 'fora_unmatched_emails.csv');
+        function downloadCSV(data, filename) {
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         // Initialize conferences section on page load
