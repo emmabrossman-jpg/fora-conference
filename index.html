@@ -44,31 +44,15 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: serif;
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c2c2c;
+            width: 120px;
+            height: 40px;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg"><text x="0" y="90" font-family="serif" font-size="100" font-weight="normal" fill="white">FORA</text></svg>') center/contain no-repeat;
             opacity: 0.9;
             z-index: 1;
         }
 
         .header::after {
-            content: 'F';
-            position: absolute;
-            top: 35px;
-            right: 35px;
-            font-family: serif;
-            font-size: 28px;
-            font-weight: bold;
-            color: #2c2c2c;
-            z-index: 2;
+            content: '';
         }
 
         .header h1 {
@@ -1247,7 +1231,7 @@
                 
                 const emailBody = `Dear Advisor ${match.advisor.id},
 
-We're excited to assign you to ${match.conference.Conference}!
+We're excited to confirm your placement at ${match.conference.Conference}!
 
 ABOUT THIS CONFERENCE:
 ${conference.description}
@@ -1256,11 +1240,11 @@ CONFERENCE DETAILS:
 📅 Dates: ${conference.dates}
 📍 Location: ${conference.location}
 
-WHY THIS IS PERFECT FOR YOU:
-• Your ${tier} status with ${match.advisor.totalTTV.toLocaleString()} TTV qualifies you for this premium event
-• This was your #${match.preferenceRank} preference choice - excellent alignment!
-• The conference focus matches your expertise and client portfolio
+WHY THIS IS A GREAT FIT:
+• Your experience and expertise align well with this conference's focus
+• This conference matches your stated preferences and professional goals
 • Excellent networking opportunities with peers in your market segment
+• Access to cutting-edge industry insights and supplier relationships
 
 NEXT STEPS:
 Please confirm your attendance by replying to this email by [CONFIRMATION DEADLINE].
@@ -1269,7 +1253,7 @@ We'll send detailed travel and accommodation information once confirmed.
 Looking forward to seeing you there!
 
 Best regards,
-The Fora Conference Team`;
+The Fora Team`;
 
                 return `${match.advisor.id},"Your Conference Assignment: ${match.conference.Conference}","${emailBody.replace(/"/g, '""')}"`;
             }).join('\n');
