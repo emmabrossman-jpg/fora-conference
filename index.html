@@ -1095,9 +1095,9 @@
             matchesList.innerHTML = realMatches.map((match, i) => `
                 <div class="match-item">
                     <div style="flex: 1;">
-                        <div class="advisor-info">#${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
+                        <div class="advisor-info">👤 #${i + 1} Advisor ${match.advisor.id} → ${match.conference.Conference}</div>
                         <div class="conference-location">${match.conference.Location} • ${match.conference.Dates}</div>
-                        ${match.advisor.notes ? `<div style="color: #64748b; font-size: 0.75rem; margin-top: 0.5rem; font-style: italic;">${match.advisor.notes.substring(0, 80)}...</div>` : ''}
+                        ${match.advisor.notes ? `<div style="color: #666666; font-size: 0.875rem; margin-top: 0.75rem; line-height: 1.4; padding: 0.75rem; background: #f8f8f8; border-left: 3px solid #2c2c2c;"><strong>Notes:</strong> ${match.advisor.notes}</div>` : ''}
                     </div>
                     <div class="ttv-info">
                         <div class="ttv-amount">${match.advisor.totalTTV.toLocaleString()}</div>
@@ -1112,7 +1112,7 @@
             if (realMatches.length === 0) return;
 
             const csvContent = realMatches.map((match, i) => 
-                [i + 1, match.advisor.id, match.conference.Conference, match.advisor.totalTTV, match.preferenceRank, Math.round(match.score.total), match.conference.Location, match.conference.Dates, match.advisor.notes.replace(/,/g, ';')].join(',')
+                [i + 1, match.advisor.id, match.conference.Conference, match.advisor.totalTTV, match.preferenceRank, Math.round(match.score.total), match.conference.Location, match.conference.Dates, `"${match.advisor.notes.replace(/"/g, '""')}"`].join(',')
             ).join('\n');
 
             const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location,Dates,Notes\n';
