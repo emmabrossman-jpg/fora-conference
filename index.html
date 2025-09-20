@@ -28,55 +28,79 @@
         .header {
             text-align: center;
             margin-bottom: 3rem;
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            padding: 3rem 2rem;
-            border: 1px solid #e2e8f0;
+            background: linear-gradient(rgba(44, 44, 44, 0.6), rgba(44, 44, 44, 0.6)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=400&fit=crop&crop=center') center/cover;
+            padding: 4rem 2rem;
+            border: 1px solid #e8e8e8;
             position: relative;
             overflow: hidden;
+            color: white;
         }
 
         .header::before {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 200px;
-            height: 200px;
-            background: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop&crop=center') center/cover;
-            opacity: 0.1;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: white;
             border-radius: 50%;
-            transform: translate(50px, -50px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c2c2c;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .header::after {
+            content: 'F';
+            position: absolute;
+            top: 35px;
+            right: 35px;
+            font-family: serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c2c2c;
+            z-index: 2;
         }
 
         .header h1 {
             font-size: 2.75rem;
-            font-weight: 600;
-            color: #0f172a;
+            font-weight: 400;
+            color: white;
             margin-bottom: 1rem;
             position: relative;
             z-index: 1;
+            font-style: italic;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .header p {
             font-size: 1.125rem;
-            color: #475569;
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 2rem;
             position: relative;
             z-index: 1;
+            font-weight: 300;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .algorithm-section {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
             padding: 2.5rem;
             margin-bottom: 2rem;
         }
 
         .algorithm-section h2 {
-            color: #0f172a;
+            color: #2c2c2c;
             margin-bottom: 1rem;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 400;
         }
 
         .algorithm-grid {
@@ -87,9 +111,9 @@
         }
 
         .algorithm-card {
-            background: #ffffff;
+            background: #faf9f7;
             padding: 2rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e8e8e8;
             transition: all 0.3s ease;
         }
 
@@ -99,26 +123,26 @@
         }
 
         .algorithm-card h3 {
-            color: #334155;
+            color: #2c2c2c;
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .scoring-formula {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            border: 1px solid #cbd5e1;
+            background: #f8f8f8;
+            border: 1px solid #e8e8e8;
             padding: 1.5rem;
             margin-top: 1.5rem;
             font-family: 'Monaco', 'Consolas', monospace;
-            color: #334155;
+            color: #2c2c2c;
             text-align: center;
             font-weight: 500;
         }
 
         .main-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
             padding: 2.5rem;
             margin-bottom: 2rem;
         }
@@ -126,23 +150,23 @@
         .upload-section {
             text-align: center;
             padding: 3rem;
-            border: 2px dashed #cbd5e1;
+            border: 2px dashed #cccccc;
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            background: #faf9f7;
             transition: all 0.3s ease;
         }
 
         .upload-section:hover {
-            border-color: #94a3b8;
+            border-color: #999999;
             background: #ffffff;
         }
 
         .upload-button {
-            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            background: #2c2c2c;
             color: white;
             padding: 1rem 2rem;
             border: none;
-            font-weight: 500;
+            font-weight: 400;
             cursor: pointer;
             margin: 1rem;
             transition: all 0.3s ease;
@@ -152,7 +176,7 @@
         }
 
         .upload-button:hover {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: #1a1a1a;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
@@ -195,8 +219,8 @@
         .stat-card {
             padding: 2.5rem 2rem;
             text-align: center;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
             transition: all 0.3s ease;
         }
 
@@ -207,22 +231,22 @@
 
         .stat-number {
             font-size: 3rem;
-            font-weight: 600;
+            font-weight: 300;
             margin-bottom: 1rem;
-            color: #0f172a;
+            color: #2c2c2c;
         }
 
         .stat-label {
-            color: #64748b;
+            color: #666666;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .matches-container {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border: 1px solid #e2e8f0;
+            background: #faf9f7;
+            border: 1px solid #e8e8e8;
             padding: 2rem;
             margin: 2rem 0;
             max-height: 500px;
@@ -234,11 +258,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.75rem;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
             margin-bottom: 0.75rem;
             transition: all 0.3s ease;
-            border-left: 4px solid #334155;
+            border-left: 4px solid #2c2c2c;
         }
 
         .match-item:hover {
@@ -248,12 +272,12 @@
 
         .advisor-info {
             font-weight: 500;
-            color: #0f172a;
+            color: #2c2c2c;
             font-size: 1.05rem;
         }
 
         .conference-location {
-            color: #64748b;
+            color: #666666;
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
@@ -264,22 +288,22 @@
         }
 
         .ttv-amount {
-            color: #0f172a;
+            color: #2c2c2c;
             font-weight: 600;
             font-size: 1rem;
         }
 
         .preference-rank {
-            color: #64748b;
+            color: #666666;
             margin: 0.25rem 0;
         }
 
         .score-badge {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            color: #334155;
+            background: #f8f8f8;
+            color: #2c2c2c;
             padding: 0.375rem 0.75rem;
             margin-top: 0.5rem;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #e8e8e8;
             display: inline-block;
             font-weight: 500;
             font-size: 0.8rem;
@@ -293,11 +317,11 @@
         }
 
         .download-button {
-            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            background: #2c2c2c;
             color: white;
             padding: 1.25rem 1.5rem;
             border: none;
-            font-weight: 500;
+            font-weight: 400;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
@@ -306,7 +330,7 @@
         }
 
         .download-button:hover {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: #1a1a1a;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
@@ -318,8 +342,8 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid #e2e8f0;
-            border-top: 4px solid #334155;
+            border: 4px solid #e8e8e8;
+            border-top: 4px solid #2c2c2c;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 3rem auto;
@@ -331,8 +355,8 @@
         }
 
         .conferences-section {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
             padding: 2.5rem;
             margin-bottom: 2rem;
         }
@@ -345,9 +369,9 @@
         }
 
         .conference-card {
-            background: #ffffff;
+            background: #faf9f7;
             padding: 1.5rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e8e8e8;
             transition: all 0.3s ease;
         }
 
@@ -357,13 +381,13 @@
         }
 
         .conference-name {
-            font-weight: 600;
-            color: #0f172a;
+            font-weight: 500;
+            color: #2c2c2c;
             margin-bottom: 0.5rem;
         }
 
         .conference-details {
-            color: #64748b;
+            color: #666666;
             font-size: 0.875rem;
             line-height: 1.5;
         }
@@ -740,22 +764,17 @@
         function loadSampleData() {
             // Create sample advisor data with realistic conference preferences
             const sampleAdvisors = [
-                { id: 3045, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO France', ranking: 3}], previousConference: null, notes: 'Luxury specialist with strong European network. 5+ years experience.' },
-                { id: 2463, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'DUCO Italy', ranking: 2}, {conference: 'LE Miami', ranking: 3}], previousConference: null, notes: 'High-volume Americas advisor with established Italian client base.' },
-                { id: 6841, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'Do Not Disturb', ranking: 2}, {conference: 'ILTM Cannes', ranking: 3}], previousConference: 'ILTM Americas', notes: 'Strong luxury leisure focus with UHNW clients.' },
-                { id: 9236, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'ILTM Cannes', ranking: 2}], previousConference: null, notes: 'Can\'t travel Feb-June due to family commitments. LE is only first half conference I can attend.' },
-                { id: 11508, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'PURE Life Experiences', ranking: 3}], previousConference: null, notes: 'European specialist with luxury focus and experiential expertise.' },
-                { id: 8394, preferences: [{conference: 'Do Not Disturb', ranking: 1}, {conference: 'Emotions Madrid', ranking: 2}], previousConference: null, notes: 'Wellness and retreat specialist with UHNW private travel expertise.' },
-                { id: 5750, preferences: [{conference: 'Emotions Madrid', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO Spain/Portugal', ranking: 3}], previousConference: null, notes: 'European market focus with strong Spanish/Portuguese expertise.' },
-                { id: 7821, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'We Are Africa', ranking: 2}], previousConference: null, notes: 'Americas regional specialist with emerging Africa interest.' },
-                { id: 4392, preferences: [{conference: 'We Are Africa', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'We Are Africa Sundance', ranking: 3}], previousConference: null, notes: 'Established advisor wanting to expand into African market.' },
-                { id: 6321, preferences: [{conference: 'Further East', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}], previousConference: null, notes: 'Asia-Pacific specialist focusing on luxury APAC experiences.' }
+                { id: 3045, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO France', ranking: 3}], previousConference: null, notes: 'Luxury specialist with strong European network. 5+ years experience.', totalTTV: 4078938 },
+                { id: 2463, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'DUCO Italy', ranking: 2}, {conference: 'LE Miami', ranking: 3}], previousConference: null, notes: 'High-volume Americas advisor with established Italian client base.', totalTTV: 3449979 },
+                { id: 6841, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'Do Not Disturb', ranking: 2}, {conference: 'ILTM Cannes', ranking: 3}], previousConference: 'ILTM Americas', notes: 'Strong luxury leisure focus with UHNW clients.', totalTTV: 2657344 },
+                { id: 9236, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'ILTM Cannes', ranking: 2}], previousConference: null, notes: 'Can\'t travel Feb-June due to family commitments. LE is only first half conference I can attend.', totalTTV: 1753868 },
+                { id: 11508, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'PURE Life Experiences', ranking: 3}], previousConference: null, notes: 'European specialist with luxury focus and experiential expertise.', totalTTV: 2845192 },
+                { id: 8394, preferences: [{conference: 'Do Not Disturb', ranking: 1}, {conference: 'Emotions Madrid', ranking: 2}], previousConference: null, notes: 'Wellness and retreat specialist with UHNW private travel expertise.', totalTTV: 1892456 },
+                { id: 5750, preferences: [{conference: 'Emotions Madrid', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO Spain/Portugal', ranking: 3}], previousConference: null, notes: 'European market focus with strong Spanish/Portuguese expertise.', totalTTV: 1634729 },
+                { id: 7821, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'We Are Africa', ranking: 2}], previousConference: null, notes: 'Americas regional specialist with emerging Africa interest.', totalTTV: 1567843 },
+                { id: 4392, preferences: [{conference: 'We Are Africa', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'We Are Africa Sundance', ranking: 3}], previousConference: null, notes: 'Established advisor wanting to expand into African market.', totalTTV: 1438291 },
+                { id: 6321, preferences: [{conference: 'Further East', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}], previousConference: null, notes: 'Asia-Pacific specialist focusing on luxury APAC experiences.', totalTTV: 1329847 }
             ];
-
-            const sampleTTV = {
-                3045: 4078938, 2463: 3449979, 6841: 2657344, 9236: 1753868, 11508: 2845192,
-                8394: 1892456, 5750: 1634729, 7821: 1567843, 4392: 1438291, 6321: 1329847
-            };
 
             // Sample geographic TTV data to test requirements
             const sampleGeoTTV = {
@@ -767,6 +786,11 @@
                 6321: { "Asia": 800000, "Japan": 300000, "Thailand": 200000 }
             };
 
+            const sampleTTV = {};
+            sampleAdvisors.forEach(advisor => {
+                sampleTTV[advisor.id] = advisor.totalTTV;
+            });
+
             fileData = {
                 advisors: sampleAdvisors,
                 ttv: sampleTTV,
@@ -777,12 +801,12 @@
             // Enable processing
             const processBtn = document.getElementById('process-btn');
             processBtn.disabled = false;
-            processBtn.textContent = '🚀 Generate Sample Matches';
+            processBtn.textContent = 'Generate Sample Matches';
             processBtn.style.background = '#2c2c2c';
 
             document.getElementById('file-status').innerHTML = `
                 <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 1.25rem; margin-top: 1rem; border: 1px solid #10b981;">
-                    <p style="color: #065f46; font-weight: 500;">✅ Sample data loaded successfully!</p>
+                    <p style="color: #065f46; font-weight: 500;">Sample data loaded successfully!</p>
                     <p style="color: #047857; font-size: 0.875rem; margin-top: 0.5rem;">10 advisors with preferences and TTV data ready for matching</p>
                 </div>
             `;
@@ -1181,4 +1205,4 @@ The Fora Conference Team`;
         populateConferences();
     </script>
 </body>
-</html>
+</html> 
