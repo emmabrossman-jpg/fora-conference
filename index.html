@@ -72,14 +72,16 @@
         }
 
         .header h1 {
+            font-family: 'Fraunces', serif;
             font-size: 2.75rem;
-            font-weight: 400;
+            font-weight: 900;
             color: white;
             margin-bottom: 1rem;
             position: relative;
             z-index: 1;
-            font-style: italic;
+            text-transform: uppercase;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.02em;
         }
 
         .header p {
@@ -100,10 +102,13 @@
         }
 
         .algorithm-section h2 {
+            font-family: 'Fraunces', serif;
             color: #2c2c2c;
             margin-bottom: 1rem;
             font-size: 1.5rem;
-            font-weight: 400;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .algorithm-grid {
@@ -126,10 +131,13 @@
         }
 
         .algorithm-card h3 {
+            font-family: 'Fraunces', serif;
             color: #2c2c2c;
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
-            font-weight: 500;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .scoring-formula {
@@ -162,6 +170,15 @@
         .upload-section:hover {
             border-color: #999999;
             background: #ffffff;
+        }
+
+        .upload-section h3 {
+            font-family: 'Fraunces', serif;
+            color: #2c2c2c;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .upload-button {
@@ -364,6 +381,16 @@
             margin-bottom: 2rem;
         }
 
+        .conferences-section h2 {
+            font-family: 'Fraunces', serif;
+            color: #2c2c2c;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
         .conferences-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -395,6 +422,20 @@
             line-height: 1.5;
         }
 
+        #results-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .matches-container h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
         @media (max-width: 768px) {
             .stats-grid, .conferences-grid {
                 grid-template-columns: 1fr;
@@ -418,7 +459,7 @@
         </div>
 
         <div class="algorithm-section">
-            <h2>🧠 How Our Matching Algorithm Works</h2>
+            <h2>How Our Matching Algorithm Works</h2>
             <div class="algorithm-grid">
                 <div class="algorithm-card">
                     <h3>Business Priority (40%)</h3>
@@ -439,7 +480,7 @@
         </div>
 
         <div class="conferences-section">
-            <h2>📅 2025-2026 Conference Calendar</h2>
+            <h2>2025-2026 Conference Calendar</h2>
             <div class="conferences-grid" id="conferences-list">
                 <!-- Conferences will be populated here -->
             </div>
@@ -501,10 +542,10 @@
 
                 <div class="download-section">
                     <button class="download-button" onclick="downloadMatches()">
-                        📄 Download Match Results
+                        Download Match Results
                     </button>
                     <button class="download-button" onclick="downloadEmails()">
-                        📧 Download Email Templates
+                        Download Email Templates
                     </button>
                 </div>
             </div>
@@ -516,7 +557,7 @@
         let realMatches = [];
         let unmatchedAdvisors = [];
 
-        // Complete conference database with all details, requirements, and capacity
+        // Complete conference database
         const conferenceDatabase = {
             "DUCO Italy": { 
                 location: "Milan, Italy", 
@@ -737,7 +778,6 @@
         function populateConferences() {
             const conferencesList = document.getElementById('conferences-list');
             const sortedConferences = Object.entries(conferenceDatabase).sort((a, b) => {
-                // Sort by date
                 const dateA = new Date(a[1].dates.split('–')[0] + ', 2026');
                 const dateB = new Date(b[1].dates.split('–')[0] + ', 2026');
                 return dateA - dateB;
@@ -747,10 +787,10 @@
                 <div class="conference-card">
                     <div class="conference-name">${name} (${details.capacity} spots)</div>
                     <div class="conference-details">
-                        <div style="margin-bottom: 0.5rem;"><strong>📅 ${details.dates}</strong></div>
-                        <div style="margin-bottom: 0.5rem;"><strong>📍 ${details.location}</strong></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>${details.dates}</strong></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>${details.location}</strong></div>
                         <div style="margin-bottom: 0.5rem;">${details.description}</div>
-                        ${details.fee ? `<div style="margin-bottom: 0.5rem; color: #059669;"><strong>💰 ${details.fee}</strong></div>` : ''}
+                        ${details.fee ? `<div style="margin-bottom: 0.5rem; color: #059669;"><strong>${details.fee}</strong></div>` : ''}
                         ${Object.keys(details.requirements || {}).length > 0 ? 
                             `<div style="margin-top: 0.5rem; font-size: 0.8rem; color: #dc2626;">
                                 <strong>Requirements:</strong> 
@@ -766,21 +806,19 @@
 
         // Load sample data function
         function loadSampleData() {
-            // Create sample advisor data with realistic conference preferences
             const sampleAdvisors = [
                 { id: 3045, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO France', ranking: 3}], previousConference: null, notes: 'Luxury specialist with strong European network. 5+ years experience.', totalTTV: 4078938 },
                 { id: 2463, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'DUCO Italy', ranking: 2}, {conference: 'LE Miami', ranking: 3}], previousConference: null, notes: 'High-volume Americas advisor with established Italian client base.', totalTTV: 3449979 },
                 { id: 6841, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'Do Not Disturb', ranking: 2}, {conference: 'ILTM Cannes', ranking: 3}], previousConference: 'ILTM Americas', notes: 'Strong luxury leisure focus with UHNW clients.', totalTTV: 2657344 },
                 { id: 9236, preferences: [{conference: 'LE Miami', ranking: 1}, {conference: 'ILTM Cannes', ranking: 2}], previousConference: null, notes: 'Can\'t travel Feb-June due to family commitments. LE is only first half conference I can attend.', totalTTV: 1753868 },
                 { id: 11508, preferences: [{conference: 'ILTM Cannes', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'PURE Life Experiences', ranking: 3}], previousConference: null, notes: 'European specialist with luxury focus and experiential expertise.', totalTTV: 2845192 },
-                { id: 8394, preferences: [{conference: 'Do Not Disturb', ranking: 1}, {conference: 'Emotions Madrid', ranking: 2}], previousConference: null, notes: 'Wellness and retreat specialist with UHNW private travel expertise.', totalTTV: 1892456 },
-                { id: 5750, preferences: [{conference: 'Emotions Madrid', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO Spain/Portugal', ranking: 3}], previousConference: null, notes: 'European market focus with strong Spanish/Portuguese expertise.', totalTTV: 1634729 },
+                { id: 8394, preferences: [{conference: 'Do Not Disturb', ranking: 1}, {conference: 'Emotions Europe', ranking: 2}], previousConference: null, notes: 'Wellness and retreat specialist with UHNW private travel expertise.', totalTTV: 1892456 },
+                { id: 5750, preferences: [{conference: 'Emotions Europe', ranking: 1}, {conference: 'LE Miami', ranking: 2}, {conference: 'DUCO Spain/Portugal', ranking: 3}], previousConference: null, notes: 'European market focus with strong Spanish/Portuguese expertise.', totalTTV: 1634729 },
                 { id: 7821, preferences: [{conference: 'ILTM Americas', ranking: 1}, {conference: 'We Are Africa', ranking: 2}], previousConference: null, notes: 'Americas regional specialist with emerging Africa interest.', totalTTV: 1567843 },
-                { id: 4392, preferences: [{conference: 'We Are Africa', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'We Are Africa Sundance', ranking: 3}], previousConference: null, notes: 'Established advisor wanting to expand into African market.', totalTTV: 1438291 },
+                { id: 4392, preferences: [{conference: 'We Are Africa', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}, {conference: 'We are Africa Sundance', ranking: 3}], previousConference: null, notes: 'Established advisor wanting to expand into African market.', totalTTV: 1438291 },
                 { id: 6321, preferences: [{conference: 'Further East', ranking: 1}, {conference: 'ILTM Americas', ranking: 2}], previousConference: null, notes: 'Asia-Pacific specialist focusing on luxury APAC experiences.', totalTTV: 1329847 }
             ];
 
-            // Sample geographic TTV data to test requirements
             const sampleGeoTTV = {
                 3045: { "France": 800000, "Italy": 300000, "Spain": 200000 },
                 2463: { "Italy": 650000, "Spain": 400000, "Portugal": 150000 },
@@ -802,7 +840,6 @@
                 conferences: []
             };
 
-            // Enable processing
             const processBtn = document.getElementById('process-btn');
             processBtn.disabled = false;
             processBtn.textContent = 'Generate Sample Matches';
@@ -827,7 +864,6 @@
                     const data = new Uint8Array(event.target.result);
                     const workbook = XLSX.read(data, {type: 'array'});
                     
-                    // Process the consolidated advisor data from Sheet1
                     const advisorSheet = workbook.Sheets['Sheet1'] || workbook.Sheets['Advisor Preferences'];
                     if (!advisorSheet) {
                         throw new Error('Could not find advisor data sheet. Please ensure your file has either "Sheet1" or "Advisor Preferences" sheet.');
@@ -837,24 +873,21 @@
                     const headers = rawAdvisorData[0];
                     const advisorRows = rawAdvisorData.slice(1);
 
-                    // Find the TTV column (should be last column with TTV data)
                     const ttvColumnIndex = headers.findIndex(header => 
                         header && header.toString().toLowerCase().includes('ttv')
                     ) || headers.length - 1;
 
                     const advisors = advisorRows.map(row => {
-                        // Skip rows with missing advisor ID
                         if (!row[0]) return null;
                         
                         const advisor = {
                             id: row[0],
                             previousConference: row[1] === 'None!' ? null : row[1],
                             preferences: [],
-                            notes: row[24] || '', // Notes column
+                            notes: row[24] || '',
                             totalTTV: row[ttvColumnIndex] || 0
                         };
                         
-                        // Handle previousConference data type issues
                         if (advisor.previousConference !== null) {
                             if (typeof advisor.previousConference === 'number') {
                                 advisor.previousConference = advisor.previousConference.toString();
@@ -863,7 +896,6 @@
                             }
                         }
                         
-                        // Process conference preference rankings (columns 2-21)
                         const conferenceColumns = headers.slice(2, 22);
                         conferenceColumns.forEach((confName, index) => {
                             const ranking = row[2 + index];
@@ -879,7 +911,6 @@
                         return advisor;
                     }).filter(advisor => advisor !== null);
 
-                    // Build TTV map from the consolidated data
                     const ttvMap = {};
                     advisors.forEach(advisor => {
                         if (advisor.id && advisor.totalTTV) {
@@ -887,7 +918,6 @@
                         }
                     });
 
-                    // Process geo data from Sheet2
                     const geoSheet = workbook.Sheets['Sheet2'] || workbook.Sheets['Geo Values'];
                     const geoRows = geoSheet ? XLSX.utils.sheet_to_json(geoSheet) : [];
                     const geoMap = {};
@@ -909,7 +939,6 @@
                         conferences: []
                     };
 
-                    // Enable processing
                     const processBtn = document.getElementById('process-btn');
                     processBtn.disabled = false;
                     processBtn.textContent = 'Generate Matches';
@@ -964,7 +993,6 @@
                 }))
                 .sort((a, b) => b.totalTTV - a.totalTTV);
 
-            // Initialize conference capacities from database
             const conferenceCapacity = {};
             const requestedConferences = new Set();
             enrichedAdvisors.forEach(advisor => {
@@ -975,7 +1003,7 @@
 
             requestedConferences.forEach(confName => {
                 const confData = conferenceDatabase[confName];
-                conferenceCapacity[confName] = confData ? confData.capacity : 6; // Use database capacity or default
+                conferenceCapacity[confName] = confData ? confData.capacity : 6;
             });
 
             const matches = [];
@@ -1034,7 +1062,6 @@
                     conferenceCapacity[bestMatch.conference.Conference]--;
                     matchedAdvisorIds.add(advisor.id);
                 } else {
-                    // Track unmatched advisors with reasons
                     unmatched.push({
                         advisor,
                         reasons: eligibilityIssues.length > 0 ? eligibilityIssues : ['No available conference spots for preferences']
@@ -1042,7 +1069,7 @@
                 }
             }
 
-            // Also track advisors without preferences or TTV
+            // Track advisors without preferences or TTV
             fileData.advisors.forEach(advisor => {
                 if (!matchedAdvisorIds.has(advisor.id)) {
                     if (!advisor.preferences || advisor.preferences.length === 0) {
@@ -1071,7 +1098,6 @@
                 return { eligible: false, reason: 'Conference not found in database' };
             }
 
-            // Check repeat attendance - ensure previousConference exists and is a string
             if (advisor.previousConference && 
                 typeof advisor.previousConference === 'string' && 
                 advisor.previousConference !== 'None!' && 
@@ -1080,12 +1106,10 @@
                 const prevConf = advisor.previousConference.toLowerCase();
                 const currentConf = conf.toLowerCase();
                 
-                // Exact same conference
                 if (prevConf === currentConf) {
                     return { eligible: false, reason: 'Attended same conference last year' };
                 }
                 
-                // Conference family restrictions
                 if (prevConf.includes('duco') && currentConf.includes('duco')) {
                     return { eligible: false, reason: 'Attended DUCO family conference last year' };
                 }
@@ -1105,7 +1129,6 @@
 
             const requirements = confData.requirements || {};
 
-            // Check minimum TTV requirements
             if (requirements.minTTV && advisor.totalTTV < requirements.minTTV) {
                 return { 
                     eligible: false, 
@@ -1113,7 +1136,6 @@
                 };
             }
 
-            // Check geographic TTV requirements
             if (requirements.geoRequirement && requirements.geoMinTTV) {
                 const geoTTV = advisor.geoTTV[requirements.geoRequirement] || 0;
                 if (geoTTV < requirements.geoMinTTV) {
@@ -1124,7 +1146,6 @@
                 }
             }
 
-            // Check geographic percentage requirements (for Emotions Maestro events)
             if (requirements.geoRequirement && requirements.geoMinPercent) {
                 const geoTTV = advisor.geoTTV[requirements.geoRequirement] || 0;
                 const geoPercent = advisor.totalTTV > 0 ? (geoTTV / advisor.totalTTV) * 100 : 0;
@@ -1143,7 +1164,6 @@
             document.getElementById('processing-step').classList.add('hidden');
             document.getElementById('results-step').classList.remove('hidden');
 
-            // Update stats
             const totalTTV = realMatches.reduce((sum, match) => sum + match.advisor.totalTTV, 0);
             const topPrefCount = realMatches.filter(match => match.preferenceRank <= 3).length;
 
@@ -1152,7 +1172,6 @@
             document.getElementById('ttv-stat').textContent = `${Math.round(totalTTV / 1000000)}M`;
             document.getElementById('qual-stat').textContent = '100%';
 
-            // Populate matches
             const matchesList = document.getElementById('matches-list');
             matchesList.innerHTML = realMatches.map((match, i) => `
                 <div class="match-item">
@@ -1168,17 +1187,49 @@
                     </div>
                 </div>
             `).join('');
+
+            // Add unmatched advisors section at the bottom
+            if (unmatchedAdvisors.length > 0) {
+                const unmatchedSection = `
+                    <div style="margin-top: 3rem;">
+                        <h3 style="color: #dc2626; margin-bottom: 1rem; font-family: 'Fraunces', serif; text-transform: uppercase; font-weight: 700;">${unmatchedAdvisors.length} Unmatched Advisors</h3>
+                        <div class="matches-container" style="border-left: 4px solid #dc2626;">
+                            ${unmatchedAdvisors.map((unmatched, i) => `
+                                <div class="match-item" style="border-left: 4px solid #dc2626;">
+                                    <div style="flex: 1;">
+                                        <div class="advisor-info">❌ Advisor ${unmatched.advisor.id} - NOT MATCHED</div>
+                                        <div class="conference-location">TTV: ${(unmatched.advisor.totalTTV || 0).toLocaleString()}</div>
+                                        <div style="color: #dc2626; font-size: 0.875rem; margin-top: 0.5rem;">
+                                            <strong>Reasons:</strong> ${unmatched.reasons.join('; ')}
+                                        </div>
+                                        ${unmatched.advisor.notes ? `<div style="color: #666666; font-size: 0.875rem; margin-top: 0.75rem; line-height: 1.4; padding: 0.75rem; background: #f8f8f8; border-left: 3px solid #dc2626;"><strong>Notes:</strong> ${unmatched.advisor.notes}</div>` : ''}
+                                    </div>
+                                    <div class="ttv-info">
+                                        <div style="color: #dc2626; font-weight: 600;">UNMATCHED</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                matchesList.innerHTML += unmatchedSection;
+            }
         }
 
         function downloadMatches() {
             if (realMatches.length === 0) return;
 
-            const csvContent = realMatches.map((match, i) => 
-                [i + 1, match.advisor.id, match.conference.Conference, match.advisor.totalTTV, match.preferenceRank, Math.round(match.score.total), match.conference.Location, match.conference.Dates, `"${match.advisor.notes.replace(/"/g, '""')}"`].join(',')
-            ).join('\n');
+            const matchedContent = realMatches.map((match, i) => 
+                [i + 1, match.advisor.id, match.conference.Conference, match.advisor.totalTTV, match.preferenceRank, Math.round(match.score.total), match.conference.Location, match.conference.Dates, (match.advisor.notes || '').replace(/,/g, ';')].join(',')
+            );
 
+            const unmatchedContent = unmatchedAdvisors.map((unmatched, i) => 
+                [realMatches.length + i + 1, unmatched.advisor.id, 'NOT MATCHED', unmatched.advisor.totalTTV || 0, 'N/A', 'N/A', 'N/A', 'N/A', (unmatched.advisor.notes || '').replace(/,/g, ';')].join(',')
+            );
+
+            const allContent = [...matchedContent, ...unmatchedContent].join('\n');
             const header = 'Rank,Advisor ID,Conference,TTV,Preference Rank,Match Score,Location,Dates,Notes\n';
-            downloadCSV(header + csvContent, 'fora_conference_matches.csv');
+            downloadCSV(header + allContent, 'fora_conference_matches.csv');
         }
 
         function downloadEmails() {
@@ -1243,4 +1294,4 @@ The Fora Conference Team`;
         populateConferences();
     </script>
 </body>
-</html> 
+</html>
